@@ -1,4 +1,4 @@
-./Controleur.java
+./controleur/Controleur.java
 
 ./ihm/FramePLateau.java
 ./ihm/PanelPlateau.java
