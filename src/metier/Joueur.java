@@ -46,12 +46,12 @@ public class Joueur
 
 	public boolean ajouterRessource (IRessource r)
 	{
-		if (ressource.getType().equals("Ressource"))
+		if (r.getType().equals("Ressource"))
 		{
 			System.out.println("ajout de Ressource");
 		}
 
-		if (ressource.getType().equals("Piece"))
+		if (r.getType().equals("Piece"))
 		{
 			System.out.println("ajout de Piece");
 		}
