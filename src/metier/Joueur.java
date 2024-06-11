@@ -48,12 +48,46 @@ public class Joueur
 	{
 		if (r.getType() instanceof Ressource)
 		{
-			System.out.println("Ajout de ressource");
+			Ressource tmpRessource = (Ressource) r.getType();
+
+			for (int y=0; y<this.tabEpice[0].length; y++)
+			{
+				if (this.tabRessources[0][y] != null)
+				{
+					if (this.tabRessources[0][y].getNom().equals(tmpRessource.getNom()))
+					{
+						for (int i=0; i<this.tabRessources.length; i++)
+						{
+							if (this.tabRessources[i][y] == null)
+							{
+								this.tabRessources[i][y] = tmpRessource;
+								return true;
+							}
+						}
+					}
+				}
+				else
+				{
+					this.tabRessources[0][y] = tmpRessource;
+					return true;
+				}
+			}
+			return false;
 		}
 
 		if (r.getType() instanceof Piece)
 		{
-			System.out.println("ajout de Piece");
+			Piece tmpPiece = (Piece) r.getType();
+
+			if (this.nbPiece + tmpPiece.getValeur() <= 8)
+			{
+				this.nbPiece += tmpPiece.getValeur();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		return false;
