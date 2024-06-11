@@ -3,18 +3,24 @@ package metier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Joueur {
+public class Joueur
+{
 	private static int                   nbJoueurs    ;
-	private        int                   numJoueur    ;
-	private        String                nom          ;
-	private        List<Sommet>          lstSommet    ;
-	private        int                   nbPossessions;
-	private        int                   nbPiece      ;
-	private        Ressource[][] tabRessources;
-	private        int                   score        ;
 
-	public Joueur ()
+	private int numJoueur;
+	private int nbPossessions;
+	private int nbPiece;
+	private int score;
+
+	private String nom;
+
+	private List<Sommet> lstSommet;
+
+	private Ressource[][] tabRessources;
+	
+	public Joueur (String nom)
 	{
+		this.nom       = nom;
 		this.numJoueur = ++Joueur.nbJoueurs;
 		this.lstSommet = new ArrayList<Sommet>();
 		this.nbPossessions = 0;
@@ -23,9 +29,9 @@ public class Joueur {
 		this.tabRessources = new Ressource[4][8];
 	}
 
-	public int           getNbPossessions () { return this.nbPossessions; }
-	public int           getNbPieces      () { return this.nbPiece      ; }
-	public int           getScore         () { return this.score        ; }
+	public int getNbPossessions () { return this.nbPossessions; }
+	public int getNbPieces      () { return this.nbPiece      ; }
+	public int getScore         () { return this.score        ; }
 
 	public Ressource getRessources (int i, int j)
 	{
@@ -38,7 +44,7 @@ public class Joueur {
 		return true;
 	}
 
-	public boolean ajouterRessource (IRessource ressource)
+	public boolean ajouterRessource (IRessource r)
 	{
 		if (ressource.getType().equals("Ressource"))
 		{
@@ -64,6 +70,11 @@ public class Joueur {
 	{
 		this.nbPossessions += nb;
 		return true;
+	}
+
+	public String toString()
+	{
+		return "(" + this.numJoueur + ") " + this.nom;
 	}
 
 } 
