@@ -13,8 +13,9 @@ public class Joueur {
 	private        List<List<Ressource>> tabRessources;
 	private        int                   score        ;
 
-	public Joueur ()
+	public Joueur (String nom)
 	{
+		this.nom       = nom;
 		this.numJoueur = ++Joueur.nbJoueurs;
 		this.lstSommet = new ArrayList<Sommet>();
 		this.nbPossessions = 0;
@@ -53,5 +54,10 @@ public class Joueur {
 	{
 		this.nbPossessions += nb;
 		return true;
+	}
+
+	public String toString()
+	{
+		return this.nom;
 	}
 } 

@@ -1,0 +1,3 @@
+# Joueurs
+joueur_1 = "Corporation Solaire"
+joueur_2 = "Syndicat Astral"
