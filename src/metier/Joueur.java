@@ -3,17 +3,22 @@ package metier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Joueur {
+public class Joueur
+{
 	private static int                   nbJoueurs    ;
-	private        int                   numJoueur    ;
-	private        String                nom          ;
-	private        List<Sommet>          lstSommet    ;
-	private        int                   nbPossessions;
-	private        int                   nbPiece      ;
-	private        List<List<Ressource>> tabRessources;
-	private        int                   score        ;
 
-	public Joueur (String nom)
+	private int numJoueur;
+	private int nbPossessions;
+	private int nbPiece;
+	private int score;
+
+	private String nom;
+
+	private List<Sommet> lstSommet;
+
+	private Ressource[][] tabRessources;
+	
+	public Joueur ()
 	{
 		this.nom       = nom;
 		this.numJoueur = ++Joueur.nbJoueurs;
@@ -21,15 +26,16 @@ public class Joueur {
 		this.nbPossessions = 0;
 		this.nbPiece = 0;
 		this.score = 0;
+		this.tabRessources = new Ressource[4][8];
 	}
 
-	public int           getNbPossessions () { return this.nbPossessions; }
-	public int           getNbPieces      () { return this.nbPiece      ; }
-	public int           getScore         () { return this.score        ; }
+	public int getNbPossessions () { return this.nbPossessions; }
+	public int getNbPieces      () { return this.nbPiece      ; }
+	public int getScore         () { return this.score        ; }
 
 	public Ressource getRessources (int i, int j)
 	{
-		return this.tabRessources.get(i).get(j);
+		return this.tabRessources[i][j];
 	}
 
 	public boolean ajouterSommet (Sommet sommet)
@@ -38,9 +44,19 @@ public class Joueur {
 		return true;
 	}
 
-	public boolean ajouterRessource (Ressource ressource)
+	public boolean ajouterRessource (IRessource r)
 	{
-		return true;
+		if (r instanceof Ressource)
+		{
+			System.out.println("ajout de Ressource");
+		}
+
+		if (r instanceof Piece)
+		{
+			System.out.println("ajout de Piece");
+		}
+
+		return false;
 	}
 
 	public void incrementerPiece () { this.nbPiece++; }
@@ -58,6 +74,7 @@ public class Joueur {
 
 	public String toString()
 	{
-		return this.nom;
+		return "(" + this.numJoueur + ") " + this.nom;
 	}
+
 } 

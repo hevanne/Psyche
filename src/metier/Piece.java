@@ -19,4 +19,9 @@ public class Piece implements IRessource
 	{
 		return "Piece : " + this.valeur + " " + this.couleur;
 	}
+
+	public Piece getType()
+	{
+		return this;
+	}
 }
