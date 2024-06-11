@@ -10,7 +10,7 @@ public class FrameScore extends JFrame
 	{
 		this.setTitle("Score");
 		this.setLocation(50,50);
-		this.setSize(400, 400);
+		this.setSize(600, 500);
 
 		/* Création des composants */
 
@@ -24,5 +24,9 @@ public class FrameScore extends JFrame
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		new FrameScore();
 	}
 }
