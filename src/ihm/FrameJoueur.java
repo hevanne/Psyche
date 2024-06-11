@@ -9,7 +9,7 @@ public class FrameJoueur extends JFrame
 	private Controleur ctrl;
 	private PanelJoueur pnlJoueur;
 
-	public FrameJoueur(Controleur ctrl)
+	public FrameJoueur(Controleur ctrl, String joueur)
 	{
 		this.setTitle("Joueur");
 		this.setLocation(50,50);
@@ -17,7 +17,7 @@ public class FrameJoueur extends JFrame
 
 		/* Création des composants */
 
-		this.pnlJoueur = new PanelJoueur(ctrl);
+		this.pnlJoueur = new PanelJoueur(ctrl, joueur);
 
 		/* Positionnement des composants */
 

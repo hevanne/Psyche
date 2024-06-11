@@ -2,7 +2,8 @@ package metier;
 
 import java.util.List;
 
-public class Joueur {
+public class Joueur
+{
 	private List<Mine>    lstMine     ;
 	private int           nbJetons    ;
 	private int           nbPiece     ;
