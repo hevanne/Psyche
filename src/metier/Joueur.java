@@ -20,7 +20,7 @@ public class Joueur {
 		this.nbPossessions = 0;
 		this.nbPiece = 0;
 		this.score = 0;
-		this.tabRessources = new Ressources[4][8];
+		this.tabRessources = new Ressource[4][8];
 	}
 
 	public int           getNbPossessions () { return this.nbPossessions; }
@@ -38,7 +38,7 @@ public class Joueur {
 		return true;
 	}
 
-	public boolean ajouterRessource (IRessource ressource)
+	public boolean ajouterRessource (IRessource r)
 	{
 		if (r.getType() instanceof Ressource)
 		{
