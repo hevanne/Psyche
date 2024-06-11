@@ -18,7 +18,7 @@ public class Joueur
 
 	private Ressource[][] tabRessources;
 	
-	public Joueur ()
+	public Joueur (String nom)
 	{
 		this.nom       = nom;
 		this.numJoueur = ++Joueur.nbJoueurs;
