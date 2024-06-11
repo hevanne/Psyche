@@ -20,59 +20,14 @@ public class Jeu {
 
 	private void lireTheme ()
 	{
-		String[] fichiers = new String[]{ "joueur.txt",
-		                                  "couleur.txt",
-										  "jeton.txt",
-		                                  "map.txt",
-										  "image.txt"   };
-		Scanner scFic, ScLig;
-
-		// Joueurs
+		Scanner scFic;
+		String  s = "";
+		
 		try {
-			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[0] ));
+			scFic = new Scanner(new FileInputStream ( "../data/theme.txt" ));
 			while(scFic.hasNextLine())
 			{
-
-			}
-			scFic.close();
-		} catch (Exception e) {}
-
-		// Couleurs
-		try {
-			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[1] ));
-			while(scFic.hasNextLine())
-			{
-
-			}
-			scFic.close();
-		} catch (Exception e) {}
-
-		// Jetons
-		try {
-			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[3] ));
-			while(scFic.hasNextLine())
-			{
-
-			}
-			scFic.close();
-		} catch (Exception e) {}
-
-		// Map
-		try {
-			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[4] ));
-			while(scFic.hasNextLine())
-			{
-
-			}
-			scFic.close();
-		} catch (Exception e) {}
-
-		// Images
-		try {
-			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[4] ));
-			while(scFic.hasNextLine())
-			{
-
+				s = scFic.nextLine();
 			}
 			scFic.close();
 		} catch (Exception e) {}
