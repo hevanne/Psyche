@@ -1,3 +1,41 @@
-# Joueurs
-joueur_1 = "Corporation Solaire"
-joueur_2 = "Syndicat Astral"
+# JOUEURS
+joueur = {
+	"Corporation Solaire",
+	"Syndicat Astral"
+}
+
+# COULEURS
+couleur = {
+	
+}
+
+# JETONS
+# Ressources
+Aluminum Al
+Argent Ag
+Or Au
+Cobalt Co
+Fer Fe
+Nickel Ni
+Platine Pt
+Titane Ti
+
+# Pieces
+Nr
+
+# Possession
+
+
+# GRAPHES
+# Sommets
+ressource 50 50
+
+# Routes
+ressource ressource2 1
+
+# IMAGES
+plateau_principal
+plateau_cs
+plateau_sa
+possession_cs
+possession_sa

@@ -32,19 +32,13 @@ public class Jeu {
 		try {
 			scFic = new Scanner(new FileInputStream ( "../data/theme.txt" ));
 
-			// Joueurs
+			// Joueur
+			/*
 			while(scFic.hasNextLine())
 			{
-				s = scFic.nextLine();
-				if(!"".equals(s) && !"#".equals(s.substring(0,1)) && s.contains("joueur"))
-				{
-					if(s.contains("\""))
-						this.lstJoueurs.add(new Joueur(s.substring(s.indexOf("\"")+1, s.length()-1).trim()));
-					else
-						this.lstJoueurs.add(new Joueur(s.substring(s.indexOf("=")+1).trim()));
-				}
+				//s = scFic.nextLine();
 			}
-			System.out.println(this.lstJoueurs);
+			*/
 			scFic.close();
 		} catch (Exception e) {System.out.println(e);}
 	}
