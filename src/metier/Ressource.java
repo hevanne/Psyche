@@ -20,8 +20,8 @@ public class Ressource implements IRessource
 		return "Ressource : " + this.nom + " " + this.coul;
 	}
 
-	public String getType()
+	public IRessource getType()
 	{
-		return "Ressource";
+		return this;
 	}
 }
