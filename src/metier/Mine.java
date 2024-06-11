@@ -1,5 +1,6 @@
 package metier;
 
-public class Mine {
-	
+public enum Mine implements IRessource
+{
+
 }
