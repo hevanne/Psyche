@@ -37,7 +37,7 @@ public class Route {
 
 	public boolean setProprietaire(Joueur j)
 	{
-		if (this.proprietaire != null)
+		if (this.proprietaire == null)
 		{
 			this.proprietaire = j;
 			return true;
