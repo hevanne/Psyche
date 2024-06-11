@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# Compilation
+cd src
+
 javac @compile.list -d bin
 
-cd bin
+# Execution
+cd ../bin
 
-java Controleur
+java controleur.Controleur
 
 read -p "Press any key to continue..."

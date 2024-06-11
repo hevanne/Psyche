@@ -1,9 +1,13 @@
 @echo off
 
-javac @compile.list -d /bin
+REM Compilation
+cd src
 
-cd bin
+javac @compile.list -d ../bin
 
-java Controleur
+REM Exécution
+cd ../bin
+
+java controleur.Controleur
 
 pause
