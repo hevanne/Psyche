@@ -35,11 +35,11 @@ public class Sommet {
 
 	public int getX () { return this.x; }
 	public int getY () { return this.y; }
-	public void setProprietaire(Joueur joueur)
+	public void setProprietaire(Joueur proprietaire)
 	{
-		if (this.joueur == null)
+		if (this.proprietaire == null)
 		{
-			this.joueur = joueur;
+			this.proprietaire = proprietaire;
 		}
 	}
 
@@ -50,7 +50,7 @@ public class Sommet {
 
 	public Joueur getProprietaire()
 	{
-		return this.joueur;
+		return this.proprietaire;
 	}
 
 	public void ajouterRoute(Route route)

@@ -1,7 +1,10 @@
 package metier;
 
+import java.awt.*;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Jeu {
 
@@ -12,11 +15,67 @@ public class Jeu {
 
 	public Jeu()
 	{
+		this.lireTheme();
 	}
 
-	public void lireTheme ()
+	private void lireTheme ()
 	{
+		String[] fichiers = new String[]{ "joueur.txt",
+		                                  "couleur.txt",
+										  "jeton.txt",
+		                                  "map.txt",
+										  "image.txt"   };
+		Scanner scFic, ScLig;
 
+		// Joueurs
+		try {
+			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[0] ));
+			while(scFic.hasNextLine())
+			{
+
+			}
+			scFic.close();
+		} catch (Exception e) {}
+
+		// Couleurs
+		try {
+			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[1] ));
+			while(scFic.hasNextLine())
+			{
+
+			}
+			scFic.close();
+		} catch (Exception e) {}
+
+		// Jetons
+		try {
+			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[3] ));
+			while(scFic.hasNextLine())
+			{
+
+			}
+			scFic.close();
+		} catch (Exception e) {}
+
+		// Map
+		try {
+			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[4] ));
+			while(scFic.hasNextLine())
+			{
+
+			}
+			scFic.close();
+		} catch (Exception e) {}
+
+		// Images
+		try {
+			scFic = new Scanner(new FileInputStream ( "../data/"+fichiers[4] ));
+			while(scFic.hasNextLine())
+			{
+
+			}
+			scFic.close();
+		} catch (Exception e) {}
 	}
 
 	public void lancerJeu()
@@ -42,6 +101,6 @@ public class Jeu {
 
 	public boolean prendreMine()
 	{
-		
+		return false;
 	}
 }
