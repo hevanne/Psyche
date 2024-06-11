@@ -76,5 +76,4 @@ public class Joueur
 	{
 		return "(" + this.numJoueur + ") " + this.nom;
 	}
-
-} 
+}
