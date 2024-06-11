@@ -10,7 +10,7 @@ public class Joueur {
 	private        List<Sommet>          lstSommet    ;
 	private        int                   nbPossessions;
 	private        int                   nbPiece      ;
-	private        List<List<Ressource>> tabRessources;
+	private        Ressource[][] tabRessources;
 	private        int                   score        ;
 
 	public Joueur ()
@@ -20,6 +20,7 @@ public class Joueur {
 		this.nbPossessions = 0;
 		this.nbPiece = 0;
 		this.score = 0;
+		this.tabRessources = new Ressources[4][8];
 	}
 
 	public int           getNbPossessions () { return this.nbPossessions; }
@@ -28,7 +29,7 @@ public class Joueur {
 
 	public Ressource getRessources (int i, int j)
 	{
-		return this.tabRessources.get(i).get(j);
+		return this.tabRessources[i][j];
 	}
 
 	public boolean ajouterSommet (Sommet sommet)
@@ -37,9 +38,19 @@ public class Joueur {
 		return true;
 	}
 
-	public boolean ajouterRessource (Ressource ressource)
+	public boolean ajouterRessource (IRessource ressource)
 	{
-		return true;
+		if (r.getType() instanceof Ressource)
+		{
+			System.out.println("ajout de Ressource");
+		}
+
+		if (r.getType() instanceof Piece)
+		{
+			System.out.println("ajout de Piece");
+		}
+
+		return false;
 	}
 
 	public void incrementerPiece () { this.nbPiece++; }
@@ -54,4 +65,5 @@ public class Joueur {
 		this.nbPossessions += nb;
 		return true;
 	}
+
 } 
