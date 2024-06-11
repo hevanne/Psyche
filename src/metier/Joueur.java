@@ -20,7 +20,7 @@ public class Joueur {
 		this.nbPossessions = 0;
 		this.nbPiece = 0;
 		this.score = 0;
-		this.tabRessources = new Ressources[4][8];
+		this.tabRessources = new Ressource[4][8];
 	}
 
 	public int           getNbPossessions () { return this.nbPossessions; }
@@ -40,12 +40,12 @@ public class Joueur {
 
 	public boolean ajouterRessource (IRessource ressource)
 	{
-		if (r.getType() instanceof Ressource)
+		if (ressource.getType().equals("Ressource"))
 		{
 			System.out.println("ajout de Ressource");
 		}
 
-		if (r.getType() instanceof Piece)
+		if (ressource.getType().equals("Piece"))
 		{
 			System.out.println("ajout de Piece");
 		}

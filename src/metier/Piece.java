@@ -20,8 +20,8 @@ public class Piece implements IRessource
 		return "Piece : " + this.valeur + " " + this.couleur;
 	}
 
-	public Piece getType()
+	public String getType()
 	{
-		return this;
+		return "Piece";
 	}
 }
