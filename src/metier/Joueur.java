@@ -29,9 +29,10 @@ public class Joueur
 		this.tabRessources = new Ressource[4][8];
 	}
 
+	public int getNum           () { return this.numJoueur;     }
 	public int getNbPossessions () { return this.nbPossessions; }
-	public int getNbPieces      () { return this.nbPiece      ; }
-	public int getScore         () { return this.score        ; }
+	public int getNbPieces      () { return this.nbPiece;       }
+	public int getScore         () { return this.score;         }
 
 	public Ressource getRessource (int i, int j)
 	{

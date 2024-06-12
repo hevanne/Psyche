@@ -79,11 +79,34 @@ public class Jeu {
 		return false;
 	}
 
+	// trouver le plus court trajet entre smt et Nouvelle Rome
+	// parcourir le trajet en ajoutant les points
+	// /!\ Mines d'or
 	private void calculerScoreTrajet(Sommet smt)
 	{
-		// trouver le plus court trajet entre smt et Nouvelle Rome
-		// parcourir le trajet en ajoutant les points
-		// /!\ Mines d'or
+		List<Route> trajet;
+		int[]       scoresRoute;
+		
+		trajet      = Jeu.dijkstraMoore(smt);
+		scoresRoute = new int[this.lstJoueurs.size()];
+
+		for(Route r : trajet)
+		{
+			scoresRoute[r.getProprietaire().getNum() - 1] += r.getNbSection();
+		}
+
+		for(int score : scoresRoute)
+		{
+			//r.getProprietaire().ajouterScoreRoute(scoresRoute[r.getProprietaire().getNum() - 1]);
+		}
+	}
+
+	private static List<Route> dijkstraMoore(Sommet smt)
+	{
+		List<Route> retour = new ArrayList<>();
+
+
+		return retour;
 	}
 
 	private void initTheme ()
