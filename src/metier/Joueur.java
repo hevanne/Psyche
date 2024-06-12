@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Joueur
 {
-	private static int                   nbJoueurs    ;
+	private static int nbJoueurs;
 
 	private int numJoueur;
 	private int nbPossessions;
@@ -33,10 +33,7 @@ public class Joueur
 	public int getNbPieces      () { return this.nbPiece      ; }
 	public int getScore         () { return this.score        ; }
 
-	public Ressource getRessources (int i, int j)
-	{
-		return this.tabRessources[i][j];
-	}
+	public Ressource getRessources (int i, int j) { return this.tabRessources[i][j]; }
 
 	public boolean ajouterSommet (Sommet sommet)
 	{
@@ -47,14 +44,10 @@ public class Joueur
 	public boolean ajouterRessource (IRessource r)
 	{
 		if (r.getType() instanceof Ressource)
-		{
-			System.out.println("Ajout de ressource");
-		}
+			System.out.println("Ajout de Ressource");
 
 		if (r.getType() instanceof Piece)
-		{
-			System.out.println("ajout de Piece");
-		}
+			System.out.println("Ajout de Piece");
 
 		return false;
 	}

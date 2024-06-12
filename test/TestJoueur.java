@@ -11,5 +11,9 @@ public class TestJoueur
 		j1.ajouterRessource(new Piece(1, new Couleur("BLEU", 255, 255, 255)));
 
 		j1.ajouterRessource(new Ressource("Fer", new Couleur("BLEU", 255, 255, 255)));
+
+		j1.calculerScore();
+
+		System.out.println(j1);
 	}
 }
