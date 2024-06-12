@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Joueur
 {
-	private static int nbJoueurs;
+	private static int                   nbJoueurs    ;
 
 	private int numJoueur;
 	private int nbPossessions;
@@ -33,7 +33,10 @@ public class Joueur
 	public int getNbPieces      () { return this.nbPiece      ; }
 	public int getScore         () { return this.score        ; }
 
-	public Ressource getRessources (int i, int j) { return this.tabRessources[i][j]; }
+	public Ressource getRessources (int i, int j)
+	{
+		return this.tabRessources[i][j];
+	}
 
 	public boolean ajouterSommet (Sommet sommet)
 	{
@@ -44,10 +47,48 @@ public class Joueur
 	public boolean ajouterRessource (IRessource r)
 	{
 		if (r.getType() instanceof Ressource)
-			System.out.println("Ajout de Ressource");
+		{
+			Ressource tmpRessource = (Ressource) r.getType();
+
+			for (int y=0; y<this.tabRessources[0].length; y++)
+			{
+				if (this.tabRessources[0][y] != null)
+				{
+					if (this.tabRessources[0][y].getNom().equals(tmpRessource.getNom()))
+					{
+						for (int i=0; i<this.tabRessources.length; i++)
+						{
+							if (this.tabRessources[i][y] == null)
+							{
+								this.tabRessources[i][y] = tmpRessource;
+								return true;
+							}
+						}
+					}
+				}
+				else
+				{
+					this.tabRessources[0][y] = tmpRessource;
+					return true;
+				}
+			}
+			return false;
+		}
 
 		if (r.getType() instanceof Piece)
-			System.out.println("Ajout de Piece");
+		{
+			Piece tmpPiece = (Piece) r.getType();
+
+			if (this.nbPiece + tmpPiece.getValeur() <= 8)
+			{
+				this.nbPiece += tmpPiece.getValeur();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 		return false;
 	}
@@ -63,6 +104,22 @@ public class Joueur
 	{
 		this.nbPossessions += nb;
 		return true;
+	}
+
+	public void triTabRessource()
+	{
+		for(int i = this.tabRessources.length-1; i > 0; i--)
+		{
+			for(int j = i; j > this.tabRessources.length-1-i; j--)
+			{
+				if(this.tabRessources[j].length > this.tabRessources[j-1].length)
+				{
+					Ressource[] tmp = this.tabRessources[j-1];
+					this.tabRessources[j-1] = this.tabRessources[j];
+					this.tabRessources[j] = tmp;
+				}
+			}
+		}
 	}
 
 	public String toString()
