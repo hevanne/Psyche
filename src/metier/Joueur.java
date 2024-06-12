@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Joueur
 {
-	private static int                   nbJoueurs    ;
+	private static int nbJoueurs;
 
 	private int numJoueur;
 	private int nbPossessions;
@@ -33,10 +33,7 @@ public class Joueur
 	public int getNbPieces      () { return this.nbPiece      ; }
 	public int getScore         () { return this.score        ; }
 
-	public Ressource getRessources (int i, int j)
-	{
-		return this.tabRessources[i][j];
-	}
+	public Ressource getRessources (int i, int j) { return this.tabRessources[i][j]; }
 
 	public boolean ajouterSommet (Sommet sommet)
 	{
@@ -47,48 +44,10 @@ public class Joueur
 	public boolean ajouterRessource (IRessource r)
 	{
 		if (r.getType() instanceof Ressource)
-		{
-			Ressource tmpRessource = (Ressource) r.getType();
-
-			for (int y=0; y<this.tabEpice[0].length; y++)
-			{
-				if (this.tabRessources[0][y] != null)
-				{
-					if (this.tabRessources[0][y].getNom().equals(tmpRessource.getNom()))
-					{
-						for (int i=0; i<this.tabRessources.length; i++)
-						{
-							if (this.tabRessources[i][y] == null)
-							{
-								this.tabRessources[i][y] = tmpRessource;
-								return true;
-							}
-						}
-					}
-				}
-				else
-				{
-					this.tabRessources[0][y] = tmpRessource;
-					return true;
-				}
-			}
-			return false;
-		}
+			System.out.println("Ajout de Ressource");
 
 		if (r.getType() instanceof Piece)
-		{
-			Piece tmpPiece = (Piece) r.getType();
-
-			if (this.nbPiece + tmpPiece.getValeur() <= 8)
-			{
-				this.nbPiece += tmpPiece.getValeur();
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+			System.out.println("Ajout de Piece");
 
 		return false;
 	}
