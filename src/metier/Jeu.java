@@ -291,8 +291,16 @@ public class Jeu {
 				{
 					tabLig = lig.split("\t");
 
-					smtDep    = this.lstSommets.get(Integer.parseInt(tabLig[0]));
-					smtArr    = this.lstSommets.get(Integer.parseInt(tabLig[1]));
+					if(tabLig[0].length() == 1 && tabLig[1].length() == 1)
+					{
+						smtDep    = this.lstSommets.get(Integer.parseInt(tabLig[0]));
+						smtArr    = this.lstSommets.get(Integer.parseInt(tabLig[1]));
+					}
+					else
+					{
+						smtDep    = this.getSommet(tabLig[0]);
+						smtArr    = this.getSommet(tabLig[1]);
+					}
 					nbSection = Integer.parseInt(tabLig[2]);
 
 					this.lstRoutes.add(Route.nvRoute(smtDep, smtArr, nbSection));
@@ -303,5 +311,21 @@ public class Jeu {
 			scFic.close();
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
+	}
+
+	private Sommet getSommet (String symbole)
+	{
+		char   couleur;
+		int    valeur;
+
+		couleur = symbole.charAt(0);
+		valeur  = Integer.parseInt(symbole.substring(1));
+
+		for(Sommet smt : this.lstSommets)
+			if(   smt.getCouleur().getNom().charAt(0) == couleur 
+			   && smt.getValeur()                           == valeur)
+			   return smt;
+
+		return null;
 	}
 }

@@ -40,5 +40,53 @@
 30	5	6	50	50
 
 # ROUTES
-# indice_sommet_depart \t indice_sommet_arrivee \t nombre_sections
-1	2	1
+# /!\ 2 syntaxes correctes
+# sommet_depart (indice)         \t sommet_arrivee (indice)         \t nombre_sections
+# sommet_depart (couleur+valeur) \t sommet_arrivee (couleur+valeur) \t nombre_sections
+J1	J4	1
+J1	J5	2
+J1	G3	2
+J1	G0	2
+J2	J4	2
+J2	J5	1
+J4	J3	2
+J3	J4	2
+G4	G2	1
+G4	G0	1
+G0	D0	2
+G0	G3	1
+G1	G3	1
+G1	O1	2
+O1	O4	1
+O1	D0	1
+D0	B2	1
+D0	O2	1
+B2	B4	1
+B2	B8	1
+B8	B6	1
+B8	B4	1
+B8	V3	1
+V3	V2	1
+V3	V4	1
+V4	V2	1
+V4	V8	1
+V8	V2	1
+V2	V6	1
+V2	B6	1
+B6	V6	1
+B6	R1	1
+B6	B3	1
+B3	R1	1
+B3	B4	1
+B3	O2	1
+O2	O3	2
+O4	O3	2
+O3	O5	2
+O5	R2	1
+R2	R4	1
+R2	R1	2
+R4	R5	2
+R1	R3	1
+R3	R5	1
+R3	V6	1
+R5	V6	2

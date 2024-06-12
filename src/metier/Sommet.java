@@ -6,8 +6,9 @@ import java.util.List;
 public class Sommet
 {
 	private static int nbSommet = 0;
-
 	private int num;
+
+	private String nom;
 	private int valeur;
 	private Couleur couleur;
 	private int x;
@@ -22,6 +23,9 @@ public class Sommet
 		this.num     = nbSommet++;
 		this.valeur  = valeur;
 		this.couleur = couleur;
+
+		this.nom     = "" + this.couleur.getNom().charAt(0) + this.valeur;  
+
 		this.x       = x;
 		this.y       = y;
 
@@ -50,9 +54,10 @@ public class Sommet
 		return null;
 	}
 
-
-	public Joueur     getProprietaire () { return this.proprietaire;    }
-	public IRessource getRessource    () { return this.ressource;       }
+	public int        getValeur       () { return this.valeur;       }
+	public Couleur    getCouleur      () { return this.couleur;      }
+	public Joueur     getProprietaire () { return this.proprietaire; }
+	public IRessource getRessource    () { return this.ressource;    }
 	public Sommet[]   getVoisins      () 
 	{
 		Sommet[] retour;
