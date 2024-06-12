@@ -8,7 +8,8 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Jeu {
+public class Jeu
+{
 
 	private int      numTour;
 	private String[] vocab;
@@ -164,7 +165,8 @@ public class Jeu {
 		int     i, r, v, b, quantite;
 		Couleur couleur;
 
-		try {
+		try
+		{
 			scFic = new Scanner(new FileInputStream ( "../theme/theme.data" ));
 
 			// Vocabulaire
