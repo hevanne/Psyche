@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class Jeu {
 
 	private int      numTour;
-	private boolean  finJeu;
 	private String[] vocab;
 	private String[] images;
 
@@ -22,7 +21,6 @@ public class Jeu {
 	public Jeu()
 	{
 		this.numTour = 0;
-		this.finJeu  = false;
 		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
 		this.images  = new String[5];
 
@@ -35,7 +33,7 @@ public class Jeu {
 		this.nouveauJeu();
 	}
 
-	private void lireTheme ()
+	private void initTheme ()
 	{
 		Scanner scFic;
 		String  lig, tabLig[], nom;
@@ -185,15 +183,22 @@ public class Jeu {
 
 	private void nouveauJeu()
 	{
-		
-	}
-
-	public void lancerJeu()
-	{
-
-		this.finJeu = false;
 		this.numTour = 0;
+		this.initTheme();
+		this.initMap();
 
+		int i= 0;
+		for(Sommet smt : this.lstSommets)
+		{
+			i = (int)(Math.random() * this.lstRessources.size());
+			smt.setRessource(this.lstRessources.remove(i));
+		}
+
+		while(!this.estFinJeu())
+		{
+			// Déroulement du jeu
+			numTour++;
+		}
 	}
 
 	public boolean estFinJeu()
@@ -202,11 +207,11 @@ public class Jeu {
 		{
 			if (s.getProprietaire() == null)
 			{
-				this.finJeu = true;
+				return true;
 			}
 		}
 
-		return this.finJeu;
+		return false;
 	}
 
 	public boolean prendreMine()

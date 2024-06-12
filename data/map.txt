@@ -1,0 +1,4 @@
+ressource 50 50
+ressource2 100 100
+
+ressource ressource2 1

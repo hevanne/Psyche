@@ -5,8 +5,8 @@ Piece=Monnaie
 Route=Route
 
 # JOUEURS
-joueur1="Corporation Solaire"
-joueur2="Syndicat Astral"
+joueur_1="Corporation Solaire"
+joueur_2="Syndicat Astral"
 
 # COULEURS
 # indice \t Nom_Couleur \t r \t v \t b
@@ -39,7 +39,7 @@ R	Fer	10	4
 R	Nickel	11	4
 R	Platine	12	4
 R	Titane	13	4
-# Piece
+# PIECE
 # type \t valeur \t indice_couleur \t quantité
 P	1	14	8
 

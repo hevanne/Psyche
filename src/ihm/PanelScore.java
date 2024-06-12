@@ -16,7 +16,6 @@ public class PanelScore extends JPanel
 	private final Color clrJauneFonce = new Color(223,194,69);
 	private final Color clrJauneClair = new Color(255,242,204);
 
-
 	public PanelScore()
 	{
 		this.setLayout(new BorderLayout());
