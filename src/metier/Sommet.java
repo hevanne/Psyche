@@ -51,8 +51,26 @@ public class Sommet
 	}
 
 
-	public Joueur     getProprietaire ()      { return this.proprietaire;    }
-	public IRessource getRessource    ()      { return this.ressource;       }
+	public Joueur     getProprietaire () { return this.proprietaire;    }
+	public IRessource getRessource    () { return this.ressource;       }
+	public Sommet[]   getVoisins      () 
+	{
+		Sommet[] retour;
+		Route    r;
+
+		retour = new Sommet[this.lstRoutes.size()];
+
+		for(int i = 0; i < this.lstRoutes.size(); i++)
+		{
+			r = this.lstRoutes.get(i);
+			if  (r.getSmtDep() == this) 
+				retour[i] = r.getSmtArr();
+			else
+				retour[i] = r.getSmtDep();
+		}
+
+		return retour;
+	}
 
 	// Modificateurs
 	public boolean setProprietaire(Joueur proprietaire)

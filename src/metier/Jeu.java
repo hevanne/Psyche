@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Jeu {
 
@@ -76,7 +77,6 @@ public class Jeu {
  		if(smtArr.setProprietaire(joueurActif))
 		{
 			route.setProprietaire(joueurActif);
-			this.calculerScoreTrajet(smtArr);
 			return true;
 		}
 		return false;
@@ -85,18 +85,16 @@ public class Jeu {
 	// trouver le plus court trajet entre smt et Nouvelle Rome
 	// parcourir le trajet en ajoutant les points
 	// /!\ Mines d'or
-	private void calculerScoreTrajet(Sommet smt)
+	private void calculerScoreTrajet(Sommet[] trajet)
 	{
-		List<Sommet> trajet;
-		int[]        scoresRoute;
-		Route        r;
+		int[]    scoresRoute;
+		Route    r;
 		
-		trajet      = this.plusCourtChemin(smt);
 		scoresRoute = new int[this.lstJoueurs.size()];
 
-		for(int i = 0; i < trajet.size()-1; i++)
+		for(int i = 0; i < trajet.length-1; i++)
 		{
-			r = trajet.get(i).getRoute(trajet.get(i+1));
+			r = trajet[i].getRoute(trajet[i+1]);
 			scoresRoute[r.getProprietaire().getNum() - 1] += r.getNbSection();
 		}
 
@@ -106,24 +104,54 @@ public class Jeu {
 		}
 	}
 
-	private List<Sommet> plusCourtChemin(Sommet smt)
+	public List<Sommet[]> plusCourtChemin(Sommet smt)
 	{
-		List<Sommet>  retour;
-		boolean[]     marquer;
-		Queue<Sommet> f;
-		Sommet s;
+		Sommet []      voisins, tabTrajet;
+		boolean[]      marque;
+		Queue<Sommet>  file;
+		Sommet         s;
+		List<Sommet>   trajet;
+		List<Sommet[]> retour;
 
-		retour  = new ArrayList<Sommet>(); 
-		marquer = new boolean[this.lstSommets.size()];
+		retour = new ArrayList<Sommet[]>();
+		trajet = new ArrayList<Sommet>();
+		marque = new boolean[this.lstSommets.size()];
+		tabTrajet = null;
 
 		// Cf cours de graph
-		// Utilise parcours en largeur
-		f = new LinkedList<Sommet>();
-		f.add(smt);
-		marquer[smt.getNum()] = true;
-		while(!f.isEmpty())
+		// Parcours en largeur
+		file = new LinkedList<Sommet>();
+		file.offer(smt);
+		marque[smt.getNum()] = true;
+		while(!file.isEmpty())
 		{
-			s = f.poll();
+			s = file.poll();
+			voisins = s.getVoisins();
+			for(int i = 0; i < voisins.length; i++)
+			{
+				if(voisins[i] == this.lstSommets.get(0))
+				{
+					trajet.add(voisins[i]);
+
+					tabTrajet = ((Sommet[])trajet.toArray());
+					if (retour.size() == 0 || tabTrajet.length == retour.get(0).length)
+					{
+						retour.add(tabTrajet);
+					}
+					else if (tabTrajet.length < retour.get(0).length)
+					{
+						retour.clear();
+						retour.add(tabTrajet);
+					}
+
+					trajet.removeLast();
+				}
+				else if(!marque[i]) 
+				{
+					file.offer(voisins[i]);
+					marque[i] = true;
+				}
+			}
 		}
 
 		return retour;
