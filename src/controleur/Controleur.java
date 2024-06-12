@@ -35,6 +35,4 @@ public class Controleur
 	}
 
 	private void afficherScore() { new FrameScore(this); }
-
-	public static void main(String[] args) { new Controleur(); }
 }

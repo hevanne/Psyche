@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import java.io.InputStream;
 
 public class Jeu
 {
@@ -151,7 +152,7 @@ public class Jeu
 						retour.add(tabTrajet);
 					}
 
-					trajet.removeLast();
+					//trajet.removeLast();
 				}
 				else if(!marque[i]) 
 				{
