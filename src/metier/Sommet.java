@@ -7,46 +7,56 @@ public class Sommet
 {
 	private static int nbSommet = 0;
 
-	private int    num;
-
-	private String nomSmt  ;
-
-	private IRessource ressource;
+	private int num;
+	private int valeur;
+	private Couleur couleur;
 	private int x;
 	private int y;
 	private Joueur proprietaire;
+	private IRessource ressource;
 	private List<Route> lstRoute = new ArrayList<Route>();
 
 
-	private  Sommet (int x, int y, IRessource ressource)
+	private  Sommet (int valeur, Couleur couleur,int x, int y)
 	{
-		this.x = x;
-		this.y = y;
-		this.num = nbSommet++;
+		this.num     = nbSommet++;
+		this.valeur  = valeur;
+		this.couleur = couleur;
+		this.x       = x;
+		this.y       = y;
+
 		this.proprietaire = null;
-		this.ressource = ressource;
+		this.ressource = null;
 	}
 
-	public static Sommet nvSommet (int x, int y, IRessource ressource)
+	public static Sommet nvSommet (int valeur, Couleur couleur, int x, int y)
 	{
-		if (x>0 && y>0)
-			return new Sommet(x,y, ressource);
+		if (valeur>0 && couleur != null && x>0 && y>0)
+			return new Sommet(valeur, couleur, x,y);
 
 		return null;
 	}
 
+	// Accesseurs
 	public int getX () { return this.x; }
 	public int getY () { return this.y; }
 
+	public Route      getRoute        (int i) { return this.lstRoute.get(i); }
+	public Joueur     getProprietaire ()      { return this.proprietaire;    }
+	public IRessource getRessource    ()      { return this.ressource;       }
+
+	// Modificateurs
 	public void setProprietaire(Joueur proprietaire)
 	{
 		if (this.proprietaire == null)
 			this.proprietaire = proprietaire;
 	}
+	public void setRessource(IRessource ressource)
+	{
+		if (this.proprietaire == null)
+			this.ressource = ressource;
+	}
 
-	public Route getRoute (int i)  { return this.lstRoute.get(i); }
-
-	public Joueur getProprietaire() { return this.proprietaire; }
-
+	// Autres Méthodes
 	public void ajouterRoute(Route route) { this.lstRoute.add(route); }
 }

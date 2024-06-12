@@ -1,0 +1,51 @@
+# VOCABULAIRE
+Sommet=Mine
+Ressource=Minerai
+Piece=Monnaie
+Route=Route
+
+# JOUEURS
+joueur1="Corporation Solaire"
+joueur2="Syndicat Astral"
+
+# COULEURS
+# indice \t Nom_Couleur \t r \t v \t b
+# Couleurs Mines
+0	Jaune	223	213	0
+1	Bleu	112	146	190
+2	Gris	195	195	195
+3	Vert	101	153	96
+4	Rose	101	153	96
+5	Orange	185	122	87
+# Couleurs Minerais
+6	Al	242	242	206
+7	Ag	214	214	214
+8	Au	255	216	119
+9	Co	183	151	151
+10	Fe	234	172	52
+11	Ni	116	167	254
+12	Pt	228	178	223
+13	Ti	114	182	106
+# Couleur Piece
+14	NR	99	193	225
+
+# RESSOURCES
+# type \t nom_ressource \t indice_couleur \t quantité
+R	Aluminum	6	4
+R	Argent	7	4
+R	Or	8	4
+R	Cobalt	9	4
+R	Fer	10	4
+R	Nickel	11	4
+R	Platine	12	4
+R	Titane	13	4
+# Piece
+# type \t valeur \t indice_couleur \t quantité
+P	1	14	8
+
+# IMAGES
+plateau_principal=plateau_principal.png
+plateau_joueur_1=plateau_cs.png
+plateau_joueur_2=plateau_sa.png
+jeton_possession_1=possession_cs.png
+jeton_possession_2=possession_sa.png
