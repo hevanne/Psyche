@@ -1,16 +1,22 @@
 package ihm;
 
+import controleur.Controleur;
+
 import javax.swing.*;
 
 public class FrameScore extends JFrame
 {
 	private PanelScore pnlScore;
 
-	public FrameScore()
+	private Controleur ctrl;
+
+	public FrameScore(Controleur ctrl)
 	{
 		this.setTitle("Score");
 		this.setLocation(50,50);
 		this.setSize(600, 600);
+
+		this.ctrl = ctrl;
 
 		/* Création des composants */
 

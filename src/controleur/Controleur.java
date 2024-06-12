@@ -24,27 +24,17 @@ public class Controleur
 		this.frameJoueur2 = new FrameJoueur(this, joueur2);
 	}
 
-	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
-	{
-		return this.jeu.prendreSommet(smtDep, smtArr);
-	}
+	public boolean prendreSommet(Sommet smtDep, Sommet smtArr) { return this.jeu.prendreSommet(smtDep, smtArr); }
 
 	public void tourSuivant()
 	{
 		if(!this.jeu.estFinJeu())
-		{
 			this.jeu.tourSuivant();
-		}
-		else this.afficherScore();
+		else
+			this.afficherScore();
 	}
 
-	private void afficherScore()
-	{
-		// new FrameScore(this);
-	}
+	private void afficherScore() { new FrameScore(this); }
 
-	public static void main(String[] args)
-	{
-		Controleur ctrl = new Controleur();
-	}
+	public static void main(String[] args) { new Controleur(); }
 }

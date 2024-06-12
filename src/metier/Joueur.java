@@ -17,6 +17,8 @@ public class Joueur
 	private List<Sommet> lstSommet;
 
 	private Ressource[][] tabRessources;
+
+	private int tabScore[];
 	
 	public Joueur (String nom)
 	{
@@ -27,6 +29,7 @@ public class Joueur
 		this.nbPiece = 0;
 		this.score = 0;
 		this.tabRessources = new Ressource[4][8];
+		this.tabScore = new int[this.tabRessources[0].length];
 	}
 
 	public int getNum           () { return this.numJoueur;     }
@@ -61,6 +64,7 @@ public class Joueur
 							if (this.tabRessources[i][y] == null)
 							{
 								this.tabRessources[i][y] = tmpRessource;
+								this.tabScore[y]++;
 								return true;
 							}
 						}
@@ -69,6 +73,7 @@ public class Joueur
 				else
 				{
 					this.tabRessources[0][y] = tmpRessource;
+					this.tabScore[y]++;
 					return true;
 				}
 			}
@@ -166,22 +171,54 @@ public class Joueur
 
 	public void triTabRessource()
 	{
-		for(int i = this.tabRessources.length-1; i > 0; i--)
+		for (int i=0; i<this.tabScore.length; i++)
 		{
-			for(int j = i; j > this.tabRessources.length-1-i; j--)
-			{
-				if(this.tabRessources[j].length > this.tabRessources[j-1].length)
-				{
-					Ressource[] tmp = this.tabRessources[j-1];
-					this.tabRessources[j-1] = this.tabRessources[j];
-					this.tabRessources[j] = tmp;
+			for (int j = 0; j < this.tabScore.length - 1; j++) {
+				// Si l'élément actuel est plus grand que l'élément suivant
+				if (tabScore[j] > tabScore[j + 1]) {
+					// Échange des éléments
+					int temp = tabScore[j];
+					tabScore[j] = tabScore[j + 1];
+					tabScore[j + 1] = temp;
+					this.permuter(j, (j+1));
 				}
-			}
+			} 
+		}
+	}
+
+	private void permuter(int i, int j)
+	{
+		for (int cpt=0; cpt<this.tabRessources.length; cpt++)
+		{
+			Ressource tmp = this.tabRessources[cpt][i];
+			this.tabRessources[cpt][i] = this.tabRessources[cpt][j];
+			this.tabRessources[cpt][j] = tmp;
 		}
 	}
 
 	public String toString()
 	{
-		return "(" + this.numJoueur + ") " + this.nom;
+		String retour = "";
+		String ligne  = "+-----+-----+-----+-----+-----+-----+-----+-----+";
+		String tmp    = "";
+
+		for (int i = 3; i >=0; i--)
+		{
+			retour += ligne + '\n' + '|';
+			tmp = "";
+			for (int j = 7; j >= 0; j--)
+			{
+				if (this.tabRessources[i][j] != null)
+					tmp += " " + String.format("%3s",this.tabRessources[i][j].getNom().substring(0, 2)) + " |";
+				else
+					tmp += " XXX |";
+			}
+			retour += tmp + '\n';
+		}
+		retour += ligne + "\n";
+
+		for (int i = 0; i < this.tabScore.length; i++)
+			retour += this.tabScore[i] + " | ";
+		return retour;
 	}
 }

@@ -41,5 +41,7 @@ public class TestJoueur
 		System.out.println("Score du joueur : " + j1.getScore());
 
 		System.out.println(j1);
+		j1.triTabRessource();
+		System.out.println(j1);
 	}
 }
