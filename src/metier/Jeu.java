@@ -87,7 +87,7 @@ public class Jeu {
 		List<Route> trajet;
 		int[]       scoresRoute;
 		
-		trajet      = Jeu.dijkstraMoore(smt);
+		trajet      = Jeu.plusCourtChemin(smt);
 		scoresRoute = new int[this.lstJoueurs.size()];
 
 		for(Route r : trajet)
@@ -101,10 +101,11 @@ public class Jeu {
 		}
 	}
 
-	private static List<Route> dijkstraMoore(Sommet smt)
+	private static List<Route> plusCourtChemin(Sommet smt)
 	{
 		List<Route> retour = new ArrayList<>();
 
+		// Cf cours de graph
 
 		return retour;
 	}
