@@ -46,10 +46,17 @@ public class Sommet
 	public IRessource getRessource    ()      { return this.ressource;       }
 
 	// Modificateurs
-	public void setProprietaire(Joueur proprietaire)
+	public boolean setProprietaire(Joueur proprietaire)
 	{
-		if (this.proprietaire == null)
+		if (    this.proprietaire == null 
+		     && proprietaire      != null
+			 && proprietaire.ajouterRessource(this.ressource))
+		{
+			proprietaire.ajouterSommet(this);
 			this.proprietaire = proprietaire;
+			return true;
+		}
+		return false;
 	}
 	public void setRessource(IRessource ressource)
 	{

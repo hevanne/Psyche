@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Joueur
 {
-	private static int                   nbJoueurs    ;
+	private static int nbJoueurs;
 
 	private int numJoueur;
 	private int nbPossessions;
@@ -38,10 +38,9 @@ public class Joueur
 		return this.tabRessources[i][j];
 	}
 
-	public boolean ajouterSommet (Sommet sommet)
+	public void ajouterSommet (Sommet sommet)
 	{
 		this.lstSommet.add(sommet);
-		return true;
 	}
 
 	public boolean ajouterRessource (IRessource r)
@@ -153,10 +152,10 @@ public class Joueur
 		}
 	}
 
-	public boolean varierNbPossessions (int nb)
+	public void varierNbPossessions (int nb)
 	{
-		this.nbPossessions += nb;
-		return true;
+		if(this.nbPossessions + nb >= 0)
+			this.nbPossessions += nb;
 	}
 
 	public void triTabRessource()

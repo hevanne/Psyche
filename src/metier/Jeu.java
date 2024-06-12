@@ -181,41 +181,54 @@ public class Jeu {
 		catch (Exception e){e.printStackTrace(System.out);}
 	}
 
-	private void nouveauJeu()
+	public void nouveauJeu()
 	{
 		this.numTour = 0;
 		this.initTheme();
 		this.initMap();
 
-		int i= 0;
-		for(Sommet smt : this.lstSommets)
+		int indRes = 0;
+		for(int i = 1; i < this.lstSommets.size(); i++)
 		{
-			i = (int)(Math.random() * this.lstRessources.size());
-			smt.setRessource(this.lstRessources.remove(i));
-		}
-
-		while(!this.estFinJeu())
-		{
-			// Déroulement du jeu
-			numTour++;
+			indRes = (int)(Math.random() * this.lstRessources.size());
+			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
 		}
 	}
 
 	public boolean estFinJeu()
 	{
 		for (Sommet s: this.lstSommets)
-		{
 			if (s.getProprietaire() == null)
-			{
 				return true;
-			}
-		}
 
 		return false;
 	}
 
-	public boolean prendreMine()
+	/*
+	public boolean prendreMine(Route r)
 	{
+		Joueur prpDep, prpArr, joueurActif;
+		Sommet smtChoisi;
+
+		prpDep      = r.getSmtDep().getProprietaire();
+		prpArr      = r.getSmtArr().getProprietaire();
+		smtChoisi   = null;
+		joueurActif = this.lstJoueurs.get(this.numTour % (this.lstJoueurs.size()) - 1);
+
+		if(    r.getProprietaire() != null
+		    || r.getNbSection() > joueurActif.getNbPossessions()
+		    || prpDep == null && prpArr == null
+		    || prpDep != null && prpArr != null                  ) return false;
+
+		if(prpDep != null && prpArr == null) smtChoisi = r.getSmtDep();
+		if(prpDep == null && prpArr != null) smtChoisi = r.getSmtArr();
+
+ 		if(smtChoisi.setProprietaire(joueurActif))
+		{
+			r.setProprietaire(joueurActif);
+			return true;
+		}
 		return false;
 	}
+	*/
 }

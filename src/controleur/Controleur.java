@@ -24,6 +24,8 @@ public class Controleur
 		this.frameJoueur2 = new FrameJoueur(this, joueur2);
 	}
 
+	
+
 	public static void main(String[] args)
 	{
 		Controleur ctrl = new Controleur();
