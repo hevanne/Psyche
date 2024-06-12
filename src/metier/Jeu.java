@@ -1,6 +1,5 @@
 package metier;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;

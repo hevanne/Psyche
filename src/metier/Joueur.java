@@ -12,7 +12,7 @@ public class Joueur
 	private int nbPiece;
 	private int score;
 
-	private String nom;
+	private String nomJouer;
 
 	private List<Sommet> lstSommet;
 
@@ -20,9 +20,10 @@ public class Joueur
 
 	private int tabScore[];
 	
-	public Joueur (String nom)
+	// Constructeurs
+	public Joueur (String nomJouer)
 	{
-		this.nom       = nom;
+		this.nomJouer       = nomJouer;
 		this.numJoueur = ++Joueur.nbJoueurs;
 		this.lstSommet = new ArrayList<Sommet>();
 		this.nbPossessions = 0;
@@ -32,16 +33,18 @@ public class Joueur
 		this.tabScore = new int[this.tabRessources[0].length];
 	}
 
+	// Accesseurs
 	public int getNum           () { return this.numJoueur;     }
 	public int getNbPossessions () { return this.nbPossessions; }
 	public int getNbPieces      () { return this.nbPiece;       }
 	public int getScore         () { return this.score;         }
-
+	public String getNom() { return this.nomJouer; }
 	public Ressource getRessource (int i, int j)
 	{
 		return this.tabRessources[i][j];
 	}
 
+	// Autres Méthodes
 	public void ajouterSommet (Sommet sommet)
 	{
 		this.lstSommet.add(sommet);
