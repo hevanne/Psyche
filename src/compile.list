@@ -13,3 +13,5 @@ metier/IRessource.java
 metier/Piece.java
 metier/Sommet.java
 metier/Couleur.java
+
+Psyche.java

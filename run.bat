@@ -8,6 +8,6 @@ javac @compile.list -d ../bin
 REM Exécution
 cd ../bin
 
-java controleur.Controleur
+java Psyche
 
 pause

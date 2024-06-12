@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import java.io.InputStream;
 
 public class Jeu
 {
@@ -145,7 +146,7 @@ public class Jeu
 						retour.add(tabTrajet);
 					}
 
-					trajet.removeLast();
+					//trajet.removeLast();
 				}
 				else if(!marque[i]) 
 				{
@@ -167,7 +168,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../theme/theme.data" ));
+			scFic = new Scanner(new FileInputStream ( "../theme/theme.txt" ));
 
 			// Vocabulaire
 			i = 0;
@@ -264,7 +265,7 @@ public class Jeu
 		Couleur couleur;
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../theme/map.data" ));
+			scFic = new Scanner(new FileInputStream ( "../theme/map.txt" ));
 			
 			// Sommets
 			valeur = x = y = 0;
