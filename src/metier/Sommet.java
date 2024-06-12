@@ -38,8 +38,9 @@ public class Sommet
 	}
 
 	// Accesseurs
-	public int getX () { return this.x; }
-	public int getY () { return this.y; }
+	public int getNum () { return this.num; }
+	public int getX   () { return this.x;   }
+	public int getY   () { return this.y;   }
 
 	public Route getRoute (int    i  ) { return this.lstRoutes.get(i); }
 	public Route getRoute (Sommet smt)

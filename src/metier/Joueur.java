@@ -11,6 +11,7 @@ public class Joueur
 	private int nbPossessions;
 	private int nbPiece;
 	private int score;
+	private int scoreRoute;
 
 	private String nomJouer;
 
@@ -23,12 +24,15 @@ public class Joueur
 	// Constructeurs
 	public Joueur (String nomJouer)
 	{
-		this.nomJouer       = nomJouer;
-		this.numJoueur = ++Joueur.nbJoueurs;
-		this.lstSommet = new ArrayList<Sommet>();
+		this.nomJouer      = nomJouer;
+		this.numJoueur     = ++Joueur.nbJoueurs;
+
+		this.lstSommet     = new ArrayList<Sommet>();
 		this.nbPossessions = 0;
-		this.nbPiece = 0;
-		this.score = 0;
+		this.nbPiece       = 0;
+		this.score         = 0;
+		this.scoreRoute    = 0;
+
 		this.tabRessources = new Ressource[4][8];
 		this.tabScore = new int[this.tabRessources[0].length];
 	}
@@ -38,7 +42,9 @@ public class Joueur
 	public int getNbPossessions () { return this.nbPossessions; }
 	public int getNbPieces      () { return this.nbPiece;       }
 	public int getScore         () { return this.score;         }
+	
 	public String getNom() { return this.nomJouer; }
+
 	public Ressource getRessource (int i, int j)
 	{
 		return this.tabRessources[i][j];
@@ -102,10 +108,9 @@ public class Joueur
 	}
 
 	public void incrementerPiece () { this.nbPiece++; }
-	public void varierScore(int val)
+	public void varierScoreRoute(int val)
 	{
-		if(this.score + val > 0) this.score += val;
-		else                     this.score = 0;
+		if(val > 0) this.scoreRoute += val;
 	}
 
 	public void CalculerScore ()

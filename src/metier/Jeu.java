@@ -2,7 +2,9 @@ package metier;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Jeu {
@@ -59,6 +61,8 @@ public class Jeu {
 
 	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
 	{
+		if(smtDep == null || smtArr == null) return false;
+
 		Joueur joueurActif;
 		Route  route;
 
@@ -83,28 +87,44 @@ public class Jeu {
 	// /!\ Mines d'or
 	private void calculerScoreTrajet(Sommet smt)
 	{
-		List<Route> trajet;
-		int[]       scoresRoute;
+		List<Sommet> trajet;
+		int[]        scoresRoute;
+		Route        r;
 		
-		trajet      = Jeu.plusCourtChemin(smt);
+		trajet      = this.plusCourtChemin(smt);
 		scoresRoute = new int[this.lstJoueurs.size()];
 
-		for(Route r : trajet)
+		for(int i = 0; i < trajet.size()-1; i++)
 		{
+			r = trajet.get(i).getRoute(trajet.get(i+1));
 			scoresRoute[r.getProprietaire().getNum() - 1] += r.getNbSection();
 		}
 
 		for(int i = 0; i < scoresRoute.length; i++)
 		{
-			this.lstJoueurs.get(i).varierScore(scoresRoute[i]);
+			this.lstJoueurs.get(i).varierScoreRoute(scoresRoute[i]);
 		}
 	}
 
-	private static List<Route> plusCourtChemin(Sommet smt)
+	private List<Sommet> plusCourtChemin(Sommet smt)
 	{
-		List<Route> retour = new ArrayList<>();
+		List<Sommet>  retour;
+		boolean[]     marquer;
+		Queue<Sommet> f;
+		Sommet s;
+
+		retour  = new ArrayList<Sommet>(); 
+		marquer = new boolean[this.lstSommets.size()];
 
 		// Cf cours de graph
+		// Utilise parcours en largeur
+		f = new LinkedList<Sommet>();
+		f.add(smt);
+		marquer[smt.getNum()] = true;
+		while(!f.isEmpty())
+		{
+			s = f.poll();
+		}
 
 		return retour;
 	}
