@@ -33,7 +33,7 @@ public class Joueur
 	public int getNbPieces      () { return this.nbPiece      ; }
 	public int getScore         () { return this.score        ; }
 
-	public Ressource getRessources (int i, int j)
+	public Ressource getRessource (int i, int j)
 	{
 		return this.tabRessources[i][j];
 	}
@@ -95,9 +95,62 @@ public class Joueur
 
 	public void incrementerPiece () { this.nbPiece++; }
 
-	public int calculerScore ()
+	public void CalculerScore ()
 	{
-		return 0;
+		this.score = 0;
+
+		switch (this.nbPiece) 
+		{
+			case 2  -> this.score += 4;	
+			case 3  -> this.score += 9;
+			case 4  -> this.score += 16;
+			case 5  -> this.score += 25;
+			case 6  -> this.score += 36;
+			case 7  -> this.score += 49;
+			case 8  -> this.score += 64;
+			default -> this.score += 0;
+		}
+
+		for (int y=0; y<this.tabRessources[0].length; y++)
+		{
+			int cpt=0;
+			for (int x=0; x<tabRessources.length; x++)
+			{
+				if (tabRessources[x][y] != null)
+					cpt++;
+			}
+			switch (cpt) 
+			{
+				case 2  -> this.score += 2;	
+				case 3  -> this.score += 10;
+				case 4  -> this.score += 20;
+				default -> this.score += 0;
+			}
+		}
+
+		for (int x=0; x<tabRessources.length; x++)
+		{
+			int cpt=0;
+			for (int y=0; y<tabRessources[x].length; y++)
+			{
+				if (tabRessources[x][y] != null)
+				{
+					cpt++;
+				}
+					
+			}
+			switch (cpt) 
+			{
+				case 2  -> this.score += 2;	
+				case 3  -> this.score += 5;
+				case 4  -> this.score += 9;
+				case 5  -> this.score += 14;
+				case 6  -> this.score += 20;
+				case 7  -> this.score += 32;
+				case 8  -> this.score += 46;
+				default -> this.score += 0;
+			}
+		}
 	}
 
 	public boolean varierNbPossessions (int nb)
