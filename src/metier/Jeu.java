@@ -42,6 +42,12 @@ public class Jeu
 		this.initTheme();
 		this.initMap();
 
+		System.out.println(this.lstJoueurs);
+		System.out.println(this.lstCouleurs);
+		System.out.println(this.lstRessources);
+		System.out.println(this.lstSommets);
+		System.out.println(this.lstRoutes);
+
 		int indRes = 0;
 		for(int i = 1; i < this.lstSommets.size(); i++)
 		{
@@ -167,7 +173,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../theme/theme.data" ));
+			scFic = new Scanner(new FileInputStream ( "../theme/theme.txt" ));
 
 			// Vocabulaire
 			i = 0;
@@ -264,12 +270,12 @@ public class Jeu
 		Couleur couleur;
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../theme/map.data" ));
+			scFic = new Scanner(new FileInputStream ( "../theme/map.txt" ));
 			
 			// Sommets
 			valeur = x = y = 0;
 			lig = scFic.nextLine();
-			while(scFic.hasNextLine() && !"".equals(lig))
+			while(!"".equals(lig))
 			{
 				if( lig.charAt(0) != '#' )
 				{

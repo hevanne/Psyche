@@ -35,7 +35,7 @@ public class Sommet
 
 	public static Sommet nvSommet (int valeur, Couleur couleur, int x, int y)
 	{
-		if (valeur>0 && couleur != null && x>0 && y>0)
+		if (valeur >= 0 && couleur != null && x >= 0 && y >= 0)
 			return new Sommet(valeur, couleur, x,y);
 
 		return null;
@@ -98,4 +98,9 @@ public class Sommet
 
 	// Autres Méthodes
 	public void ajouterRoute (Route route) { this.lstRoutes.add(route); }
+
+	public String toString()
+	{
+		return this.nom;
+	}
 }
