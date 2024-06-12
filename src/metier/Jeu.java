@@ -20,7 +20,6 @@ public class Jeu {
 
 	public Jeu()
 	{
-		this.numTour = 0;
 		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
 		this.images  = new String[5];
 
@@ -31,6 +30,60 @@ public class Jeu {
 		this.lstRoutes     = new ArrayList<Route>();
 
 		this.nouveauJeu();
+	}
+
+	public void nouveauJeu()
+	{
+		this.numTour = 0;
+		this.numTour = 0;
+		this.initTheme();
+		this.initMap();
+
+		int indRes = 0;
+		for(int i = 1; i < this.lstSommets.size(); i++)
+		{
+			indRes = (int)(Math.random() * this.lstRessources.size());
+			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
+		}
+	}
+
+	public void tourSuivant () { this.numTour++; }
+
+	public boolean estFinJeu()
+	{
+		for (Sommet s: this.lstSommets)
+			if (s.getProprietaire() == null)
+				return true;
+
+		return false;
+	}
+
+	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
+	{
+		Joueur joueurActif;
+		Route  route;
+
+		route       = smtDep.getRoute(smtArr);
+		joueurActif = this.lstJoueurs.get(this.numTour % (this.lstJoueurs.size()) - 1);
+
+		if(   smtDep.getProprietaire() == null 
+		   || smtArr.getProprietaire() != null
+		   || route  == null                  ) return false;
+
+ 		if(smtArr.setProprietaire(joueurActif))
+		{
+			route.setProprietaire(joueurActif);
+			this.calculerScoreTrajet(smtArr);
+			return true;
+		}
+		return false;
+	}
+
+	private void calculerScoreTrajet(Sommet smt)
+	{
+		// trouver le plus court trajet entre smt et Nouvelle Rome
+		// parcourir le trajet en ajoutant les points
+		// /!\ Mines d'or
 	}
 
 	private void initTheme ()
@@ -180,55 +233,4 @@ public class Jeu {
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
 	}
-
-	public void nouveauJeu()
-	{
-		this.numTour = 0;
-		this.initTheme();
-		this.initMap();
-
-		int indRes = 0;
-		for(int i = 1; i < this.lstSommets.size(); i++)
-		{
-			indRes = (int)(Math.random() * this.lstRessources.size());
-			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
-		}
-	}
-
-	public boolean estFinJeu()
-	{
-		for (Sommet s: this.lstSommets)
-			if (s.getProprietaire() == null)
-				return true;
-
-		return false;
-	}
-
-	/*
-	public boolean prendreMine(Route r)
-	{
-		Joueur prpDep, prpArr, joueurActif;
-		Sommet smtChoisi;
-
-		prpDep      = r.getSmtDep().getProprietaire();
-		prpArr      = r.getSmtArr().getProprietaire();
-		smtChoisi   = null;
-		joueurActif = this.lstJoueurs.get(this.numTour % (this.lstJoueurs.size()) - 1);
-
-		if(    r.getProprietaire() != null
-		    || r.getNbSection() > joueurActif.getNbPossessions()
-		    || prpDep == null && prpArr == null
-		    || prpDep != null && prpArr != null                  ) return false;
-
-		if(prpDep != null && prpArr == null) smtChoisi = r.getSmtDep();
-		if(prpDep == null && prpArr != null) smtChoisi = r.getSmtArr();
-
- 		if(smtChoisi.setProprietaire(joueurActif))
-		{
-			r.setProprietaire(joueurActif);
-			return true;
-		}
-		return false;
-	}
-	*/
 }

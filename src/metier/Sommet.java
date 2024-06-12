@@ -14,7 +14,7 @@ public class Sommet
 	private int y;
 	private Joueur proprietaire;
 	private IRessource ressource;
-	private List<Route> lstRoute = new ArrayList<Route>();
+	private List<Route> lstRoutes = new ArrayList<Route>();
 
 
 	private  Sommet (int valeur, Couleur couleur,int x, int y)
@@ -41,7 +41,15 @@ public class Sommet
 	public int getX () { return this.x; }
 	public int getY () { return this.y; }
 
-	public Route      getRoute        (int i) { return this.lstRoute.get(i); }
+	public Route getRoute (int    i  ) { return this.lstRoutes.get(i); }
+	public Route getRoute (Sommet smt)
+	{
+		for(Route r : this.lstRoutes)
+			if(r.getSmtDep() == smt || r.getSmtArr() == smt) return r;
+		return null;
+	}
+
+
 	public Joueur     getProprietaire ()      { return this.proprietaire;    }
 	public IRessource getRessource    ()      { return this.ressource;       }
 
@@ -65,5 +73,5 @@ public class Sommet
 	}
 
 	// Autres Méthodes
-	public void ajouterRoute(Route route) { this.lstRoute.add(route); }
+	public void ajouterRoute (Route route) { this.lstRoutes.add(route); }
 }

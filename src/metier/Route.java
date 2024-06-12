@@ -6,6 +6,7 @@ public class Route {
 	private int    nbSection;
 	private Joueur proprietaire;
 
+	// Constructeurs
 	private Route (Sommet smtDep, Sommet smtArr,int nbSection)
 	{
 		this.smtDep       = smtDep;
@@ -14,6 +15,7 @@ public class Route {
 		this.proprietaire = null;
 	}
 
+	// Factory
 	public static Route nvRoute(Sommet smtDep, Sommet smtArr,int nbSection)
 	{
 		Route route = null;
@@ -30,14 +32,19 @@ public class Route {
 		return route;
 	}
 
+	// Accesseurs
 	public int    getNbSection   () { return this.nbSection    ;}
 	public Sommet getSmtDep      () { return this.smtDep       ;}
 	public Sommet getSmtArr      () { return this.smtArr       ;}
 	public Joueur getProprietaire() { return this.proprietaire ;}
 
+	// Modificateurs
 	public void setProprietaire(Joueur proprietaire)
 	{
 		if (this.proprietaire == null && proprietaire != null)
 			this.proprietaire = proprietaire;
 	}
+
+	// Autres Méthodes
+	
 }
