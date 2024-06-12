@@ -94,6 +94,11 @@ public class Joueur
 	}
 
 	public void incrementerPiece () { this.nbPiece++; }
+	public void varierScore(int val)
+	{
+		if(this.score + val > 0) this.score += val;
+		else                     this.score = 0;
+	}
 
 	public void CalculerScore ()
 	{

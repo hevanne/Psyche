@@ -95,9 +95,9 @@ public class Jeu {
 			scoresRoute[r.getProprietaire().getNum() - 1] += r.getNbSection();
 		}
 
-		for(int score : scoresRoute)
+		for(int i = 0; i < scoresRoute.length; i++)
 		{
-			//r.getProprietaire().ajouterScoreRoute(scoresRoute[r.getProprietaire().getNum() - 1]);
+			this.lstJoueurs.get(i).varierScore(scoresRoute[i]);
 		}
 	}
 
