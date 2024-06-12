@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Joueur
 {
-	private static int                   nbJoueurs    ;
+	private static int nbJoueurs;
 
 	private int numJoueur;
 	private int nbPossessions;
@@ -32,19 +32,19 @@ public class Joueur
 		this.tabScore = new int[this.tabRessources[0].length];
 	}
 
+	public int getNum           () { return this.numJoueur;     }
 	public int getNbPossessions () { return this.nbPossessions; }
-	public int getNbPieces      () { return this.nbPiece      ; }
-	public int getScore         () { return this.score        ; }
+	public int getNbPieces      () { return this.nbPiece;       }
+	public int getScore         () { return this.score;         }
 
 	public Ressource getRessource (int i, int j)
 	{
 		return this.tabRessources[i][j];
 	}
 
-	public boolean ajouterSommet (Sommet sommet)
+	public void ajouterSommet (Sommet sommet)
 	{
 		this.lstSommet.add(sommet);
-		return true;
 	}
 
 	public boolean ajouterRessource (IRessource r)
@@ -99,6 +99,11 @@ public class Joueur
 	}
 
 	public void incrementerPiece () { this.nbPiece++; }
+	public void varierScore(int val)
+	{
+		if(this.score + val > 0) this.score += val;
+		else                     this.score = 0;
+	}
 
 	public void CalculerScore ()
 	{
@@ -158,10 +163,10 @@ public class Joueur
 		}
 	}
 
-	public boolean varierNbPossessions (int nb)
+	public void varierNbPossessions (int nb)
 	{
-		this.nbPossessions += nb;
-		return true;
+		if(this.nbPossessions + nb >= 0)
+			this.nbPossessions += nb;
 	}
 
 	public void triTabRessource()

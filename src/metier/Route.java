@@ -1,19 +1,21 @@
 package metier;
 
 public class Route {
-	private Sommet smtDep      ;
-	private Sommet smtArr      ;
-	private int    nbSection   ;
+	private Sommet smtDep;
+	private Sommet smtArr;
+	private int    nbSection;
 	private Joueur proprietaire;
 
+	// Constructeurs
 	private Route (Sommet smtDep, Sommet smtArr,int nbSection)
 	{
-		this.smtDep       = smtDep   ;
-		this.smtArr       = smtArr   ;
+		this.smtDep       = smtDep;
+		this.smtArr       = smtArr;
 		this.nbSection    = nbSection;
-		this.proprietaire = null     ;
+		this.proprietaire = null;
 	}
 
+	// Factory
 	public static Route nvRoute(Sommet smtDep, Sommet smtArr,int nbSection)
 	{
 		Route route = null;
@@ -30,18 +32,19 @@ public class Route {
 		return route;
 	}
 
+	// Accesseurs
 	public int    getNbSection   () { return this.nbSection    ;}
 	public Sommet getSmtDep      () { return this.smtDep       ;}
 	public Sommet getSmtArr      () { return this.smtArr       ;}
 	public Joueur getProprietaire() { return this.proprietaire ;}
 
-	public boolean setProprietaire(Joueur j)
+	// Modificateurs
+	public void setProprietaire(Joueur proprietaire)
 	{
-		if (this.proprietaire == null)
-		{
-			this.proprietaire = j;
-			return true;
-		}
-		return false;
+		if (this.proprietaire == null && proprietaire != null)
+			this.proprietaire = proprietaire;
 	}
+
+	// Autres Méthodes
+	
 }
