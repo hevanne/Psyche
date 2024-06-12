@@ -7,9 +7,9 @@ public class Sommet
 {
 	private static int nbSommet = 0;
 
-	private int    num;
+	private int num;
 
-	private String nomSmt  ;
+	private String nomSmt;
 
 	private IRessource ressource;
 	private int x;
