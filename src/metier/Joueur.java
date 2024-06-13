@@ -113,7 +113,7 @@ public class Joueur
 		if(val > 0) this.scoreRoute += val;
 	}
 
-	public void CalculerScore ()
+	public void calculerScore ()
 	{
 		this.score = 0;
 

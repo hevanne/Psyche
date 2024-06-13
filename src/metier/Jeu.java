@@ -6,12 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
-import java.io.InputStream;
 
 public class Jeu
 {
-
 	private int      numTour;
 	private String[] vocab;
 	private String[] images;
@@ -36,13 +33,36 @@ public class Jeu
 		this.nouveauJeu();
 	}
 
+	// Accesseurs
+	public int    getNumTour     () { return this.numTour; }
+	public Joueur getJoueurActif () { return this.lstJoueurs.get((this.numTour+1) % (this.lstJoueurs.size())); }
+	public int    getNbJoueur    () { return this.lstJoueurs.size(); }
+
+	public Joueur getJoueur (int indice)     { return this.lstJoueurs.get(indice); }
+	public String getVocab  (int indice)     { return this.vocab[indice];          }
+	public Sommet getSommet (String symbole)
+	{
+		char   couleur;
+		int    valeur;
+
+		couleur = symbole.charAt(0);
+		valeur  = Integer.parseInt(symbole.substring(1));
+
+		for(Sommet smt : this.lstSommets)
+			if(   smt.getCouleur().getNom().charAt(0) == couleur 
+			   && smt.getValeur()                           == valeur)
+			   return smt;
+
+		return null;
+	}
+	// Autres Méthodes
 	public void nouveauJeu()
 	{
-		this.numTour = 0;
 		this.numTour = 0;
 		this.initTheme();
 		this.initMap();
 
+		System.out.println("Créations des listes : ");
 		System.out.println(this.lstJoueurs);
 		System.out.println(this.lstCouleurs);
 		System.out.println(this.lstRessources);
@@ -57,15 +77,15 @@ public class Jeu
 		}
 	}
 
-	public void tourSuivant () { this.numTour++; }
+	public void incrementerNumTour () { this.numTour++; }
 
 	public boolean estFinJeu()
 	{
-		for (Sommet s: this.lstSommets)
-			if (s.getProprietaire() == null)
-				return true;
+		for (int i = 1; i < this.lstSommets.size(); i++)
+			if (this.lstSommets.get(i).getProprietaire() == null)
+				return false;
 
-		return false;
+		return true;
 	}
 
 	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
@@ -76,12 +96,21 @@ public class Jeu
 		Route  route;
 
 		route       = smtDep.getRoute(smtArr);
-		joueurActif = this.lstJoueurs.get(this.numTour % (this.lstJoueurs.size()) - 1);
+		joueurActif = this.getJoueurActif();
 
-		if(   smtDep.getProprietaire() == null 
-		   || smtArr.getProprietaire() != null
-		   || route  == null                  ) return false;
+		/*
+		 *  Pour prendre une mine, le joueur doit :
+		 * - Partir soit d’une Mine qui a déjà été prise, soit de la nouvelle Rome.
+		 * - Arriver sur une Mine qui n’a pas encore été prise, c’est-à-dire possédant toujours son jeton Mine.
+		 * Il est tout à fait possible de passer par plusieurs Mines vides.
+		 */
+		if(!((smtDep == this.lstSommets.get(0) || (smtDep != this.lstSommets.get(0) && smtDep.getProprietaire() != null))
+		   && smtArr.getProprietaire() == null
+		   && route.getProprietaire()  == null)) return false;
 
+		   System.out.println(smtArr);
+		   System.out.println(smtArr.getRessource());
+		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
  		if(smtArr.setProprietaire(joueurActif))
 		{
 			route.setProprietaire(joueurActif);
@@ -152,7 +181,7 @@ public class Jeu
 						retour.add(tabTrajet);
 					}
 
-					//trajet.removeLast();
+					trajet.removeLast();
 				}
 				else if(!marque[i]) 
 				{
@@ -320,21 +349,5 @@ public class Jeu
 			scFic.close();
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
-	}
-
-	private Sommet getSommet (String symbole)
-	{
-		char   couleur;
-		int    valeur;
-
-		couleur = symbole.charAt(0);
-		valeur  = Integer.parseInt(symbole.substring(1));
-
-		for(Sommet smt : this.lstSommets)
-			if(   smt.getCouleur().getNom().charAt(0) == couleur 
-			   && smt.getValeur()                           == valeur)
-			   return smt;
-
-		return null;
 	}
 }

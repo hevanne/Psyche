@@ -14,25 +14,32 @@ public class Controleur
 	private FrameJoueur frameJoueur1;
 	private FrameJoueur frameJoueur2;
 
-
+	// private CUI cui;
+	// Constructeurs
 	public Controleur()
 	{
 		this.jeu = new Jeu();
 
 		this.framePlateau = new FramePlateau(this);
-		this.frameJoueur1 = new FrameJoueur(this, joueur1);
-		this.frameJoueur2 = new FrameJoueur(this, joueur2);
+
+		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0).getNom());
+		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1).getNom());
+
+		// this.cui = new CUI(this);
 	}
 
-	public boolean prendreSommet(Sommet smtDep, Sommet smtArr) { return this.jeu.prendreSommet(smtDep, smtArr); }
+	// Accesseurs
+	public int    getNumTour    () { return this.jeu.getNumTour    (); }
+	public Joueur getJoueurActif() { return this.jeu.getJoueurActif(); }
 
-	public void tourSuivant()
-	{
-		if(!this.jeu.estFinJeu())
-			this.jeu.tourSuivant();
-		else
-			this.afficherScore();
-	}
+	public Joueur getJoueur (int i)          { return this.jeu.getJoueur(i);       }
+	public String getVocab  (int i)          { return this.jeu.getVocab(i);        }
+	public Sommet getSommet (String symbole) { return this.jeu.getSommet(symbole); }
 
-	private void afficherScore() { new FrameScore(this); }
+	// Autres Méthodes
+	public boolean estFinJeu () { return this.jeu.estFinJeu(); }
+ 	public boolean prendreSommet(Sommet smtDep, Sommet smtArr) { return this.jeu.prendreSommet(smtDep, smtArr); }
+	public void incrementerNumTour () { this.jeu.incrementerNumTour(); }
+
+	public void afficherScore() { new FrameScore(this); }
 }

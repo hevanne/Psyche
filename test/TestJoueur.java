@@ -36,7 +36,7 @@ public class TestJoueur
 
 		j1.ajouterRessource(new Ressource("Aluminium", beige));
 
-		j1.CalculerScore();
+		j1.calculerScore();
 
 		System.out.println("Score du joueur : " + j1.getScore());
 
