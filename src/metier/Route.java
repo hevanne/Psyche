@@ -46,5 +46,6 @@ public class Route {
 	}
 
 	// Autres Méthodes
+	public boolean aProprietaire() { return this.proprietaire != null; }
 	
 }
