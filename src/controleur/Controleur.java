@@ -17,7 +17,7 @@ public class Controleur
 	private FrameJoueur frameJoueur1;
 	private FrameJoueur frameJoueur2;
 
-	private CUI cui;
+	//private CUI cui;
 
 	// Constructeurs
 	public Controleur()
@@ -29,7 +29,7 @@ public class Controleur
 		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0).getNom());
 		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1).getNom());
 
-		this.cui = new CUI(this);
+		//this.cui = new CUI(this);
 	}
 
 	// Accesseurs
