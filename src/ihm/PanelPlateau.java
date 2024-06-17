@@ -16,7 +16,7 @@ import java.awt.Color;
 
 public class PanelPlateau extends JPanel
 {
-	private static final int DIAMETRE = 10;
+	private static final int RAYON_SOMMET = 10;
 
 	private List<Point>   points   = new ArrayList<>();
 	private List<Segment> segments = new ArrayList<>();
@@ -33,46 +33,7 @@ public class PanelPlateau extends JPanel
 
 		/* Activation des composants */
 
-		this.addMouseListener(new MouseAdapter()
-		{
-			private Point pTemp1, pTemp2;
-
-			public void mouseClicked(MouseEvent e)
-			{
-				super.mouseClicked(e);
-
-				for (Point p : points)
-				{
-					if (e.getX() >= p.getX() && e.getX() <= p.getX() + p.getW() &&
-						e.getY() >= p.getY() && e.getY() <= p.getY() + p.getH())
-					{
-						System.out.println("point : "+p);
-						if (pTemp1 == null)
-						{
-							pTemp1 = p;
-						}
-						else
-						{
-							pTemp2 = p;
-						}
-					}
-				}
-
-				if (pTemp1 != null && pTemp2 != null)
-				{
-					Sommet sommetTmp1, sommetTmp2;
-					sommetTmp1 = PanelPlateau.this.ctrl.getSommet(pTemp1.getX(), pTemp1.getY());
-					sommetTmp2 = PanelPlateau.this.ctrl.getSommet(pTemp2.getX(), pTemp2.getY());
-
-					System.out.println(sommetTmp1);
-					System.out.println(sommetTmp2);
-
-					Route r = sommetTmp1.getRoute(sommetTmp2);
-
-					System.out.println(r);
-				}
-			}
-		});
+		this.addMouseListener( new GereSouris() );
 	}
 
 
@@ -108,7 +69,52 @@ public class PanelPlateau extends JPanel
 		for(Point p : pointsCopy)
 		{
 			g2.setColor(p.couleur.getColor());
-			g2.fillOval(p.x - DIAMETRE / 2, p.y - DIAMETRE / 2, DIAMETRE, DIAMETRE);
+			g2.fillOval(p.x - RAYON_SOMMET, p.y - RAYON_SOMMET, RAYON_SOMMET * 2, RAYON_SOMMET * 2);
+		}
+	}
+
+	public static double distance(int x1, int y1, int x2, int y2)
+	{
+		return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
+	}
+
+	private class GereSouris extends MouseAdapter
+	{
+		private Point pTemp1, pTemp2;
+
+		public void mouseClicked(MouseEvent e)
+		{
+			super.mouseClicked(e);
+
+			for (Point p : points)
+			{
+				if (PanelPlateau.distance(e.getX(), e.getY(), p.getX(), p.getY()) <= PanelPlateau.RAYON_SOMMET)
+				{
+					System.out.println("point : "+p);
+					if (pTemp1 == null)
+					{
+						pTemp1 = p;
+					}
+					else
+					{
+						pTemp2 = p;
+					}
+				}
+			}
+
+			if (pTemp1 != null && pTemp2 != null)
+			{
+				Sommet sommetTmp1, sommetTmp2;
+				sommetTmp1 = PanelPlateau.this.ctrl.getSommet(pTemp1.getX(), pTemp1.getY());
+				sommetTmp2 = PanelPlateau.this.ctrl.getSommet(pTemp2.getX(), pTemp2.getY());
+
+				System.out.println(sommetTmp1);
+				System.out.println(sommetTmp2);
+
+				Route r = sommetTmp1.getRoute(sommetTmp2);
+
+				System.out.println(r);
+			}
 		}
 	}
 
