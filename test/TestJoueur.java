@@ -1,5 +1,3 @@
-package test;
-
 import metier.*;
 
 public class TestJoueur
@@ -17,24 +15,24 @@ public class TestJoueur
 		j1.ajouterRessource(new Piece(1, jaune));
 		j1.ajouterRessource(new Piece(1, jaune));
 
-		j1.ajouterRessource(new Ressource("Cobalt", marron, false));
-		j1.ajouterRessource(new Ressource("Cobalt", marron, false));
+		j1.ajouterRessource(new Ressource("Cobalt", marron));
+		j1.ajouterRessource(new Ressource("Cobalt", marron));
 
-		j1.ajouterRessource(new Ressource("Or", jaune, true));
-		j1.ajouterRessource(new Ressource("Or", jaune, true));
-		j1.ajouterRessource(new Ressource("Or", jaune, true));
+		j1.ajouterRessource(new Ressource("Or", jaune));
+		j1.ajouterRessource(new Ressource("Or", jaune));
+		j1.ajouterRessource(new Ressource("Or", jaune));
 
-		j1.ajouterRessource(new Ressource("Argent", gris, false));
-		j1.ajouterRessource(new Ressource("Argent", gris, false));
-		j1.ajouterRessource(new Ressource("Argent", gris, false));
+		j1.ajouterRessource(new Ressource("Argent", gris));
+		j1.ajouterRessource(new Ressource("Argent", gris));
+		j1.ajouterRessource(new Ressource("Argent", gris));
 
-		j1.ajouterRessource(new Ressource("Titane", vert, false));
-		j1.ajouterRessource(new Ressource("Titane", vert, false));
+		j1.ajouterRessource(new Ressource("Titane", vert));
+		j1.ajouterRessource(new Ressource("Titane", vert));
 
-		j1.ajouterRessource(new Ressource("Nickel", bleu, false));
-		j1.ajouterRessource(new Ressource("Nickel", bleu, false));
+		j1.ajouterRessource(new Ressource("Nickel", bleu));
+		j1.ajouterRessource(new Ressource("Nickel", bleu));
 
-		j1.ajouterRessource(new Ressource("Aluminium", beige, false));
+		j1.ajouterRessource(new Ressource("Aluminium", beige));
 
 		j1.calculerScore();
 
