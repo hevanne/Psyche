@@ -57,4 +57,10 @@ public class Controleur
 	public int[] calculerScoresTrajet(List<Sommet> trajet) { return this.jeu.calculerScoresTrajet(trajet); }
 
 	public Sommet getSommet(int x, int y) { return this.jeu.getSommet(x, y); }
+
+	public void majPlateau()
+	{
+		this.frameJoueur1.majPlateau();
+		this.frameJoueur2.majPlateau();
+	}
 }

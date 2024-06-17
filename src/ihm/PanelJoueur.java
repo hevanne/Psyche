@@ -2,6 +2,7 @@ package ihm;
 
 import controleur.Controleur;
 import metier.Joueur;
+import metier.Ressource;
 
 import java.awt.*;
 import javax.swing.*;
@@ -27,18 +28,6 @@ public class PanelJoueur extends JPanel
 
 		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getJoueur(this.numJoueur).getImage());
 
-		JLabel test = new JLabel(new ImageIcon("../theme/distrib_images_2/ressources/AG.png"));
-		JLabel test2 = new JLabel(new ImageIcon("../theme/distrib_images_2/ressources/AL.png"));
-		JLabel test3 = new JLabel(new ImageIcon("../theme/distrib_images_2/ressources/AU.png"));
-
-		test.setBounds(56, 210,65, 65);
-		test2.setBounds(56 + ECART_HORIZONTAL, 210,65, 65);
-		test3.setBounds(56, 210 - ECART_VERTICAL,65, 65);
-		
-		this.add(test);
-		this.add(test2);
-		this.add(test3);
-
 		/* Création des composants */
 		
 		/* Positionnement des composants */
@@ -48,9 +37,21 @@ public class PanelJoueur extends JPanel
 
 	public void paintComponent(Graphics g)
 	{
+		String url = "../theme/distrib_images_2/ressources/";
+		String png = ".png";
+
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.drawImage ( this.imgPlateau, 0, 0, this );
+
+		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getTabRessources().length-1; i++)
+			for(int j = 0; j < this.ctrl.getJoueur(numJoueur).getTabRessources()[i].length-1; j++)
+			{
+				Image img = getToolkit().getImage(url + this.ctrl.getJoueur(numJoueur).getRessource(0,0).getCouleur().getNom().toUpperCase() + png);
+				g2.drawImage ( img, 66 + i * ECART_VERTICAL, 220 - j * ECART_HORIZONTAL, this );
+			}
 	}
+
+	public void majPlateau() { this.repaint(); }
 }

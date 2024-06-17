@@ -224,8 +224,8 @@ public class PanelPlateau extends JPanel
 					
 				}
 
+				PanelPlateau.this.ctrl.majPlateau();
 			}
-
 			this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 		}
 	}

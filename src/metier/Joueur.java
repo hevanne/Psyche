@@ -51,6 +51,8 @@ public class Joueur
 
 	public Ressource getRessource (int i, int j) { return this.tabRessources[i][j]; }
 
+	public Ressource[][] getTabRessources () { return this.tabRessources; }
+
 	public String getImage () { return this.image; }
 
 	// Modificateurs

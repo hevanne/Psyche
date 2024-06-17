@@ -31,4 +31,9 @@ public class FrameJoueur extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
+
+	public void majPlateau()
+	{
+		this.pnlJoueur.majPlateau();
+	}
 }
