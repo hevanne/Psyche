@@ -1,5 +1,3 @@
-package test;
-
 import metier.*;
 
 public class TestJoueur

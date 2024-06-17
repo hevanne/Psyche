@@ -2,6 +2,12 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class Sommet
 {
@@ -24,7 +30,9 @@ public class Sommet
 		this.valeur  = valeur;
 		this.couleur = couleur;
 
-		this.nom     = "" + this.couleur.getNom().charAt(0) + this.valeur;  
+		this.nom     =   String.format("%2d", this.num) 
+		               + this.couleur.getNom().charAt(0) 
+					   + this.valeur;
 
 		this.x       = x;
 		this.y       = y;
@@ -42,9 +50,10 @@ public class Sommet
 	}
 
 	// Accesseurs
-	public int getNum () { return this.num; }
-	public int getX   () { return this.x;   }
-	public int getY   () { return this.y;   }
+	public int    getNum () { return this.num; }
+	public int    getX   () { return this.x;   }
+	public int    getY   () { return this.y;   }
+	public String getNom () { return this.nom; }
 
 	public Route getRoute (int    i  ) { return this.lstRoutes.get(i); }
 	public Route getRoute (Sommet smt)
@@ -58,6 +67,7 @@ public class Sommet
 	public Couleur      getCouleur      () { return this.couleur;      }
 	public Joueur       getProprietaire () { return this.proprietaire; }
 	public IRessource   getRessource    () { return this.ressource;    }
+
 	public List<Sommet> getVoisinsPrp   () 
 	{
 		List<Sommet> retour;
@@ -93,6 +103,7 @@ public class Sommet
 		}
 		return false;
 	}
+
 	public void setRessource(IRessource ressource)
 	{
 		if (this.proprietaire == null)
@@ -110,6 +121,6 @@ public class Sommet
 
 	public String toString()
 	{
-		return this.nom;
+		return this.nom + " " + this.ressource;
 	}
 }

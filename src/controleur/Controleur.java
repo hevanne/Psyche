@@ -9,15 +9,12 @@ import ihm.*;
 public class Controleur
 {
 	private Jeu jeu;
-
-	private String joueur1;
-	private String joueur2;
-
+	
 	private FramePlateau framePlateau;
 	private FrameJoueur frameJoueur1;
 	private FrameJoueur frameJoueur2;
 
-	//private CUI cui;
+	private CUI cui;
 
 	// Constructeurs
 	public Controleur()
@@ -29,16 +26,16 @@ public class Controleur
 		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0).getNom());
 		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1).getNom());
 
-		//this.cui = new CUI(this);
+		this.cui = new CUI(this);
 	}
 
 	// Accesseurs
 	public int    getNumTour    () { return this.jeu.getNumTour    (); }
 	public Joueur getJoueurActif() { return this.jeu.getJoueurActif(); }
 
-	public Joueur getJoueur (int i)          { return this.jeu.getJoueur(i);       }
-	public String getVocab  (int i)          { return this.jeu.getVocab(i);        }
-	public Sommet getSommet (String symbole) { return this.jeu.getSommet(symbole); }
+	public Joueur getJoueur (int i) { return this.jeu.getJoueur(i); }
+	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
+	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
 
 	public List<Sommet> getLstSommet() {return this.jeu.getLstSommet();}
 	public List<Route>  getLstRoute () {return this.jeu.getLstRoute ();}

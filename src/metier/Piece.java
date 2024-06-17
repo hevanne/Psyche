@@ -11,17 +11,14 @@ public class Piece implements IRessource
 		this.couleur = coul;
 	}
 
-	public int getValeur() { return this.valeur; }
-	
-	public Couleur getCouleur() { return this.couleur; }
+	// Accesseurs
+	public char    getType    () { return 'P';          }
+	public int     getValeur  () { return this.valeur;  }
+	public Couleur getCouleur () { return this.couleur; }
 
+	// Autres Méthodes
 	public String toString()
 	{
 		return "Piece : " + this.valeur + " " + this.couleur;
-	}
-
-	public IRessource getType()
-	{
-		return this;
 	}
 }
