@@ -35,6 +35,7 @@ public class Controleur
 
 	public Joueur getJoueur (int i) { return this.jeu.getJoueur(i); }
 	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
+	public Sommet getSommet (int x, int y) { return this.jeu.getSommet(x, y); }
 	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
 
 	public List<Sommet> getLstSommets () { return this.jeu.getLstSommets (); }
@@ -56,5 +57,20 @@ public class Controleur
 
 	public int[] calculerScoresTrajet(List<Sommet> trajet) { return this.jeu.calculerScoresTrajet(trajet); }
 
-	public Sommet getSommet(int x, int y) { return this.jeu.getSommet(x, y); }
+	public void parcourirEtape (int etape) 
+	{ 
+		this.jeu.parcourirEtape(etape); 
+		this.majIHM();
+	}
+	public void ajouterEtape   (Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi) 
+	{ 
+		this.jeu.ajouterEtape(smtDep, smtArr, indiceTrajetChoisi); 
+	}
+
+	public void majIHM()
+	{
+		this.frameJoueur1.repaint();
+		this.frameJoueur2.repaint();
+		this.framePlateau.repaint();
+	}
 }

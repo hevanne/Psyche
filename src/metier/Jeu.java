@@ -1,6 +1,9 @@
 package metier;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +22,7 @@ public class Jeu
 	private List<Sommet>     lstSommets;
 	private List<Route>      lstRoutes;
 
+	private List<String>     lstEtapes;
 	private String imagePlateauVierge;
 
 	public Jeu()
@@ -31,7 +35,8 @@ public class Jeu
 		this.lstRessources = new ArrayList<IRessource>();
 		this.lstSommets    = new ArrayList<Sommet>();
 		this.lstRoutes     = new ArrayList<Route>();
-
+		
+		this.lstEtapes          = new ArrayList<String>();
 		this.imagePlateauVierge = "";
 
 		this.nouveauJeu();
@@ -87,7 +92,7 @@ public class Jeu
 	// Autres Méthodes
 	public void nouveauJeu()
 	{
-		this.numTour = 0;
+		this.numTour = 1;
 		this.initTheme();
 		this.setCheminsImage();
 		this.initMap();
@@ -106,13 +111,6 @@ public class Jeu
 			indRes = (int)(Math.random() * this.lstRessources.size());
 			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
 		}
-
-		System.out.println("Créations des listes : ");
-		System.out.println(this.lstJoueurs);
-		System.out.println(this.lstCouleurs);
-		System.out.println(this.lstRessources);
-		System.out.println(this.lstSommets);
-		System.out.println(this.lstRoutes);
 	}
 
 	public void incrementerNumTour () { this.numTour++; }
@@ -145,8 +143,6 @@ public class Jeu
 		   && !smtArr.aProprietaire()
 		   && !route.aProprietaire())) return false;
 
-		   System.out.println(smtArr);
-		   System.out.println(smtArr.getRessource());
 		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
  		if(smtArr.setProprietaire(joueurActif))
 		{
@@ -165,18 +161,14 @@ public class Jeu
 		Route    r;
 		
 		scores = new int[this.lstJoueurs.size()];
-
+		
 		for(int i = 0; i < trajet.size()-1; i++)
 		{
 			r = trajet.get(i).getRoute(trajet.get(i+1));
+			System.out.println(r.getProprietaire().getNum());
 			scores[r.getProprietaire().getNum() - 1] += r.getNbSection();
 		}
-
-		for(int i = 0; i < scores.length; i++)
-		{
-			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
-		}
-
+		
 		if(   trajet.get(0).getRessource().getType() == 'R' 
 		   && ((Ressource)trajet.get(0).getRessource()).getDoubler())
 			for(int i = 0; i < scores.length; i++)
@@ -399,5 +391,73 @@ public class Jeu
 			scFic.close();
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
+	}
+
+	public void parcourirEtape(int etape)
+	{
+		Scanner  scFic;
+		String[] tabLig;
+		Sommet   smtDep, smtArr;
+		int[]    scores;
+		
+		List<List<Sommet>> lstTrajets;
+		int                indiceTrajetChoisi;
+
+		this.lstJoueurs    = new ArrayList<Joueur>();
+		this.lstCouleurs   = new ArrayList<Couleur>();
+		this.lstRessources = new ArrayList<IRessource>();
+		this.lstSommets    = new ArrayList<Sommet>();
+		this.lstRoutes     = new ArrayList<Route>();
+		
+		this.nouveauJeu();
+		System.out.println(etape);
+
+		try {
+			scFic = new Scanner(new FileInputStream ( "../data/etapes.data" ));
+			for(this.numTour = 1; this.numTour <= etape; this.numTour++)
+			{
+				tabLig = scFic.nextLine().split("\t");
+
+				smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
+				smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
+				this.prendreSommet(smtDep, smtArr);
+				
+
+				lstTrajets = this.plusCourtsChemins(smtArr);
+				indiceTrajetChoisi = 0;
+				if(tabLig.length == 4)
+					indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
+
+				scores = this.calculerScoresTrajet(lstTrajets.get(indiceTrajetChoisi));
+
+				this.lstJoueurs.get(0).varierScoreRoute(scores[0]);
+				this.lstJoueurs.get(1).varierScoreRoute(scores[1]);
+			}
+
+		} catch (Exception e) {System.out.println(e);}
+	}
+
+	public void ajouterEtape(Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi)
+	{
+		String str = this.numTour + "\t" + smtDep.getNom() + "\t" + smtArr.getNom();
+		if (indiceTrajetChoisi != null) 
+			str += "\t" + indiceTrajetChoisi;
+
+		this.lstEtapes.add(str);
+		this.sauvegarder();
+	}
+
+	public void sauvegarder()
+	{
+		try
+		{
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("../data/etapes.data"), "UTF8" ));
+
+			for (String str : this.lstEtapes)
+				pw.println(str);
+			
+			pw.close();
+		}
+		catch (Exception e){}
 	}
 }

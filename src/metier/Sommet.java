@@ -27,7 +27,7 @@ public class Sommet
 		this.valeur  = valeur;
 		this.couleur = couleur;
 
-		this.nom     =   String.format("%2d", this.num) 
+		this.nom     =   String.format("%02d", this.num) 
 		               + this.couleur.getNom().charAt(0) 
 					   + this.valeur;
 

@@ -156,7 +156,7 @@ public class PanelPlateau extends JPanel
 		public void mousePressed(MouseEvent e)
 		{
 			this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			System.out.println("s1 : "+this.sommetsActifs[0]);
+			//System.out.println("s1 : "+this.sommetsActifs[0]);
 		}
 
 		
@@ -167,13 +167,13 @@ public class PanelPlateau extends JPanel
 			
 			scores = new int[2];
 			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			System.out.println("s2 : "+this.sommetsActifs[1]);
+			//System.out.println("s2 : "+this.sommetsActifs[1]);
 			
 			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
 			{
 				
 				boolean retour = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-				System.out.println(retour);
+				//System.out.println(retour);
 
 				if(retour)
 				{
@@ -188,9 +188,11 @@ public class PanelPlateau extends JPanel
 					{
 						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
-					System.out.println(scores[0]);
-					System.out.println(scores[1]);
+					//System.out.println(scores[0]);
+					//System.out.println(scores[1]);
 					
+					PanelPlateau.this.ctrl.ajouterEtape(this.sommetsActifs[0], this.sommetsActifs[1], null);
+					PanelPlateau.this.ctrl.incrementerNumTour();
 				}
 
 			}

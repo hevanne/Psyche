@@ -15,7 +15,7 @@ public class Joueur
 
 	private String nomJouer;
 
-	private List<Sommet> lstSommet;
+	private List<Sommet> lstSommets;
 
 	private Ressource[][] tabRessources;
 
@@ -29,16 +29,13 @@ public class Joueur
 		this.nomJouer      = nomJouer;
 		this.numJoueur     = ++Joueur.nbJoueurs;
 
-		this.lstSommet     = new ArrayList<Sommet>();
-		this.nbPossessions = 0;
-		this.nbPiece       = 0;
-		this.score         = 0;
-		this.scoreRoute    = 0;
-
+		this.lstSommets     = new ArrayList<Sommet>();
 		this.tabRessources = new Ressource[4][8];
 		this.tabScore = new int[this.tabRessources[0].length];
 
 		this.image = "";
+
+		this.nouveauJoueur();
 	}
 
 	// Accesseurs
@@ -57,9 +54,26 @@ public class Joueur
 	public void setCheminImage (String image) { this.image = image; }
 
 	// Autres Méthodes
+	public void nouveauJoueur()
+	{
+		this.lstSommets.clear();
+		
+		this.nbPossessions = 0;
+		this.nbPiece       = 0;
+		this.score         = 0;
+		this.scoreRoute    = 0;
+
+		for(int i = 0; i < this.tabRessources.length; i++)
+			for(int j = 0; j < this.tabRessources.length; j++)
+				this.tabRessources[i][j] = null;
+		
+		for(int i = 0; i < this.tabScore.length; i++)
+			this.tabScore[i] = 0;
+	}
+
 	public void ajouterSommet (Sommet sommet)
 	{
-		this.lstSommet.add(sommet);
+		this.lstSommets.add(sommet);
 	}
 
 	public boolean ajouterRessource (IRessource r)

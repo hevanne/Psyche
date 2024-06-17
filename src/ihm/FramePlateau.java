@@ -14,6 +14,7 @@ public class FramePlateau extends JFrame
 		this.setTitle("Plateau");
 		this.setLocation(50,50);
 		this.setSize(1269, 1122);
+		this.setJMenuBar( new BarreMenu(ctrl) );
 
 		/* Création des composants */
 
