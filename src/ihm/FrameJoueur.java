@@ -7,18 +7,20 @@ import javax.swing.*;
 
 public class FrameJoueur extends JFrame
 {
-	private Controleur ctrl;
+	private Controleur  ctrl;
 	private PanelJoueur pnlJoueur;
 
-	public FrameJoueur(Controleur ctrl, Joueur joueur)
+	public FrameJoueur(Controleur ctrl, int numJoueur)
 	{
-		this.setTitle(joueur.getNom());
+		this.ctrl = ctrl;
+		
+		this.setTitle(this.ctrl.getJoueur(numJoueur).getNom());
 		this.setLocation(50,50);
-		this.setSize(553, 397);
+		this.setSize(553, 435);
 
 		/* Création des composants */
 
-		this.pnlJoueur = new PanelJoueur(ctrl, joueur);
+		this.pnlJoueur = new PanelJoueur(ctrl, numJoueur);
 
 		/* Positionnement des composants */
 

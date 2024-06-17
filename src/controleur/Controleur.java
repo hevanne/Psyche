@@ -23,8 +23,8 @@ public class Controleur
 
 		this.framePlateau = new FramePlateau(this);
 
-		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0));
-		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1));
+		this.frameJoueur1 = new FrameJoueur(this, 0);
+		this.frameJoueur2 = new FrameJoueur(this, 1);
 
 		//this.cui = new CUI(this);
 	}
@@ -34,14 +34,15 @@ public class Controleur
 	public Joueur getJoueurActif() { return this.jeu.getJoueurActif(); }
 
 	public Joueur getJoueur (int i) { return this.jeu.getJoueur(i); }
-	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
 	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
+	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
 
 	public List<Sommet> getLstSommets () { return this.jeu.getLstSommets (); }
 	public List<Route>  getLstRoutes  () { return this.jeu.getLstRoutes  (); }
 
 	public String getImagePlateauVierge () { return this.jeu.getImagePlateauVierge(); }
- 
+
+
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.jeu.estFinJeu(); }
 
