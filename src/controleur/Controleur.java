@@ -34,14 +34,14 @@ public class Controleur
 	public Joueur getJoueurActif() { return this.jeu.getJoueurActif(); }
 
 	public Joueur getJoueur (int i) { return this.jeu.getJoueur(i); }
-	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
 	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
 
 	public List<Sommet> getLstSommets () { return this.jeu.getLstSommets (); }
 	public List<Route>  getLstRoutes  () { return this.jeu.getLstRoutes  (); }
 
 	public String getImagePlateauVierge () { return this.jeu.getImagePlateauVierge(); }
- 
+
+
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.jeu.estFinJeu(); }
 
