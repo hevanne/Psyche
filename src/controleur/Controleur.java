@@ -23,8 +23,8 @@ public class Controleur
 
 		this.framePlateau = new FramePlateau(this);
 
-		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0));
-		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1));
+		this.frameJoueur1 = new FrameJoueur(this, 0);
+		this.frameJoueur2 = new FrameJoueur(this, 1);
 
 		//this.cui = new CUI(this);
 	}

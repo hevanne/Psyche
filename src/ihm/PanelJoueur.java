@@ -9,15 +9,18 @@ import javax.swing.*;
 
 public class PanelJoueur extends JPanel
 {
-	private Joueur joueur;
+	private Controleur ctrl;
+	
+	private int numJoueur;
 
 	private Image imgPlateau;
 
-	public PanelJoueur(Controleur ctrl, Joueur joueur)
+	public PanelJoueur(Controleur ctrl, int numJoueur)
 	{
-		this.joueur = joueur;
+		this.ctrl      = ctrl;
+		this.numJoueur = numJoueur;
 
-		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+joueur.getImage());
+		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getJoueur(this.numJoueur).getImage());
 
 		/* Création des composants */
 		
