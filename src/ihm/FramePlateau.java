@@ -21,7 +21,7 @@ public class FramePlateau extends JFrame
 
 		/* Positionnement des composants */
 
-		this.add(pnlPlateau);
+		this.add(this.pnlPlateau);
 
 		/* Activation des composants */
 

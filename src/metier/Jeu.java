@@ -39,9 +39,31 @@ public class Jeu
 	public int    getNbJoueur    () { return this.lstJoueurs.size();       }
 	public Joueur getJoueurActif () { return this.lstJoueurs.get((this.numTour+1) % (this.lstJoueurs.size())); }
 
+<<<<<<< HEAD
 	public Joueur getJoueur (int i) { return this.lstJoueurs.get(i); }
 	public String getVocab  (int i) { return this.vocab[i];          }
 	public Sommet getSommet (int i) { return this.lstSommets.get(i); }
+=======
+	public Joueur getJoueur (int indice)     { return this.lstJoueurs.get(indice); }
+	public String getVocab  (int indice)     { return this.vocab[indice];          }
+
+	public List<Sommet> getLstSommet() {return this.lstSommets;}
+	public Sommet getSommet (String symbole)
+	{
+		char   couleur;
+		int    valeur;
+
+		couleur = symbole.charAt(0);
+		valeur  = Integer.parseInt(symbole.substring(1));
+
+		for(Sommet smt : this.lstSommets)
+			if(   smt.getCouleur().getNom().charAt(0) == couleur 
+			   && smt.getValeur()                           == valeur)
+			   return smt;
+
+		return null;
+	}
+>>>>>>> b2710299ddbbfc45df5909a0cfcb41949d85bd82
 
 	public List<Sommet> getSommetsPrp()
 	{
@@ -197,7 +219,9 @@ public class Jeu
 						retour.add(trajet);
 					}
 
-					trajet.removeLast();
+					if (!trajet.isEmpty()) {
+						trajet.remove(trajet.size() - 1);
+					}
 				}
 				else if(marque.indexOf(s) == -1) 
 				{
