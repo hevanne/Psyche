@@ -104,16 +104,16 @@ public class Sommet
 			this.ressource = ressource;
 	}
 
+	// Ajout d'un joueur invisible au sommet de départ pour éviter des bugs
 	public void setDepart()
 	{
 		if(this.num == 0) this.proprietaire = new Joueur("Départ");
 	}
 
 	// Autres Méthodes
-	public boolean aProprietaire() { return this.proprietaire != null; }
- 	public void ajouterRoute (Route route) { this.lstRoutes.add(route); }
-
-	public String toString()
+	public boolean aProprietaire () { return this.proprietaire != null; }
+ 	public void    ajouterRoute  (Route route) { this.lstRoutes.add(route); }
+	public String  toString      ()
 	{
 		return this.nom + " " + this.ressource;
 	}

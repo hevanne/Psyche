@@ -22,6 +22,6 @@ public class Ressource implements IRessource
 	// Autres Méthodes
 	public String toString()
 	{
-		return "Ressource : " + this.nom + " " + this.coul;
+		return "R : " + this.nom + " " + this.coul;
 	}
 }

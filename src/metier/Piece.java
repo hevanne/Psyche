@@ -19,6 +19,6 @@ public class Piece implements IRessource
 	// Autres Méthodes
 	public String toString()
 	{
-		return "Piece : " + this.valeur + " " + this.couleur;
+		return "P : " + this.valeur + " " + this.couleur;
 	}
 }
