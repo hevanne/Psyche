@@ -45,8 +45,8 @@ R	Titane	14	4
 P	1	15	8
 
 # IMAGES
-plateau_principal=plateau_principal.png
-plateau_joueur_1=plateau_cs.png
-plateau_joueur_2=plateau_sa.png
-jeton_possession_1=possession_cs.png
-jeton_possession_2=possession_sa.png
+plateau_principal=Plateau_vierge.png
+plateau_joueur_1=plateau_joueur_1.png
+plateau_joueur_2=plateau_joueur_2.png
+jeton_possession_1=pion_joueur_1.png
+jeton_possession_2=pion_joueur_2.png

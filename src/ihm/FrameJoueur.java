@@ -1,6 +1,7 @@
 package ihm;
 
 import controleur.Controleur;
+import metier.Joueur;
 
 import javax.swing.*;
 
@@ -9,11 +10,11 @@ public class FrameJoueur extends JFrame
 	private Controleur ctrl;
 	private PanelJoueur pnlJoueur;
 
-	public FrameJoueur(Controleur ctrl, String joueur)
+	public FrameJoueur(Controleur ctrl, Joueur joueur)
 	{
-		this.setTitle("Joueur");
+		this.setTitle(joueur.getNom());
 		this.setLocation(50,50);
-		this.setSize(400, 400);
+		this.setSize(553, 397);
 
 		/* Création des composants */
 

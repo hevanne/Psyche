@@ -23,8 +23,8 @@ public class Controleur
 
 		this.framePlateau = new FramePlateau(this);
 
-		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0).getNom());
-		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1).getNom());
+		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0));
+		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1));
 
 		//this.cui = new CUI(this);
 	}
@@ -40,6 +40,8 @@ public class Controleur
 	public List<Sommet> getLstSommets () { return this.jeu.getLstSommets (); }
 	public List<Route>  getLstRoutes  () { return this.jeu.getLstRoutes  (); }
 
+	public String getImagePlateauVierge () { return this.jeu.getImagePlateauVierge(); }
+ 
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.jeu.estFinJeu(); }
 

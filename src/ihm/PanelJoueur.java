@@ -1,16 +1,23 @@
 package ihm;
 
 import controleur.Controleur;
+import metier.Joueur;
+
+import java.awt.*;
 
 import javax.swing.*;
 
 public class PanelJoueur extends JPanel
 {
-	private String joueur;
+	private Joueur joueur;
 
-	public PanelJoueur(Controleur ctrl, String joueur)
+	private Image imgPlateau;
+
+	public PanelJoueur(Controleur ctrl, Joueur joueur)
 	{
 		this.joueur = joueur;
+
+		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+joueur.getImage());
 
 		/* Création des composants */
 		
@@ -18,4 +25,14 @@ public class PanelJoueur extends JPanel
 		
 		/* Activation des composants */
 	}
+
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+
+		g2.drawImage ( this.imgPlateau, 0, 0, this );
+	}
+
+
 }

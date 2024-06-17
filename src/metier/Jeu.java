@@ -19,6 +19,8 @@ public class Jeu
 	private List<Sommet>     lstSommets;
 	private List<Route>      lstRoutes;
 
+	private String imagePlateauVierge;
+
 	public Jeu()
 	{
 		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
@@ -29,6 +31,8 @@ public class Jeu
 		this.lstRessources = new ArrayList<IRessource>();
 		this.lstSommets    = new ArrayList<Sommet>();
 		this.lstRoutes     = new ArrayList<Route>();
+
+		this.imagePlateauVierge = "";
 
 		this.nouveauJeu();
 	}
@@ -55,7 +59,6 @@ public class Jeu
 
 		return null;
 	}
-
 	private static double distance(int x1, int y1, int x2, int y2)
 	{
 		return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
@@ -78,6 +81,8 @@ public class Jeu
 
 		return retour;
 	}
+
+	public String getImagePlateauVierge () { return this.imagePlateauVierge; }
 
 	// Autres Méthodes
 	public void nouveauJeu()
@@ -324,6 +329,7 @@ public class Jeu
 
 	private void setCheminsImage()
 	{
+		this.imagePlateauVierge = this.images[0];
 		this.lstJoueurs.get(0).setCheminImage(this.images[1]);
 		this.lstJoueurs.get(1).setCheminImage(this.images[2]);
 	}
