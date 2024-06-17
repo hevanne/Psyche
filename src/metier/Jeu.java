@@ -87,7 +87,7 @@ public class Jeu
 	// Autres Méthodes
 	public void nouveauJeu()
 	{
-		this.numTour = 0;
+		this.numTour = 1;
 		this.initTheme();
 		this.setCheminsImage();
 		this.initMap();
