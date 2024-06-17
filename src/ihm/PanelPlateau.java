@@ -86,31 +86,19 @@ public class PanelPlateau extends JPanel
 			
 			if(!s.aProprietaire())
 			{
-				g2.setColor(s.getCouleur().getColor());
-				g2.fillOval(s.getX() - Sommet.RAYON_SOMMET, 
-				            s.getY() - Sommet.RAYON_SOMMET, 
-				            Sommet.RAYON_SOMMET * 2, 
-				            Sommet.RAYON_SOMMET * 2);
+				Image imgSommet = getToolkit().getImage("../theme/distrib_images_2/transparent/"+ this.ctrl.getVocab(0) +"_"+ s.getCouleur().getNom() +".png");
+				g2.drawImage(imgSommet,  s.getX() - Sommet.RAYON_SOMMET, 
+				             s.getY() - Sommet.RAYON_SOMMET, this);
 
-				g2.setColor(s.getRessource().getCouleur().getColor());
-				g2.fillOval(s.getX() - Sommet.RAYON_IRESSOURCE, 
-				            s.getY() + Sommet.RAYON_IRESSOURCE, 
-				            Sommet.RAYON_IRESSOURCE * 2, 
-				            Sommet.RAYON_IRESSOURCE * 2);
+				Image imgRessource = getToolkit().getImage("../theme/distrib_images_2/ressources/"+ s.getRessource().getCouleur().getNom().toUpperCase() +".png");
+				g2.drawImage(imgRessource,  s.getX() - Sommet.RAYON_IRESSOURCE + Sommet.RAYON_IRESSOURCE/2, 
+							 s.getY() + Sommet.RAYON_IRESSOURCE + Sommet.RAYON_IRESSOURCE/2, this);
 			}
 			else
 			{
-				g2.setColor(s.getCouleur().getColor());
-				g2.drawOval(s.getX() - Sommet.RAYON_SOMMET, 
-				            s.getY() - Sommet.RAYON_SOMMET, 
-				            Sommet.RAYON_SOMMET * 2, 
-				            Sommet.RAYON_SOMMET * 2);
-
-				g2.setColor(s.getRessource().getCouleur().getColor());
-				g2.drawOval(s.getX() - Sommet.RAYON_IRESSOURCE, 
-				            s.getY() + Sommet.RAYON_IRESSOURCE, 
-				            Sommet.RAYON_IRESSOURCE * 2, 
-				            Sommet.RAYON_IRESSOURCE * 2);
+				Image imgSommet = getToolkit().getImage("../theme/distrib_images_2/transparent/"+ this.ctrl.getVocab(0) +"_"+ s.getCouleur().getNom() +"_clair.png");
+				g2.drawImage(imgSommet,  s.getX() - Sommet.RAYON_SOMMET, 
+				             s.getY() - Sommet.RAYON_SOMMET, this);
 			}
 		}
 

@@ -16,8 +16,8 @@ joueur_2="Syndicat Astral"
 2	Bleu	112	146	190
 3	Gris	195	195	195
 4	Vert	101	153	96
-5	Rose	101	153	96
-6	Orange	185	122	87
+5	Rouge	101	153	96
+6	Marron	185	122	87
 # Couleurs Ressources
 7	Al	242	242	206
 8	Ag	214	214	214
