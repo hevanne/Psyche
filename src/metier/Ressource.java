@@ -2,26 +2,26 @@ package metier;
 
 public class Ressource implements IRessource
 {
-	private String nom;
+	private String  nom;
 	private Couleur coul;
+	private boolean doubler;
 
-	public Ressource(String nom, Couleur coul)
+	public Ressource(String nom, Couleur coul, boolean doubler)
 	{
-		this.nom = nom;
-		this.coul = coul;
+		this.nom     = nom;
+		this.coul    = coul;
+		this.doubler = doubler;
 	}
 
-	public String getNom() { return this.nom; }
+	// Accesseurs
+	public char    getType    () { return 'R';          }
+	public String  getNom     () { return this.nom;     }
+	public Couleur getCouleur () { return this.coul;    }
+	public boolean getDoubler () { return this.doubler; }
 
-	public Couleur getCouleur() { return this.coul; }
-
+	// Autres Méthodes
 	public String toString()
 	{
 		return "Ressource : " + this.nom + " " + this.coul;
-	}
-
-	public IRessource getType()
-	{
-		return this;
 	}
 }

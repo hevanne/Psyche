@@ -1,3 +1,4 @@
+# /!\ Ne suprimez pas les espaces entre chaque section
 # VOCABULAIRE
 Sommet=Mine
 Ressource=Minerai
@@ -31,10 +32,10 @@ joueur_2="Syndicat Astral"
 15	NR	99	193	225
 
 # RESSOURCES
-# type \t nom_ressource \t indice_couleur \t quantité
+# type \t nom_ressource \t indice_couleur \t quantité (\t doubler)
 R	Aluminum	7	4
 R	Argent	8	4
-R	Or	9	4
+R	Or	9	4	doubler
 R	Cobalt	10	4
 R	Fer	11	4
 R	Nickel	12	4

@@ -44,9 +44,10 @@ public class Sommet
 	}
 
 	// Accesseurs
-	public int getNum () { return this.num; }
-	public int getX   () { return this.x;   }
-	public int getY   () { return this.y;   }
+	public int    getNum () { return this.num; }
+	public int    getX   () { return this.x;   }
+	public int    getY   () { return this.y;   }
+	public String getNom () { return this.nom; }
 
 	public Route getRoute (int    i  ) { return this.lstRoutes.get(i); }
 	public Route getRoute (Sommet smt)
@@ -60,6 +61,7 @@ public class Sommet
 	public Couleur      getCouleur      () { return this.couleur;      }
 	public Joueur       getProprietaire () { return this.proprietaire; }
 	public IRessource   getRessource    () { return this.ressource;    }
+
 	public List<Sommet> getVoisinsPrp   () 
 	{
 		List<Sommet> retour;
@@ -113,6 +115,6 @@ public class Sommet
 
 	public String toString()
 	{
-		return this.nom;
+		return this.nom + " " + this.ressource;
 	}
 }

@@ -58,9 +58,9 @@ public class Joueur
 
 	public boolean ajouterRessource (IRessource r)
 	{
-		if (r.getType() instanceof Ressource)
+		if (r.getType() == 'R')
 		{
-			Ressource tmpRessource = (Ressource) r.getType();
+			Ressource tmpRessource = (Ressource) r;
 
 			for (int y=0; y<this.tabRessources[0].length; y++)
 			{
@@ -89,9 +89,9 @@ public class Joueur
 			return false;
 		}
 
-		if (r.getType() instanceof Piece)
+		if (r.getType() == 'P')
 		{
-			Piece tmpPiece = (Piece) r.getType();
+			Piece tmpPiece = (Piece) r;
 
 			if (this.nbPiece + tmpPiece.getValeur() <= 8)
 			{

@@ -79,7 +79,7 @@ public class Jeu
 		/*
 		 * Le sommet d'indice 0 est toujours considéré le départ.
 		 * setDepart lui ajoute un joueur invisible comme proprietaire.
-		 * Cela permet d'éviter des bug qui peuvent survenir par le fait 
+		 * Cela permet d'éviter des bug qui peuvent appaître par le fait 
 		 * que le sommet de Départ ne peut pas être pris par un joueur.
 		 */
 		this.getDepart().setDepart();
@@ -105,7 +105,7 @@ public class Jeu
 
 	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
 	{
-		if(smtDep == null || smtArr == null) return false;
+		if(smtDep == null || smtArr == null || smtDep.getRoute(smtArr)== null) return false;
 
 		Joueur joueurActif;
 		Route  route;
@@ -154,6 +154,11 @@ public class Jeu
 		{
 			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
 		}
+
+		if(   trajet.get(0).getRessource().getType() == 'R' 
+		   && ((Ressource)trajet.get(0).getRessource()).getDoubler())
+			for(int i = 0; i < scores.length; i++)
+				scores[i] = scores[i] * 2;
 
 		return scores;
 	}
@@ -220,6 +225,8 @@ public class Jeu
 		String  lig, tabLig[], nom;
 		int     i, r, v, b, quantite;
 		Couleur couleur;
+		boolean doubler;
+
 
 		try
 		{
@@ -272,10 +279,12 @@ public class Jeu
 					nom      = tabLig[1];
 					couleur  = this.lstCouleurs.get(Integer.parseInt(tabLig[2]));
 					quantite = Integer.parseInt(tabLig[3]);
+					doubler  = false;
+					if (tabLig.length == 5) doubler = true;
 					
 					if(tabLig[0].charAt(0) == 'R')
 						for(i = 0; i < quantite; i++)
-							this.lstRessources.add(new Ressource(nom, couleur));
+							this.lstRessources.add(new Ressource(nom, couleur, doubler));
 					if(tabLig[0].charAt(0) == 'P')
 						for(i = 0; i < quantite; i++)
 							this.lstRessources.add(new Piece    (1, couleur));
