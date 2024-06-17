@@ -11,9 +11,9 @@ public class FrameJoueur extends JFrame
 
 	public FrameJoueur(Controleur ctrl, String joueur)
 	{
-		this.setTitle("Joueur");
+		this.setTitle(joueur);
 		this.setLocation(50,50);
-		this.setSize(400, 400);
+		this.setSize(553, 397);
 
 		/* Création des composants */
 

@@ -13,7 +13,7 @@ public class FramePlateau extends JFrame
 	{
 		this.setTitle("Plateau");
 		this.setLocation(50,50);
-		this.setSize(400, 400);
+		this.setSize(1269, 1122);
 
 		/* Création des composants */
 

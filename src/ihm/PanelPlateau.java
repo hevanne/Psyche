@@ -4,15 +4,11 @@ import controleur.Controleur;
 import metier.*;
 
 import javax.swing.*;
-
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.awt.Color;
 
 public class PanelPlateau extends JPanel
 {
@@ -23,10 +19,14 @@ public class PanelPlateau extends JPanel
 
 	private Controleur ctrl;
 
+	private Image imgPlateau;
+
 	public PanelPlateau(Controleur ctrl)
 	{
 		/* Création des composants */
 		this.ctrl= ctrl;
+
+		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/Plateau_vierge.png");
 		
 		/* Positionnement des composants */
 		this.initPlateau();
@@ -64,6 +64,7 @@ public class PanelPlateau extends JPanel
 		List<Point> pointsCopy = new ArrayList<>(points);
 
 		// Définir la couleur pour les points
+		g2.drawImage ( this.imgPlateau, 0, 0, this );
 
 		// dessine les points déjà enregistrés
 		for(Point p : pointsCopy)
