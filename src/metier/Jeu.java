@@ -43,6 +43,8 @@ public class Jeu
 	public String getVocab  (int indice)     { return this.vocab[indice];          }
 
 	public List<Sommet> getLstSommet() {return this.lstSommets;}
+	public List<Route>  getLstRoute () {return this.lstRoutes; }
+
 	public Sommet getSommet (String symbole)
 	{
 		char   couleur;
@@ -55,6 +57,15 @@ public class Jeu
 			if(   smt.getCouleur().getNom().charAt(0) == couleur 
 			   && smt.getValeur()                           == valeur)
 			   return smt;
+
+		return null;
+	}
+
+	public Sommet getSommet(int x, int y)
+	{
+		for(Sommet smt : this.lstSommets)
+			if(smt.getX() == x && smt.getY() == y)
+				return smt;
 
 		return null;
 	}

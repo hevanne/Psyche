@@ -41,15 +41,20 @@ public class Controleur
 	public Sommet getSommet (String symbole) { return this.jeu.getSommet(symbole); }
 
 	public List<Sommet> getLstSommet() {return this.jeu.getLstSommet();}
+	public List<Route>  getLstRoute () {return this.jeu.getLstRoute ();}
 
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.jeu.estFinJeu(); }
+
  	public boolean prendreSommet(Sommet smtDep, Sommet smtArr) { return this.jeu.prendreSommet(smtDep, smtArr); }
+
 	public void incrementerNumTour () { this.jeu.incrementerNumTour(); }
 
 	public void afficherScore() { new FrameScore(this); }
+
 	public List<List<Sommet>> plusCourtsChemins(Sommet smtArr) { return this.jeu.plusCourtsChemins(smtArr);}
 
 	public int[] calculerScoresTrajet(List<Sommet> trajet) { return this.jeu.calculerScoresTrajet(trajet); }
-		
+
+	public Sommet getSommet(int x, int y) { return this.jeu.getSommet(x, y); }
 }

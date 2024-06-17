@@ -3,7 +3,7 @@
 # Compilation
 cd src
 
-javac @compile.list -d bin
+javac @compile.list -d ../bin
 
 # Execution
 cd ../bin

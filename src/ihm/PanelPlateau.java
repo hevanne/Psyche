@@ -1,6 +1,7 @@
 package ihm;
 
 import controleur.Controleur;
+import metier.*;
 
 import javax.swing.*;
 
@@ -10,15 +11,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import metier.Sommet;
-import metier.*;
+
 import java.awt.Color;
 
 public class PanelPlateau extends JPanel
 {
-	private List<Point> points = new ArrayList<>();
-	private Controleur ctrl;
 	private static final int DIAMETRE = 10;
+
+	private List<Point>   points   = new ArrayList<>();
+	private List<Segment> segments = new ArrayList<>();
+
+	private Controleur ctrl;
+
 	public PanelPlateau(Controleur ctrl)
 	{
 		/* Création des composants */
@@ -26,10 +30,13 @@ public class PanelPlateau extends JPanel
 		
 		/* Positionnement des composants */
 		this.initPlateau();
+
 		/* Activation des composants */
 
 		this.addMouseListener(new MouseAdapter()
 		{
+			private Point pTemp1, pTemp2;
+
 			public void mouseClicked(MouseEvent e)
 			{
 				super.mouseClicked(e);
@@ -38,26 +45,54 @@ public class PanelPlateau extends JPanel
 				{
 					if (e.getX() >= p.getX() && e.getX() <= p.getX() + p.getW() &&
 						e.getY() >= p.getY() && e.getY() <= p.getY() + p.getH())
-
 					{
-						System.out.println(p);
+						System.out.println("point : "+p);
+						if (pTemp1 == null)
+						{
+							pTemp1 = p;
+						}
+						else
+						{
+							pTemp2 = p;
+						}
 					}
+				}
+
+				if (pTemp1 != null && pTemp2 != null)
+				{
+					Sommet sommetTmp1, sommetTmp2;
+					sommetTmp1 = PanelPlateau.this.ctrl.getSommet(pTemp1.getX(), pTemp1.getY());
+					sommetTmp2 = PanelPlateau.this.ctrl.getSommet(pTemp2.getX(), pTemp2.getY());
+
+					System.out.println(sommetTmp1);
+					System.out.println(sommetTmp2);
+
+					Route r = sommetTmp1.getRoute(sommetTmp2);
+
+					System.out.println(r);
 				}
 			}
 		});
 	}
+
+
 
 	public void initPlateau()
 	{
 		points.clear();
 		this.repaint();
 
-		for(Sommet s: this.ctrl.getLstSommet())
+		for(Sommet s : this.ctrl.getLstSommet())
 		{
 			System.out.println(s);
 			this.points.add(new Point(s.getX(), s.getY(),10,10, s.getCouleur()));
 		}
 
+		for(Route r : this.ctrl.getLstRoute())
+		{
+			System.out.println(r);
+			this.segments.add(new Segment(r.getSmtDep(), r.getSmtArr(), r.getNbSection()));
+		}
 	}
 
 	public void paintComponent(Graphics g)
@@ -74,12 +109,10 @@ public class PanelPlateau extends JPanel
 		{
 			g2.setColor(p.couleur.getColor());
 			g2.fillOval(p.x - DIAMETRE / 2, p.y - DIAMETRE / 2, DIAMETRE, DIAMETRE);
-			g2.setColor(Color.BLACK);
-			g2.drawString("", p.x + 5, p.y - 5);
 		}
 	}
 
-	private static class Point // classe internes pour stocker les points
+	private static class Point // classe interne pour stocker les sommets
 	{
 		int x, y, w, h;
 		Couleur couleur;
@@ -99,5 +132,21 @@ public class PanelPlateau extends JPanel
 		public int getH() { return h; }
 	}
 
+	private static class Segment // classe interne pour stocker les routes
+	{
+		Sommet dep, arr;
+		int nbSections;
 
+		Segment(Sommet dep, Sommet arr, int nbSections)
+		{
+			this.dep = dep;
+			this.arr = arr;
+			this.nbSections = nbSections;
+		}
+
+		public Sommet getDep() { return dep; }
+		public Sommet getArr() { return arr; }
+
+		public int getNbSections() { return nbSections; }
+	}
 }
