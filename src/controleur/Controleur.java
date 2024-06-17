@@ -35,6 +35,7 @@ public class Controleur
 
 	public Joueur getJoueur (int i) { return this.jeu.getJoueur(i); }
 	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
+	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
 
 	public List<Sommet> getLstSommets () { return this.jeu.getLstSommets (); }
 	public List<Route>  getLstRoutes  () { return this.jeu.getLstRoutes  (); }
