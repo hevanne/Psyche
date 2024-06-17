@@ -54,24 +54,27 @@ public class Sommet
 		return null;
 	}
 
-	public int        getValeur       () { return this.valeur;       }
-	public Couleur    getCouleur      () { return this.couleur;      }
-	public Joueur     getProprietaire () { return this.proprietaire; }
-	public IRessource getRessource    () { return this.ressource;    }
-	public Sommet[]   getVoisins      () 
+	public int          getValeur       () { return this.valeur;       }
+	public Couleur      getCouleur      () { return this.couleur;      }
+	public Joueur       getProprietaire () { return this.proprietaire; }
+	public IRessource   getRessource    () { return this.ressource;    }
+	public List<Sommet> getVoisinsPrp   () 
 	{
-		Sommet[] retour;
+		List<Sommet> retour;
 		Route    r;
 
-		retour = new Sommet[this.lstRoutes.size()];
+		retour = new ArrayList<Sommet>();
 
 		for(int i = 0; i < this.lstRoutes.size(); i++)
 		{
 			r = this.lstRoutes.get(i);
-			if  (r.getSmtDep() == this) 
-				retour[i] = r.getSmtArr();
-			else
-				retour[i] = r.getSmtDep();
+			if(r.getProprietaire() != null)
+			{
+				if  (r.getSmtDep() == this) 
+					retour.add(r.getSmtArr());
+				else
+					retour.add(r.getSmtDep());
+			}
 		}
 
 		return retour;
@@ -96,8 +99,14 @@ public class Sommet
 			this.ressource = ressource;
 	}
 
+	public void setDepart()
+	{
+		if(this.num == 0) this.proprietaire = new Joueur("Départ");
+	}
+
 	// Autres Méthodes
-	public void ajouterRoute (Route route) { this.lstRoutes.add(route); }
+	public boolean aProprietaire() { return this.proprietaire != null; }
+ 	public void ajouterRoute (Route route) { this.lstRoutes.add(route); }
 
 	public String toString()
 	{

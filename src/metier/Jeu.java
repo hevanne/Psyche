@@ -34,9 +34,10 @@ public class Jeu
 	}
 
 	// Accesseurs
-	public int    getNumTour     () { return this.numTour; }
+	public Sommet getDepart      () { return this.lstSommets.get(0); }
+	public int    getNumTour     () { return this.numTour;                 }
+	public int    getNbJoueur    () { return this.lstJoueurs.size();       }
 	public Joueur getJoueurActif () { return this.lstJoueurs.get((this.numTour+1) % (this.lstJoueurs.size())); }
-	public int    getNbJoueur    () { return this.lstJoueurs.size(); }
 
 	public Joueur getJoueur (int indice)     { return this.lstJoueurs.get(indice); }
 	public String getVocab  (int indice)     { return this.vocab[indice];          }
@@ -55,6 +56,25 @@ public class Jeu
 
 		return null;
 	}
+
+	public List<Sommet> getSommetsPrp()
+	{
+		List<Sommet> retour;
+		Sommet       s;
+
+		retour = new ArrayList<Sommet>();
+		retour.add(this.getDepart());
+
+		for(int i = 0; i < this.lstSommets.size(); i++)
+		{
+			s = this.lstSommets.get(i);
+			if(s.aProprietaire())
+				retour.add(s);
+		}
+
+		return retour;
+	}
+
 	// Autres Méthodes
 	public void nouveauJeu()
 	{
@@ -69,6 +89,14 @@ public class Jeu
 		System.out.println(this.lstSommets);
 		System.out.println(this.lstRoutes);
 
+		/*
+		 * Le sommet d'indice 0 est toujours considéré le départ.
+		 * setDepart lui ajoute un joueur invisible comme proprietaire.
+		 * Cela permet d'éviter des bug qui peuvent survenir par le fait 
+		 * que le sommet de Départ ne peut pas être pris par un joueur.
+		 */
+		this.getDepart().setDepart();
+
 		int indRes = 0;
 		for(int i = 1; i < this.lstSommets.size(); i++)
 		{
@@ -82,7 +110,7 @@ public class Jeu
 	public boolean estFinJeu()
 	{
 		for (int i = 1; i < this.lstSommets.size(); i++)
-			if (this.lstSommets.get(i).getProprietaire() == null)
+			if (!this.lstSommets.get(i).aProprietaire())
 				return false;
 
 		return true;
@@ -99,14 +127,14 @@ public class Jeu
 		joueurActif = this.getJoueurActif();
 
 		/*
-		 *  Pour prendre une mine, le joueur doit :
+		 * Pour prendre une mine, le joueur doit :
 		 * - Partir soit d’une Mine qui a déjà été prise, soit de la nouvelle Rome.
 		 * - Arriver sur une Mine qui n’a pas encore été prise, c’est-à-dire possédant toujours son jeton Mine.
 		 * Il est tout à fait possible de passer par plusieurs Mines vides.
 		 */
-		if(!((smtDep == this.lstSommets.get(0) || (smtDep != this.lstSommets.get(0) && smtDep.getProprietaire() != null))
-		   && smtArr.getProprietaire() == null
-		   && route.getProprietaire()  == null)) return false;
+		if(!((smtDep == this.getDepart() || (smtDep != this.getDepart() && smtDep.aProprietaire()))
+		   && !smtArr.aProprietaire()
+		   && !route.aProprietaire())) return false;
 
 		   System.out.println(smtArr);
 		   System.out.println(smtArr.getRessource());
@@ -122,71 +150,74 @@ public class Jeu
 	// trouver le plus court trajet entre smt et Nouvelle Rome
 	// parcourir le trajet en ajoutant les points
 	// /!\ Mines d'or
-	private void calculerScoreTrajet(Sommet[] trajet)
+	public int[] calculerScoresTrajet(List<Sommet> trajet)
 	{
-		int[]    scoresRoute;
+		int[]    scores;
 		Route    r;
 		
-		scoresRoute = new int[this.lstJoueurs.size()];
+		scores = new int[this.lstJoueurs.size()];
 
-		for(int i = 0; i < trajet.length-1; i++)
+		for(int i = 0; i < trajet.size()-1; i++)
 		{
-			r = trajet[i].getRoute(trajet[i+1]);
-			scoresRoute[r.getProprietaire().getNum() - 1] += r.getNbSection();
+			r = trajet.get(i).getRoute(trajet.get(i+1));
+			scores[r.getProprietaire().getNum() - 1] += r.getNbSection();
 		}
 
-		for(int i = 0; i < scoresRoute.length; i++)
+		for(int i = 0; i < scores.length; i++)
 		{
-			this.lstJoueurs.get(i).varierScoreRoute(scoresRoute[i]);
+			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
 		}
+
+		return scores;
 	}
 
-	public List<Sommet[]> plusCourtChemin(Sommet smt)
+	public List<List<Sommet>> plusCourtsChemins(Sommet smt)
 	{
-		Sommet []      voisins, tabTrajet;
-		boolean[]      marque;
 		Queue<Sommet>  file;
 		Sommet         s;
-		List<Sommet>   trajet;
-		List<Sommet[]> retour;
+		List<Sommet>   trajet, voisins, marque;
+		List<List<Sommet>> retour;
 
-		retour = new ArrayList<Sommet[]>();
+		retour = new ArrayList<List<Sommet>>();
+		
+		marque = new ArrayList<Sommet>();
 		trajet = new ArrayList<Sommet>();
-		marque = new boolean[this.lstSommets.size()];
-		tabTrajet = null;
+		trajet.add(smt);
 
 		// Cf cours de graph
 		// Parcours en largeur
 		file = new LinkedList<Sommet>();
-		file.offer(smt);
-		marque[smt.getNum()] = true;
+		file.add(smt);
+		marque.add(smt);
 		while(!file.isEmpty())
 		{
-			s = file.poll();
-			voisins = s.getVoisins();
-			for(int i = 0; i < voisins.length; i++)
+			s = file.remove();
+			voisins = s.getVoisinsPrp();
+			for(int i = 0; i < voisins.size(); i++)
 			{
-				if(voisins[i] == this.lstSommets.get(0))
-				{
-					trajet.add(voisins[i]);
+				s = voisins.get(i);
 
-					tabTrajet = ((Sommet[])trajet.toArray());
-					if (retour.size() == 0 || tabTrajet.length == retour.get(0).length)
+				if(s == this.getDepart())
+				{
+					trajet.add(s);
+
+					if (retour.size() == 0 || trajet.size() == retour.get(0).size())
 					{
-						retour.add(tabTrajet);
+						retour.add(new ArrayList<Sommet>(trajet));
 					}
-					else if (tabTrajet.length < retour.get(0).length)
+					else if (trajet.size() < retour.get(0).size())
 					{
 						retour.clear();
-						retour.add(tabTrajet);
+						retour.add(trajet);
 					}
 
 					trajet.removeLast();
 				}
-				else if(!marque[i]) 
+				else if(marque.indexOf(s) == -1) 
 				{
-					file.offer(voisins[i]);
-					marque[i] = true;
+					file.add(s);
+					trajet.add(s);
+					marque.add(s);
 				}
 			}
 		}

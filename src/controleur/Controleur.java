@@ -1,6 +1,9 @@
 package controleur;
 
 import metier.*;
+
+import java.util.List;
+
 import ihm.*;
 
 public class Controleur
@@ -14,7 +17,8 @@ public class Controleur
 	private FrameJoueur frameJoueur1;
 	private FrameJoueur frameJoueur2;
 
-	// private CUI cui;
+	//private CUI cui;
+
 	// Constructeurs
 	public Controleur()
 	{
@@ -25,7 +29,7 @@ public class Controleur
 		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0).getNom());
 		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1).getNom());
 
-		// this.cui = new CUI(this);
+		//this.cui = new CUI(this);
 	}
 
 	// Accesseurs
@@ -42,4 +46,8 @@ public class Controleur
 	public void incrementerNumTour () { this.jeu.incrementerNumTour(); }
 
 	public void afficherScore() { new FrameScore(this); }
+	public List<List<Sommet>> plusCourtsChemins(Sommet smtArr) { return this.jeu.plusCourtsChemins(smtArr);}
+
+	public int[] calculerScoresTrajet(List<Sommet> trajet) { return this.jeu.calculerScoresTrajet(trajet); }
+		
 }
