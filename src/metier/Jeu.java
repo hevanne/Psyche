@@ -41,6 +41,8 @@ public class Jeu
 
 	public Joueur getJoueur (int indice)     { return this.lstJoueurs.get(indice); }
 	public String getVocab  (int indice)     { return this.vocab[indice];          }
+
+	public List<Sommet> getLstSommet() {return this.lstSommets;}
 	public Sommet getSommet (String symbole)
 	{
 		char   couleur;
@@ -211,7 +213,9 @@ public class Jeu
 						retour.add(trajet);
 					}
 
-					trajet.removeLast();
+					if (!trajet.isEmpty()) {
+						trajet.remove(trajet.size() - 1);
+					}
 				}
 				else if(marque.indexOf(s) == -1) 
 				{
