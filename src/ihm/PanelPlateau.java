@@ -72,6 +72,53 @@ public class PanelPlateau extends JPanel
 		Graphics2D g2 = (Graphics2D) g;
 
 		g2.drawImage ( this.imgPlateau, 0, 0, this );
+		List<Route> lstRoute = this.ctrl.getLstRoutes();
+		g2.setColor(Color.DARK_GRAY);
+		float epaisseur = 5.0f;
+		g2.setStroke(new BasicStroke(epaisseur));
+
+		for (Route r: lstRoute)
+		{
+			int mx, my;
+
+			g2.setColor(Color.DARK_GRAY);
+			g2.drawLine(r.getSmtDep().getX(), r.getSmtDep().getY(),r.getSmtArr().getX(), r.getSmtArr().getY());
+
+			if (r.getNbSection() == 2)
+			{
+				mx = (r.getSmtDep().getX()+r.getSmtArr().getX())/2;
+				my = (r.getSmtDep().getY()+r.getSmtArr().getY())/2;
+				g2.fillOval(mx-10, my-10,20,20);
+			}
+		}
+
+		for (Route r: lstRoute)
+		{
+			int mx, my;
+			if (r.getProprietaire() != null)
+			{
+				if(PanelPlateau.this.ctrl.getJoueurActif().getNum() == 1){g2.setColor(Color.GREEN);}
+				if(PanelPlateau.this.ctrl.getJoueurActif().getNum() == 2){g2.setColor(Color.RED);}
+				if (r.getNbSection() == 1)
+				{
+					mx = (r.getSmtDep().getX()+r.getSmtArr().getX())/2;
+					my = (r.getSmtDep().getY()+r.getSmtArr().getY())/2;
+					g2.fillOval(mx-5, my-5,10,10);
+				}
+				else
+				{
+					mx = (r.getSmtDep().getX()+r.getSmtArr().getX())/2;
+					my = (r.getSmtDep().getY()+r.getSmtArr().getY())/2;
+					int mx1 = (mx+r.getSmtDep().getX())/2;
+					int my1 = (my+r.getSmtDep().getY())/2;
+					g2.fillOval(mx1-5, my1-5,10,10);
+					int mx2 = (mx+r.getSmtArr().getX())/2;
+					int my2 = (my+r.getSmtArr().getY())/2;
+					g2.fillOval(mx2-5, my2-5,10,10);
+				}
+			}
+		}
+
 
 		List<Sommet> lstSommets = this.ctrl.getLstSommets();
 		
@@ -115,23 +162,6 @@ public class PanelPlateau extends JPanel
 				            Sommet.RAYON_IRESSOURCE * 2);
 			}
 
-			List<Route> lstRoute = this.ctrl.getLstRoutes();
-			g2.setColor(Color.DARK_GRAY);
-			float epaisseur = 5.0f;
-			g2.setStroke(new BasicStroke(epaisseur));
-
-			for (Route r: lstRoute)
-			{
-				int mx, my;
-				g2.drawLine(r.getSmtDep().getX(), r.getSmtDep().getY(),r.getSmtArr().getX(), r.getSmtArr().getY());
-
-				if (r.getNbSection() == 2)
-				{
-					mx = (r.getSmtDep().getX()+r.getSmtArr().getX())/2;
-					my = (r.getSmtDep().getY()+r.getSmtArr().getY())/2;
-					g2.fillOval(mx-10, my-10,20,20);
-				}
-			}
 		}
 
 		/*
@@ -188,6 +218,7 @@ public class PanelPlateau extends JPanel
 					{
 						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
+					System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());
 					System.out.println(scores[0]);
 					System.out.println(scores[1]);
 					
