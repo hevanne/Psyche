@@ -8,7 +8,7 @@ import metier.Sommet;
 
 public class CUI 
 {
-	Controleur ctrl;
+	private Controleur ctrl;
 
 	public CUI(Controleur ctrl)
 	{
@@ -36,7 +36,7 @@ public class CUI
 			
 			bOk = false;
 			System.out.println("Saisissez votre action : ");
-			// prendre un sommet : P symbole_smtDep symbole_smtArr;
+			// prendre un sommet : P nom_smtDep nom_smtArr;
 			// cf map.txt pour syntaxe symbole
 			do
 			{
@@ -74,8 +74,8 @@ public class CUI
 
 		if(action == 'P')
 		{
-			smtDep = this.ctrl.getSommet(s1);
-			smtArr = this.ctrl.getSommet(s2);
+			smtDep = this.ctrl.getSommet(Integer.parseInt(s1.substring(0, 2)));
+			smtArr = this.ctrl.getSommet(Integer.parseInt(s2.substring(0, 2)));
 			retour = this.ctrl.prendreSommet(smtDep, smtArr);
 
 			if(retour == true)

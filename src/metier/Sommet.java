@@ -24,7 +24,9 @@ public class Sommet
 		this.valeur  = valeur;
 		this.couleur = couleur;
 
-		this.nom     = "" + this.couleur.getNom().charAt(0) + this.valeur;  
+		this.nom     =   String.format("%2d", this.num) 
+		               + this.couleur.getNom().charAt(0) 
+					   + this.valeur;
 
 		this.x       = x;
 		this.y       = y;
@@ -93,6 +95,7 @@ public class Sommet
 		}
 		return false;
 	}
+
 	public void setRessource(IRessource ressource)
 	{
 		if (this.proprietaire == null)
