@@ -13,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Color;
+import java.awt.BasicStroke;
 
 public class PanelPlateau extends JPanel
 {
@@ -111,6 +113,24 @@ public class PanelPlateau extends JPanel
 				            s.getY() + Sommet.RAYON_IRESSOURCE, 
 				            Sommet.RAYON_IRESSOURCE * 2, 
 				            Sommet.RAYON_IRESSOURCE * 2);
+			}
+
+			List<Route> lstRoute = this.ctrl.getLstRoutes();
+			g2.setColor(Color.DARK_GRAY);
+			float epaisseur = 5.0f;
+			g2.setStroke(new BasicStroke(epaisseur));
+
+			for (Route r: lstRoute)
+			{
+				int mx, my;
+				g2.drawLine(r.getSmtDep().getX(), r.getSmtDep().getY(),r.getSmtArr().getX(), r.getSmtArr().getY());
+
+				if (r.getNbSection() == 2)
+				{
+					mx = (r.getSmtDep().getX()+r.getSmtArr().getX())/2;
+					my = (r.getSmtDep().getY()+r.getSmtArr().getY())/2;
+					g2.fillOval(mx-10, my-10,20,20);
+				}
 			}
 		}
 
