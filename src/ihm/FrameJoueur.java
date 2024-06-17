@@ -14,7 +14,7 @@ public class FrameJoueur extends JFrame
 	{
 		this.setTitle(joueur.getNom());
 		this.setLocation(50,50);
-		this.setSize(553, 397);
+		this.setSize(553, 435);
 
 		/* Création des composants */
 
