@@ -3,11 +3,11 @@
 # Compilation
 cd src
 
-javac @compile.list -d bin
+javac @compile.list -d ../bin
 
 # Execution
 cd ../bin
 
-java Psyche
+java controleur.Controleur
 
 read -p "Press any key to continue..."

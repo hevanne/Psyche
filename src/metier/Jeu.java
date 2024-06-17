@@ -42,8 +42,19 @@ public class Jeu
 	public Joueur getJoueur (int i) { return this.lstJoueurs.get(i); }
 	public String getVocab  (int i) { return this.vocab[i];          }
 	public Sommet getSommet (int i) { return this.lstSommets.get(i); }
-	
-	public List<Sommet> getLstSommet () {return new ArrayList<Sommet>(this.lstSommets);}
+
+	public List<Sommet> getLstSommet() {return this.lstSommets;}
+	public List<Route>  getLstRoute () {return this.lstRoutes; }
+
+	public Sommet getSommet(int x, int y)
+	{
+		for(Sommet smt : this.lstSommets)
+			if(smt.getX() == x && smt.getY() == y)
+				return smt;
+
+		return null;
+	}
+
 	public List<Sommet> getSommetsPrp()
 	{
 		List<Sommet> retour;

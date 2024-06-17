@@ -14,7 +14,7 @@ public class Controleur
 	private FrameJoueur frameJoueur1;
 	private FrameJoueur frameJoueur2;
 
-	private CUI cui;
+	//private CUI cui;
 
 	// Constructeurs
 	public Controleur()
@@ -26,7 +26,7 @@ public class Controleur
 		this.frameJoueur1 = new FrameJoueur(this, this.getJoueur(0).getNom());
 		this.frameJoueur2 = new FrameJoueur(this, this.getJoueur(1).getNom());
 
-		this.cui = new CUI(this);
+		//this.cui = new CUI(this);
 	}
 
 	// Accesseurs
@@ -38,15 +38,20 @@ public class Controleur
 	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
 
 	public List<Sommet> getLstSommet() {return this.jeu.getLstSommet();}
+	public List<Route>  getLstRoute () {return this.jeu.getLstRoute ();}
 
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.jeu.estFinJeu(); }
+
  	public boolean prendreSommet(Sommet smtDep, Sommet smtArr) { return this.jeu.prendreSommet(smtDep, smtArr); }
+
 	public void incrementerNumTour () { this.jeu.incrementerNumTour(); }
 
 	public void afficherScore() { new FrameScore(this); }
+
 	public List<List<Sommet>> plusCourtsChemins(Sommet smtArr) { return this.jeu.plusCourtsChemins(smtArr);}
 
 	public int[] calculerScoresTrajet(List<Sommet> trajet) { return this.jeu.calculerScoresTrajet(trajet); }
-		
+
+	public Sommet getSommet(int x, int y) { return this.jeu.getSommet(x, y); }
 }
