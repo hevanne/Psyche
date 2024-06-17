@@ -8,6 +8,6 @@ javac @compile.list -d bin
 # Execution
 cd ../bin
 
-java controleur.Controleur
+java Psyche
 
 read -p "Press any key to continue..."
