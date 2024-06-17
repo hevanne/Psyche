@@ -43,16 +43,22 @@ public class Jeu
 	public String getVocab  (int i) { return this.vocab[i];          }
 	public Sommet getSommet (int i) { return this.lstSommets.get(i); }
 
-	public List<Sommet> getLstSommet() {return this.lstSommets;}
-	public List<Route>  getLstRoute () {return this.lstRoutes; }
+	public List<Sommet> getLstSommets() {return new ArrayList<Sommet> (this.lstSommets); }
+	public List<Route>  getLstRoutes () {return new ArrayList<Route>  (this.lstRoutes); }
 
 	public Sommet getSommet(int x, int y)
 	{
 		for(Sommet smt : this.lstSommets)
-			if(smt.getX() == x && smt.getY() == y)
+			//if(smt.getX() == x && smt.getY() == y)
+			if(Jeu.distance(x, y, smt.getX(), smt.getY()) <= Sommet.RAYON_SOMMET)
 				return smt;
 
 		return null;
+	}
+
+	private static double distance(int x1, int y1, int x2, int y2)
+	{
+		return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
 	}
 
 	public List<Sommet> getSommetsPrp()
@@ -78,14 +84,8 @@ public class Jeu
 	{
 		this.numTour = 0;
 		this.initTheme();
+		this.setCheminsImage();
 		this.initMap();
-
-		System.out.println("Créations des listes : ");
-		System.out.println(this.lstJoueurs);
-		System.out.println(this.lstCouleurs);
-		System.out.println(this.lstRessources);
-		System.out.println(this.lstSommets);
-		System.out.println(this.lstRoutes);
 
 		/*
 		 * Le sommet d'indice 0 est toujours considéré le départ.
@@ -101,6 +101,13 @@ public class Jeu
 			indRes = (int)(Math.random() * this.lstRessources.size());
 			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
 		}
+
+		System.out.println("Créations des listes : ");
+		System.out.println(this.lstJoueurs);
+		System.out.println(this.lstCouleurs);
+		System.out.println(this.lstRessources);
+		System.out.println(this.lstSommets);
+		System.out.println(this.lstRoutes);
 	}
 
 	public void incrementerNumTour () { this.numTour++; }
@@ -116,14 +123,13 @@ public class Jeu
 
 	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
 	{
-		if(smtDep == null || smtArr == null || smtDep.getRoute(smtArr)== null) return false;
+		if(smtDep == null || smtArr == null || smtDep.getRoute(smtArr) == null) return false;
 
 		Joueur joueurActif;
 		Route  route;
 
 		route       = smtDep.getRoute(smtArr);
 		joueurActif = this.getJoueurActif();
-
 		/*
 		 * Pour prendre une mine, le joueur doit :
 		 * - Partir soit d’une Mine qui a déjà été prise, soit de la nouvelle Rome.
@@ -312,9 +318,14 @@ public class Jeu
 					this.images[i++] = this.getDonnee(lig);
 				lig = scFic.nextLine();
 			}
-
 			scFic.close();
 		} catch (Exception e) {System.out.println(e);}
+	}
+
+	private void setCheminsImage()
+	{
+		this.lstJoueurs.get(0).setCheminImage(this.images[1]);
+		this.lstJoueurs.get(1).setCheminImage(this.images[2]);
 	}
 
 	private String getDonnee(String lig)

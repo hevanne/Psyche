@@ -2,5 +2,6 @@ package metier;
 
 public interface IRessource
 {
-	char getType();
+	char    getType();
+	Couleur getCouleur();
 }

@@ -4,6 +4,7 @@ import controleur.Controleur;
 import metier.*;
 
 import javax.swing.*;
+import javax.swing.text.Segment;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,10 +17,9 @@ import java.awt.Color;
 
 public class PanelPlateau extends JPanel
 {
-	private static final int RAYON_SOMMET = 10;
 
-	private List<Point>   points   = new ArrayList<>();
-	private List<Segment> segments = new ArrayList<>();
+	//private List<Point>   points   = new ArrayList<>();
+	//private List<Segment> segments = new ArrayList<>();
 
 	private Controleur ctrl;
 
@@ -40,13 +40,15 @@ public class PanelPlateau extends JPanel
 
 	public void initPlateau()
 	{
+		
+		/*
 		points.clear();
 		this.repaint();
 
 		for(Sommet s : this.ctrl.getLstSommet())
 		{
 			System.out.println(s);
-			this.points.add(new Point(s.getX(), s.getY(),10,10, s.getCouleur()));
+			this.points.add(new Point(s.getX(), s.getY(), s.getCouleur()));
 		}
 
 		for(Route r : this.ctrl.getLstRoute())
@@ -54,6 +56,7 @@ public class PanelPlateau extends JPanel
 			System.out.println(r);
 			this.segments.add(new Segment(r.getSmtDep(), r.getSmtArr(), r.getNbSection()));
 		}
+		*/
 	}
 
 	public void paintComponent(Graphics g)
@@ -61,6 +64,50 @@ public class PanelPlateau extends JPanel
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
+		List<Sommet> lstSommets = this.ctrl.getLstSommets();
+		
+		// Déssiner Sommet de Départ
+		g2.setColor(lstSommets.get(0).getCouleur().getColor());
+		g2.fillOval(lstSommets.get(0).getX() - Sommet.RAYON_SOMMET, 
+		            lstSommets.get(0).getY() - Sommet.RAYON_SOMMET, 
+					Sommet.RAYON_SOMMET * 2, 
+					Sommet.RAYON_SOMMET * 2);
+
+		for(int i = 1; i < lstSommets.size(); i++)
+		{
+			Sommet s = lstSommets.get(i);
+			
+			if(!s.aProprietaire())
+			{
+				g2.setColor(s.getCouleur().getColor());
+				g2.fillOval(s.getX() - Sommet.RAYON_SOMMET, 
+				            s.getY() - Sommet.RAYON_SOMMET, 
+				            Sommet.RAYON_SOMMET * 2, 
+				            Sommet.RAYON_SOMMET * 2);
+
+				g2.setColor(s.getRessource().getCouleur().getColor());
+				g2.fillOval(s.getX() - Sommet.RAYON_IRESSOURCE, 
+				            s.getY() + Sommet.RAYON_IRESSOURCE, 
+				            Sommet.RAYON_IRESSOURCE * 2, 
+				            Sommet.RAYON_IRESSOURCE * 2);
+			}
+			else
+			{
+				g2.setColor(s.getCouleur().getColor());
+				g2.drawOval(s.getX() - Sommet.RAYON_SOMMET, 
+				            s.getY() - Sommet.RAYON_SOMMET, 
+				            Sommet.RAYON_SOMMET * 2, 
+				            Sommet.RAYON_SOMMET * 2);
+
+				g2.setColor(s.getRessource().getCouleur().getColor());
+				g2.drawOval(s.getX() - Sommet.RAYON_IRESSOURCE, 
+				            s.getY() + Sommet.RAYON_IRESSOURCE, 
+				            Sommet.RAYON_IRESSOURCE * 2, 
+				            Sommet.RAYON_IRESSOURCE * 2);
+			}
+		}
+
+		/*
 		List<Point> pointsCopy = new ArrayList<>(points);
 
 		// Définir la couleur pour les points
@@ -69,15 +116,64 @@ public class PanelPlateau extends JPanel
 		for(Point p : pointsCopy)
 		{
 			g2.setColor(p.couleur.getColor());
-			g2.fillOval(p.x - RAYON_SOMMET, p.y - RAYON_SOMMET, RAYON_SOMMET * 2, RAYON_SOMMET * 2);
+			g2.fillOval(p.x - RAYON, p.y - RAYON, RAYON * 2, RAYON * 2);
+		}
+		*/
+	}
+
+	private class GereSouris extends MouseAdapter
+	{
+		Sommet[] sommetsActifs = new Sommet[2];
+		
+		public void mousePressed(MouseEvent e)
+		{
+			this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+			System.out.println("s1 : "+this.sommetsActifs[0]);
+		}
+
+		
+		public void mouseReleased(MouseEvent e) 
+		{
+			List<List<Sommet>> lstTrajets;
+			int[]              scores;
+			
+			scores = new int[2];
+			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+			System.out.println("s2 : "+this.sommetsActifs[1]);
+			
+			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
+			{
+				
+				boolean retour = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
+				System.out.println(retour);
+
+				if(retour)
+				{
+					PanelPlateau.this.repaint();
+					lstTrajets = PanelPlateau.this.ctrl.plusCourtsChemins(this.sommetsActifs[1]);
+
+					if(lstTrajets.size() == 1)
+					{
+						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
+					}
+					else
+					{
+						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
+					}
+					System.out.println(scores[0]);
+					System.out.println(scores[1]);
+					
+				}
+
+			}
+
+			this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 		}
 	}
 
-	public static double distance(int x1, int y1, int x2, int y2)
-	{
-		return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
-	}
+	
 
+	/*
 	private class GereSouris extends MouseAdapter
 	{
 		private Point pTemp1, pTemp2;
@@ -88,7 +184,7 @@ public class PanelPlateau extends JPanel
 
 			for (Point p : points)
 			{
-				if (PanelPlateau.distance(e.getX(), e.getY(), p.getX(), p.getY()) <= PanelPlateau.RAYON_SOMMET)
+				if (PanelPlateau.distance(e.getX(), e.getY(), p.getX(), p.getY()) <= PanelPlateau.RAYON)
 				{
 					System.out.println("point : "+p);
 					if (pTemp1 == null)
@@ -120,22 +216,18 @@ public class PanelPlateau extends JPanel
 
 	private static class Point // classe interne pour stocker les sommets
 	{
-		int x, y, w, h;
+		int x, y;
 		Couleur couleur;
 
-		Point(int x, int y, int w, int h, Couleur couleur)
+		Point(int x, int y, Couleur couleur)
 		{
 			this.x = x;
 			this.y = y;
 			this.couleur = couleur;
-			this.w = w;
-			this.h = h;
 		}
 
 		public int getX() { return x; }
 		public int getY() { return y; }
-		public int getW() { return w; }
-		public int getH() { return h; }
 	}
 
 	private static class Segment // classe interne pour stocker les routes
@@ -155,4 +247,5 @@ public class PanelPlateau extends JPanel
 
 		public int getNbSections() { return nbSections; }
 	}
+	*/
 }

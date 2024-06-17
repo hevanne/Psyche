@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Sommet
 {
+	public static final int RAYON_SOMMET     = 10;
+	public static final int RAYON_IRESSOURCE = 20;
+	
 	private static int nbSommet = 0;
 	private int num;
 
@@ -111,7 +114,8 @@ public class Sommet
 	}
 
 	// Autres Méthodes
-	public boolean aProprietaire () { return this.proprietaire != null; }
+	public boolean aProprietaire () { return this.proprietaire != null;     }
+	public boolean estDepart     () { return this.num == 0;                 }
  	public void    ajouterRoute  (Route route) { this.lstRoutes.add(route); }
 	public String  toString      ()
 	{

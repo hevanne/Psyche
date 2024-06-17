@@ -37,8 +37,8 @@ public class Controleur
 	public String getVocab  (int i) { return this.jeu.getVocab(i);  }
 	public Sommet getSommet (int i) { return this.jeu.getSommet(i); }
 
-	public List<Sommet> getLstSommet() {return this.jeu.getLstSommet();}
-	public List<Route>  getLstRoute () {return this.jeu.getLstRoute ();}
+	public List<Sommet> getLstSommets () { return this.jeu.getLstSommets (); }
+	public List<Route>  getLstRoutes  () { return this.jeu.getLstRoutes  (); }
 
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.jeu.estFinJeu(); }

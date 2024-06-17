@@ -19,6 +19,8 @@ public class Joueur
 
 	private Ressource[][] tabRessources;
 
+	private String cheminImage;
+
 	private int tabScore[];
 	
 	// Constructeurs
@@ -35,6 +37,8 @@ public class Joueur
 
 		this.tabRessources = new Ressource[4][8];
 		this.tabScore = new int[this.tabRessources[0].length];
+
+		this.cheminImage = "";
 	}
 
 	// Accesseurs
@@ -45,10 +49,12 @@ public class Joueur
 	
 	public String getNom() { return this.nomJouer; }
 
-	public Ressource getRessource (int i, int j)
-	{
-		return this.tabRessources[i][j];
-	}
+	public Ressource getRessource (int i, int j) { return this.tabRessources[i][j]; }
+
+	public String getCheminImage () { return this.cheminImage; }
+
+	// Modificateurs
+	public void setCheminImage (String cheminImage) { this.cheminImage = cheminImage; }
 
 	// Autres Méthodes
 	public void ajouterSommet (Sommet sommet)
