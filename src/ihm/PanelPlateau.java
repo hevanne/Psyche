@@ -159,15 +159,15 @@ public class PanelPlateau extends JPanel
 				if(retour)
 				{
 					PanelPlateau.this.repaint();
-					lstTrajets = PanelPlateau.this.ctrl.plusCourtsChemins(this.sommetsActifs[1]);
+					lstTrajets = PanelPlateau.this.ctrl.plusCourtsTrajets(this.sommetsActifs[1], PanelPlateau.this.ctrl.getDepart());
 
 					if(lstTrajets.size() == 1)
 					{
-						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
+						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
 					else
 					{
-						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
+						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
 
 					System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());

@@ -68,24 +68,6 @@ public class Jeu
 		return null;
 	}
 
-	public List<Sommet> getSommetsPrp()
-	{
-		List<Sommet> retour;
-		Sommet       s;
-
-		retour = new ArrayList<Sommet>();
-		retour.add(this.getDepart());
-
-		for(int i = 0; i < this.lstSommets.size(); i++)
-		{
-			s = this.lstSommets.get(i);
-			if(s.aProprietaire())
-				retour.add(s);
-		}
-
-		return retour;
-	}
-
 	public String getImagePlateauVierge () { return this.images[0]; }
 	public String getImageDepart        () { return this.images[5]; } 
 	public String getImagePiece         () { return this.images[6]; } 
@@ -178,60 +160,60 @@ public class Jeu
 		return scores;
 	}
 
-	public List<List<Sommet>> plusCourtsChemins(Sommet smt)
+	public List<List<Sommet>> plusCourtsTrajets(Sommet smtDep, Sommet smtArr)
 	{
 		Queue<Sommet>  file;
-		Sommet         s;
 		List<Sommet>   trajet, voisins, marque;
 		List<List<Sommet>> retour;
+		Sommet         smt;
 
 		retour = new ArrayList<List<Sommet>>();
 		
 		marque = new ArrayList<Sommet>();
 		trajet = new ArrayList<Sommet>();
-		trajet.add(smt);
 
 		// Cf cours de graph
 		// Parcours en largeur
 		file = new LinkedList<Sommet>();
-		file.add(smt);
-		marque.add(smt);
+		file.add(smtDep);
+		marque.add(smtDep);
 		while(!file.isEmpty())
 		{
 			System.out.println(file);
-			s = file.remove();
-			voisins = s.getVoisinsPrp();
-			System.out.println("voisins de " + s + " : " + voisins);
+			smt = file.poll();
+			trajet.add(smt);
+			System.out.println(smt);
+
+			if(smt == smtArr)
+			{
+				if (retour.size() == 0 || trajet.size() == retour.get(0).size())
+				{
+					retour.add(new ArrayList<Sommet>(trajet));
+				}
+				else if (trajet.size() < retour.get(0).size())
+				{
+					retour.clear();
+					retour.add(trajet);
+				}
+
+				trajet.removeLast();
+			}
+
+			voisins = smt.getVoisinsPrp();
+			System.out.println("voisins de " + smt + " : " + voisins);
+			int cpt = 0;
 			for(int i = 0; i < voisins.size(); i++)
 			{
-				s = voisins.get(i);
-
-				if(s == this.getDepart())
+				Sommet tmp = voisins.get(i);
+				if(marque.indexOf(tmp) == -1) 
 				{
-					trajet.add(s);
-
-					if (retour.size() == 0 || trajet.size() == retour.get(0).size())
-					{
-						retour.add(new ArrayList<Sommet>(trajet));
-					}
-					else if (trajet.size() < retour.get(0).size())
-					{
-						retour.clear();
-						retour.add(trajet);
-					}
-
-					if (!trajet.isEmpty()) {
-						trajet.remove(trajet.size() - 1);
-					}
+					file.add(tmp);
+					marque.add(tmp);
 				}
-				else if(marque.indexOf(s) == -1) 
-				{
-					file.add(s);
-					marque.add(s);
-
-					trajet.add(s);
-				}
+				else cpt++;
 			}
+			if(cpt == voisins.size()) trajet.remove(smt);
+			System.out.println(trajet);
 		}
 
 		for(int i = 0; i < retour.size(); i++)
@@ -423,7 +405,7 @@ public class Jeu
 				this.prendreSommet(smtDep, smtArr);
 				
 
-				lstTrajets = this.plusCourtsChemins(smtArr);
+				lstTrajets = this.plusCourtsTrajets(smtArr, this.getDepart());
 				indiceTrajetChoisi = 0;
 				if(tabLig.length == 4)
 					indiceTrajetChoisi = Integer.parseInt(tabLig[3]);

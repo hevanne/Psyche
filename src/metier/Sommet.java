@@ -62,22 +62,49 @@ public class Sommet
 	public Joueur       getProprietaire () { return this.proprietaire; }
 	public IRessource   getRessource    () { return this.ressource;    }
 
-	public List<Sommet> getVoisinsPrp   () 
+	public List<Sommet> getVoisins      () 
 	{
 		List<Sommet> retour;
-		Route    r;
+		Route        r;
+		Sommet       autreSmt;
 
 		retour = new ArrayList<Sommet>();
 
 		for(int i = 0; i < this.lstRoutes.size(); i++)
 		{
 			r = this.lstRoutes.get(i);
-			if(r.getProprietaire() != null)
+
+			if  (r.getSmtDep() == this) 
+				autreSmt = r.getSmtArr();
+			else
+				autreSmt = r.getSmtDep();
+
+			retour.add(autreSmt);
+		}
+
+		return retour;
+	}
+
+	public List<Sommet> getVoisinsPrp   () 
+	{
+		List<Sommet> retour;
+		Route        r;
+		Sommet       autreSmt;
+
+		retour = new ArrayList<Sommet>();
+
+		for(int i = 0; i < this.lstRoutes.size(); i++)
+		{
+			r = this.lstRoutes.get(i);
+
+			if  (r.getSmtDep() == this) 
+				autreSmt = r.getSmtArr();
+			else
+				autreSmt = r.getSmtDep();
+
+			if(autreSmt.aProprietaire())
 			{
-				if  (r.getSmtDep() == this) 
-					retour.add(r.getSmtArr());
-				else
-					retour.add(r.getSmtDep());
+				retour.add(autreSmt);
 			}
 		}
 
