@@ -27,6 +27,4 @@ public class FrameJoueur extends JFrame
 		/* Activation des composants */
 
 	}
-
-	
 }

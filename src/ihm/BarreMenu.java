@@ -7,7 +7,7 @@ import controleur.Controleur;
 public class BarreMenu extends JMenuBar implements ActionListener
 {
 	private Controleur ctrl;
-	private String[][] modeleBarre = { { "M", "Etape",             "E"                 },
+	private String[][] modeleBarre = { { "M", "Etape",              "E"                 },
 	                                   { "I", "Etape suivante",     "D", "CTRL+SHIFT+Z" },
 									   { "I", "Etape précédente",   "Q", "CTRL+Z"       },
 									   { "I", "Sélectionner étape", "S", "CTRL+SHIFT+O" },

@@ -27,6 +27,7 @@ public class Controleur
 	public IHM getIHM(){ return this.ihm;}
 	public int    getNumTour    () { return this.metier.getNumTour    (); }
 	public Joueur getJoueurActif() { return this.metier.getJoueurActif(); }
+	public Sommet getDepart     () { return this.metier.getDepart     (); }
 
 	public Joueur getJoueur (int i) { return this.metier.getJoueur(i); }
 	public Sommet getSommet (int i) { return this.metier.getSommet(i); }
@@ -68,9 +69,9 @@ public class Controleur
 		this.metier.ajouterEtape(smtDep, smtArr, indiceTrajetChoisi); 
 	}
 
-	public List<List<Sommet>> plusCourtsChemins(Sommet smtArr) 
+	public List<List<Sommet>> plusCourtsTrajets(Sommet smtDep, Sommet smtArr) 
 	{ 
-		return this.metier.plusCourtsChemins(smtArr);
+		return this.metier.plusCourtsTrajets(smtDep, smtArr);
 	}
 
 	public int[] calculerScoresTrajet(List<Sommet> trajet) 
@@ -96,6 +97,8 @@ public class Controleur
 
 	public void majSommet(int num, int val, int coul, int x, int y)
 	{
+		System.out.println("ajout de ville num : " + num);
 		this.metier.ajouterVille(num, val, coul, x, y);
+		
 	}
 }

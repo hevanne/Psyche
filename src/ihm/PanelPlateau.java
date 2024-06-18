@@ -179,31 +179,21 @@ public class PanelPlateau extends JPanel
 				
 				if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
 				{
-					
-					boolean retour = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-					System.out.println(retour);
+					PanelPlateau.this.repaint();
+					lstTrajets = PanelPlateau.this.ctrl.plusCourtsTrajets(this.sommetsActifs[1], PanelPlateau.this.ctrl.getDepart());
 
-					if(retour)
+					if(false)
 					{
-						PanelPlateau.this.repaint();
-						lstTrajets = PanelPlateau.this.ctrl.plusCourtsChemins(this.sommetsActifs[1]);
-
-						if(lstTrajets.size() == 1)
-						{
-							scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
-						}
-						else
-						{
-							scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
-						}
-
-						System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());
-						System.out.println(scores[0]);
-						System.out.println(scores[1]);
-
-						PanelPlateau.this.ctrl.ajouterEtape(this.sommetsActifs[0], this.sommetsActifs[1], null);
-						PanelPlateau.this.ctrl.incrementerNumTour();
+						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
+					else
+					{
+						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
+					}
+
+					System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());
+					System.out.println(scores[0]);
+					System.out.println(scores[1]);
 
 					PanelPlateau.this.ctrl.majIHM();
 				}

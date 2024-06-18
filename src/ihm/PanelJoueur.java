@@ -4,6 +4,7 @@ import controleur.Controleur;
 import metier.Jeu;
 import metier.Joueur;
 import metier.Ressource;
+import metier.Sommet;
 
 import java.awt.*;
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class PanelJoueur extends JPanel
 
 	private static final int ECART_VERTICAL   = 55;
 	private static final int ECART_HORIZONTAL = 55;
-	private static final int RAYON_RESSOURCE      = 36;
+	private static final int RAYON_RESSOURCE  = 36;
 
 	public PanelJoueur(Controleur ctrl, int numJoueur, int largeur, int hauteur)
 	{
@@ -47,8 +48,23 @@ public class PanelJoueur extends JPanel
 		String url;
 		int    x, y;
 
-		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getTabRessources().length-1; i++)
-			for(int j = 0; j < this.ctrl.getJoueur(numJoueur).getTabRessources()[i].length-1; j++)
+		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getLstSommets().size(); i++)
+		{
+			Sommet smt = this.ctrl.getJoueur(numJoueur).getSommet(i);
+			if(smt != null)
+				{
+					url = "../theme/distrib_images_2/opaque/" + this.ctrl.getVocab(0) +"_"+ smt.getCouleur().getNom() + ".png";
+					img = getToolkit().getImage(url);
+					x = 30 + i%6 * 50;
+					y = 300 + 60 * (int) Math.floor(i/6);
+					g2.drawImage(img, x, y, x+Jeu.LARGEUR_SOMMET, y+Jeu.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
+					g2.setColor(Color.BLACK);
+					g2.drawString(""+smt.getValeur(), x+13, y+19);
+				}
+		}
+
+		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getTabRessources().length; i++)
+			for(int j = 0; j < this.ctrl.getJoueur(numJoueur).getTabRessources()[i].length; j++)
 			{
 				Ressource res = this.ctrl.getJoueur(numJoueur).getRessource(i, j);
 				if(res != null)
