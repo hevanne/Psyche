@@ -105,6 +105,21 @@ public class PanelTableVille extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
-		
+		if (e.getSource() == this.btnModifier)
+		{
+			this.ctrl.majSommet(Integer.parseInt(model.getValueAt(0, 0)+""),
+								Integer.parseInt(model.getValueAt(0, 1)+""),
+								0,
+								Integer.parseInt(model.getValueAt(0, 3)+""),
+								Integer.parseInt(model.getValueAt(0, 4)+"")); 
+			for (int i=1; i<this.model.getRowCount(); i++)
+			{
+				this.ctrl.majSommet(Integer.parseInt(model.getValueAt(i, 0)+""),
+									Integer.parseInt(model.getValueAt(i, 1)+""),
+									Integer.parseInt(model.getValueAt(i, 2)+""),
+									Integer.parseInt(model.getValueAt(i, 3)+""),
+									Integer.parseInt(model.getValueAt(i, 4)+"")); 
+			}
+		}
 	}
 }

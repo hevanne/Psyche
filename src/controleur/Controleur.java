@@ -93,4 +93,9 @@ public class Controleur
 			this.frameVille.dispose();
 
 	}
+
+	public void majSommet(int num, int val, int coul, int x, int y)
+	{
+		this.metier.ajouterVille(num, val, coul, x, y);
+	}
 }

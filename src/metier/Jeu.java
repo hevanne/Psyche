@@ -2,6 +2,7 @@ package metier;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -459,5 +460,52 @@ public class Jeu
 			pw.close();
 		}
 		catch (Exception e){}
+	}
+
+	public void ajouterVille(int num, int val, int coul, int x, int y)
+	{
+
+		FileReader fr;
+		String sRet = "";
+
+
+		try
+		{
+			fr = new FileReader ( "../theme/map.txt" );
+			Scanner sc = new Scanner ( fr );
+			sRet += sc.nextLine() + "\n";
+			sc.nextLine();
+			sRet += sc.nextLine() + "\n";
+			sc.nextLine();
+			sRet += sc.nextLine() + "\n";
+			sc.nextLine();
+			if (num == 0)
+			{
+				sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+				fr.close();
+			}
+			if (num != 0)
+			{
+				while ( sc.hasNextLine()  && !sc.nextLine().equals("# ROUTES"))
+				{
+					String[] mots = sc.nextLine().split("\t");
+					if(mots.length>1)
+					{
+						if (mots[2].equals("1") && coul == 1){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";}
+						if (mots[2].equals("2") && coul == 2){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";}
+						if (mots[2].equals("3") && coul == 3){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";}
+						if (mots[2].equals("4") && coul == 4){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";}
+						if (mots[2].equals("5") && coul == 5){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";}
+						if (mots[2].equals("6") && coul == 6){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";}
+					}
+				}
+				fr.close();
+			}
+
+			fr.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+
+		System.out.println(sRet);
 	}
 }
