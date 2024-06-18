@@ -6,27 +6,27 @@ import javax.swing.*;
 
 public class FramePlateau extends JFrame
 {
-	private Controleur ctrl;
-	private PanelPlateau pnlPlateau;
+	private Controleur   ctrl;
+	private int          largeur, hauteur;
+	private PanelPlateau panelPlateau;
 
-	public FramePlateau(Controleur ctrl)
-	{
-		this.setTitle("Plateau");
-		this.setLocation(50,50);
-		this.setSize(1269, 1122);
+	public FramePlateau(Controleur ctrl, int largeur, int hauteur)
+	{    
+		this.ctrl    = ctrl;
+		this.largeur = largeur;
+		this.hauteur = hauteur;
+
 		this.setJMenuBar( new BarreMenu(ctrl) );
 
 		/* Création des composants */
 
-		this.pnlPlateau = new PanelPlateau(ctrl);
+		this.panelPlateau = new PanelPlateau(ctrl, this.largeur, this.hauteur);
 
 		/* Positionnement des composants */
 
-		this.add(this.pnlPlateau);
+		this.add(this.panelPlateau);
 
 		/* Activation des composants */
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
 	}
 }

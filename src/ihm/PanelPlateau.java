@@ -4,149 +4,130 @@ import controleur.Controleur;
 import metier.*;
 
 import javax.swing.*;
-import javax.swing.text.Segment;
+import java.awt.*;
+import java.awt.event.*;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Color;
-import java.awt.BasicStroke;
 
 public class PanelPlateau extends JPanel
 {
-
-	//private List<Point>   points   = new ArrayList<>();
-	//private List<Segment> segments = new ArrayList<>();
-
 	private Controleur ctrl;
+	private int        largeur, hauteur;
+	private Image      imgPlateau, imgDepart;
 
-	private Image imgPlateau;
-
-	public PanelPlateau(Controleur ctrl)
+	public PanelPlateau(Controleur ctrl, int largeur, int hauteur)
 	{
-		/* Création des composants */
-		this.ctrl= ctrl;
-		
+		this.ctrl    = ctrl;
+		this.largeur = largeur;
+		this.hauteur = hauteur;
+
 		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getImagePlateauVierge());
-
-		/* Positionnement des composants */
-		//this.initPlateau();
-
-		/* Activation des composants */
+		this.imgDepart  = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getImageDepart());
 
 		this.addMouseListener( new GereSouris() );
-
-		this.repaint();
-	}
-
-
-
-	public void initPlateau()
-	{
-		
-		/*
-		points.clear();
-		this.repaint();
-
-		for(Sommet s : this.ctrl.getLstSommet())
-		{
-			System.out.println(s);
-			this.points.add(new Point(s.getX(), s.getY(), s.getCouleur()));
-		}
-
-		for(Route r : this.ctrl.getLstRoute())
-		{
-			System.out.println(r);
-			this.segments.add(new Segment(r.getSmtDep(), r.getSmtArr(), r.getNbSection()));
-		}
-		*/
 	}
 
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setFont(new Font("Arial", Font.BOLD, 10));
 
-		g2.drawImage ( this.imgPlateau, 0, 0, this );
+		g2.drawImage(this.imgPlateau, 0, 0, this.largeur, this.hauteur-25, 15, 15, this.imgPlateau.getWidth(this)-15, this.imgPlateau.getHeight(this)-15, this);
 
-		List<Sommet> lstSommets = this.ctrl.getLstSommets();
+		String       url;
+		Image        img;
+		Sommet       smt;
+		int          x1, y1, x2, y2, mx, my;
+		List<Route>  lstRoutes;
+		List<Sommet> lstSommets;
+
 		
-		// Déssiner Sommet de Départ
-		g2.setColor(lstSommets.get(0).getCouleur().getColor());
-		g2.fillOval(lstSommets.get(0).getX() - Sommet.RAYON_SOMMET, 
-		            lstSommets.get(0).getY() - Sommet.RAYON_SOMMET, 
-					Sommet.RAYON_SOMMET * 2, 
-					Sommet.RAYON_SOMMET * 2);
+		lstRoutes = this.ctrl.getLstRoutes();
+		g2.setColor(Color.DARK_GRAY);
+		g2.setStroke(new BasicStroke(4));
 
-		for(int i = 1; i < lstSommets.size(); i++)
+		for (Route r: lstRoutes)
 		{
-			Sommet s = lstSommets.get(i);
+			x1 = r.getSmtDep().getX() + Jeu.LARGEUR_SOMMET/2;
+			y1 = r.getSmtDep().getY() + Jeu.HAUTEUR_SOMMET/2;
+			x2 = r.getSmtArr().getX() + Jeu.LARGEUR_SOMMET/2;
+			y2 = r.getSmtArr().getY() + Jeu.HAUTEUR_SOMMET/2;
 			
-			if(!s.aProprietaire())
-			{
-				g2.setColor(s.getCouleur().getColor());
-				g2.fillOval(s.getX() - Sommet.RAYON_SOMMET, 
-				            s.getY() - Sommet.RAYON_SOMMET, 
-				            Sommet.RAYON_SOMMET * 2, 
-				            Sommet.RAYON_SOMMET * 2);
+			g2.fillOval(x1-5, y1-5, 10, 10);
+			g2.fillOval(x2-5, y2-5, 10, 10);
 
-				g2.setColor(s.getRessource().getCouleur().getColor());
-				g2.fillOval(s.getX() - Sommet.RAYON_IRESSOURCE, 
-				            s.getY() + Sommet.RAYON_IRESSOURCE, 
-				            Sommet.RAYON_IRESSOURCE * 2, 
-				            Sommet.RAYON_IRESSOURCE * 2);
-			}
-			else
-			{
-				g2.setColor(s.getCouleur().getColor());
-				g2.drawOval(s.getX() - Sommet.RAYON_SOMMET, 
-				            s.getY() - Sommet.RAYON_SOMMET, 
-				            Sommet.RAYON_SOMMET * 2, 
-				            Sommet.RAYON_SOMMET * 2);
+			g2.drawLine(x1, y1, x2, y2);
 
-				g2.setColor(s.getRessource().getCouleur().getColor());
-				g2.drawOval(s.getX() - Sommet.RAYON_IRESSOURCE, 
-				            s.getY() + Sommet.RAYON_IRESSOURCE, 
-				            Sommet.RAYON_IRESSOURCE * 2, 
-				            Sommet.RAYON_IRESSOURCE * 2);
+			if (r.getNbSection() == 2)
+			{
+				mx = (x1+x2)/2;
+				my = (y1+y2)/2;
+				g2.fillOval(mx-5, my-5, 10, 10);
 			}
 
-			List<Route> lstRoute = this.ctrl.getLstRoutes();
-			g2.setColor(Color.DARK_GRAY);
-			float epaisseur = 5.0f;
-			g2.setStroke(new BasicStroke(epaisseur));
-
-			for (Route r: lstRoute)
+			if (r.aProprietaire())
 			{
-				int mx, my;
-				g2.drawLine(r.getSmtDep().getX(), r.getSmtDep().getY(),r.getSmtArr().getX(), r.getSmtArr().getY());
+				url = "../theme/distrib_images_2/"+this.ctrl.getImagePionJoueur(r.getProprietaire().getNum());
+				img = getToolkit().getImage(url);
 
-				if (r.getNbSection() == 2)
+				mx = (x1+x2)/2;
+				my = (y1+y2)/2;
+
+				if (r.getNbSection() == 1)
 				{
-					mx = (r.getSmtDep().getX()+r.getSmtArr().getX())/2;
-					my = (r.getSmtDep().getY()+r.getSmtArr().getY())/2;
-					g2.fillOval(mx-10, my-10,20,20);
+					g2.drawImage(img, mx-Jeu.RAYON_PION, my-Jeu.RAYON_PION, mx+Jeu.RAYON_PION, my+Jeu.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+				}
+				else
+				{
+					x1 = (mx+x1)/2;
+					y1 = (my+y1)/2;
+					g2.drawImage(img, x1-Jeu.RAYON_PION, y1-Jeu.RAYON_PION, x1+Jeu.RAYON_PION, y1+Jeu.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					x2 = (mx+x2)/2;
+					y2 = (my+y2)/2;
+					g2.drawImage(img, x2-Jeu.RAYON_PION, y2-Jeu.RAYON_PION, x2+Jeu.RAYON_PION, y2+Jeu.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 				}
 			}
 		}
 
-		/*
-		List<Point> pointsCopy = new ArrayList<>(points);
+		lstSommets = this.ctrl.getLstSommets();
+		
+		// Déssiner Sommet de Départ
+		smt = lstSommets.get(0);
+		g2.drawImage (this.imgDepart, smt.getX(), smt.getY(), smt.getX()+Jeu.LARGEUR_SOMMET, smt.getY()+Jeu.LARGEUR_SOMMET, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 
-		// Définir la couleur pour les points
-		g2.drawImage ( this.imgPlateau, 0, 0, this );
-
-		// dessine les points déjà enregistrés
-		for(Point p : pointsCopy)
+		
+		for(int i = 1; i < lstSommets.size(); i++)
 		{
-			g2.setColor(p.couleur.getColor());
-			g2.fillOval(p.x - RAYON, p.y - RAYON, RAYON * 2, RAYON * 2);
+			smt = lstSommets.get(i);
+			
+			if(!smt.aProprietaire())
+			{
+				// Sommet
+				url = "../theme/distrib_images_2/transparent/" + this.ctrl.getVocab(0) +"_"+ smt.getCouleur().getNom() + ".png";
+				img = getToolkit().getImage(url);
+				g2.drawImage (img, smt.getX(), smt.getY(), smt.getX()+Jeu.LARGEUR_SOMMET, smt.getY()+Jeu.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
+				g2.setColor(Color.BLACK);
+				g2.drawString(""+smt.getValeur(), smt.getX()+13, smt.getY()+19);
+
+				// Ressource
+				url = "../theme/distrib_images_2/ressources/" + smt.getRessource().getCouleur().getNom().toUpperCase() + ".png";
+				img = getToolkit().getImage(url);
+				x1  = smt.getX()+Jeu.LARGEUR_SOMMET/2-Jeu.LARGEUR_SOMMET/2;
+				y1  = smt.getY()+Jeu.HAUTEUR_SOMMET-Jeu.LARGEUR_SOMMET;
+				x2  = x1+Jeu.LARGEUR_SOMMET;
+				y2  = y1+Jeu.LARGEUR_SOMMET;
+				g2.drawImage (img, x1, y1, x2, y2, 0, 0, img.getWidth(this), img.getHeight(this), this);
+			}
+			else
+			{
+				url = "../theme/distrib_images_2/transparent/" + this.ctrl.getVocab(0) + "_" + smt.getCouleur().getNom() + "_clair.png";
+				img = getToolkit().getImage(url);
+				g2.drawImage (img, smt.getX(), smt.getY(), smt.getX()+Jeu.LARGEUR_SOMMET, smt.getY()+Jeu.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
+			}
+ 			
 		}
-		*/
 	}
 
 	private class GereSouris extends MouseAdapter
@@ -156,7 +137,7 @@ public class PanelPlateau extends JPanel
 		public void mousePressed(MouseEvent e)
 		{
 			this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			//System.out.println("s1 : "+this.sommetsActifs[0]);
+			System.out.println("s1 : "+this.sommetsActifs[0]);
 		}
 
 		
@@ -167,13 +148,13 @@ public class PanelPlateau extends JPanel
 			
 			scores = new int[2];
 			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			//System.out.println("s2 : "+this.sommetsActifs[1]);
+			System.out.println("s2 : "+this.sommetsActifs[1]);
 			
 			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
 			{
 				
 				boolean retour = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-				//System.out.println(retour);
+				System.out.println(retour);
 
 				if(retour)
 				{
@@ -188,94 +169,18 @@ public class PanelPlateau extends JPanel
 					{
 						scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
-					//System.out.println(scores[0]);
-					//System.out.println(scores[1]);
-					
+
+					System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());
+					System.out.println(scores[0]);
+					System.out.println(scores[1]);
+
 					PanelPlateau.this.ctrl.ajouterEtape(this.sommetsActifs[0], this.sommetsActifs[1], null);
 					PanelPlateau.this.ctrl.incrementerNumTour();
 				}
 
+				PanelPlateau.this.ctrl.majIHM();
 			}
-
 			this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 		}
 	}
-
-	
-
-	/*
-	private class GereSouris extends MouseAdapter
-	{
-		private Point pTemp1, pTemp2;
-
-		public void mouseClicked(MouseEvent e)
-		{
-			super.mouseClicked(e);
-
-			for (Point p : points)
-			{
-				if (PanelPlateau.distance(e.getX(), e.getY(), p.getX(), p.getY()) <= PanelPlateau.RAYON)
-				{
-					System.out.println("point : "+p);
-					if (pTemp1 == null)
-					{
-						pTemp1 = p;
-					}
-					else
-					{
-						pTemp2 = p;
-					}
-				}
-			}
-
-			if (pTemp1 != null && pTemp2 != null)
-			{
-				Sommet sommetTmp1, sommetTmp2;
-				sommetTmp1 = PanelPlateau.this.ctrl.getSommet(pTemp1.getX(), pTemp1.getY());
-				sommetTmp2 = PanelPlateau.this.ctrl.getSommet(pTemp2.getX(), pTemp2.getY());
-
-				System.out.println(sommetTmp1);
-				System.out.println(sommetTmp2);
-
-				Route r = sommetTmp1.getRoute(sommetTmp2);
-
-				System.out.println(r);
-			}
-		}
-	}
-
-	private static class Point // classe interne pour stocker les sommets
-	{
-		int x, y;
-		Couleur couleur;
-
-		Point(int x, int y, Couleur couleur)
-		{
-			this.x = x;
-			this.y = y;
-			this.couleur = couleur;
-		}
-
-		public int getX() { return x; }
-		public int getY() { return y; }
-	}
-
-	private static class Segment // classe interne pour stocker les routes
-	{
-		Sommet dep, arr;
-		int nbSections;
-
-		Segment(Sommet dep, Sommet arr, int nbSections)
-		{
-			this.dep = dep;
-			this.arr = arr;
-			this.nbSections = nbSections;
-		}
-
-		public Sommet getDep() { return dep; }
-		public Sommet getArr() { return arr; }
-
-		public int getNbSections() { return nbSections; }
-	}
-	*/
 }

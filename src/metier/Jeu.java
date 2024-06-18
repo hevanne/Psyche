@@ -12,6 +12,12 @@ import java.util.Scanner;
 
 public class Jeu
 {
+	public static final int RAYON_SOMMET     = 12;
+	public static final int RAYON_IRESSOURCE = 12;
+	public static final int LARGEUR_SOMMET   = 32;
+	public static final int HAUTEUR_SOMMET   = 56;
+	public static final int RAYON_PION       = 10;
+
 	private int      numTour;
 	private String[] vocab;
 	private String[] images;
@@ -23,12 +29,11 @@ public class Jeu
 	private List<Route>      lstRoutes;
 
 	private List<String>     lstEtapes;
-	private String imagePlateauVierge;
 
 	public Jeu()
 	{
 		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
-		this.images  = new String[5];
+		this.images  = new String[7];
 
 		this.lstJoueurs    = new ArrayList<Joueur>();
 		this.lstCouleurs   = new ArrayList<Couleur>();
@@ -36,8 +41,7 @@ public class Jeu
 		this.lstSommets    = new ArrayList<Sommet>();
 		this.lstRoutes     = new ArrayList<Route>();
 		
-		this.lstEtapes          = new ArrayList<String>();
-		this.imagePlateauVierge = "";
+		this.lstEtapes     = new ArrayList<String>();
 
 		this.nouveauJeu();
 	}
@@ -58,15 +62,10 @@ public class Jeu
 	public Sommet getSommet(int x, int y)
 	{
 		for(Sommet smt : this.lstSommets)
-			//if(smt.getX() == x && smt.getY() == y)
-			if(Jeu.distance(x, y, smt.getX(), smt.getY()) <= Sommet.RAYON_SOMMET)
+			if(x >= smt.getX() && y >= smt.getY() && x <= smt.getX()+Jeu.LARGEUR_SOMMET && y <= smt.getY()+Jeu.HAUTEUR_SOMMET)
 				return smt;
 
 		return null;
-	}
-	private static double distance(int x1, int y1, int x2, int y2)
-	{
-		return Math.sqrt((x1-x2) * (x1-x2) + (y1-y2) * (y1-y2));
 	}
 
 	public List<Sommet> getSommetsPrp()
@@ -87,14 +86,17 @@ public class Jeu
 		return retour;
 	}
 
-	public String getImagePlateauVierge () { return this.imagePlateauVierge; }
+	public String getImagePlateauVierge () { return this.images[0]; }
+	public String getImageDepart        () { return this.images[5]; } 
+	public String getImagePiece         () { return this.images[6]; } 
+	public String getImagePlateauJoueur (int numJoueur) { return this.images[1+numJoueur]; } 
+	public String getImagePionJoueur    (int numJoueur) { return this.images[2+numJoueur]; } 
 
 	// Autres Méthodes
 	public void nouveauJeu()
 	{
 		this.numTour = 1;
 		this.initTheme();
-		this.setCheminsImage();
 		this.initMap();
 
 		/*
@@ -154,7 +156,6 @@ public class Jeu
 
 	// trouver le plus court trajet entre smt et Nouvelle Rome
 	// parcourir le trajet en ajoutant les points
-	// /!\ Mines d'or
 	public int[] calculerScoresTrajet(List<Sommet> trajet)
 	{
 		int[]    scores;
@@ -197,8 +198,10 @@ public class Jeu
 		marque.add(smt);
 		while(!file.isEmpty())
 		{
+			System.out.println(file);
 			s = file.remove();
 			voisins = s.getVoisinsPrp();
+			System.out.println("voisins de " + s + " : " + voisins);
 			for(int i = 0; i < voisins.size(); i++)
 			{
 				s = voisins.get(i);
@@ -224,11 +227,15 @@ public class Jeu
 				else if(marque.indexOf(s) == -1) 
 				{
 					file.add(s);
-					trajet.add(s);
 					marque.add(s);
+
+					trajet.add(s);
 				}
 			}
 		}
+
+		for(int i = 0; i < retour.size(); i++)
+			System.out.println(retour.get(i));
 
 		return retour;
 	}
@@ -317,13 +324,6 @@ public class Jeu
 			}
 			scFic.close();
 		} catch (Exception e) {System.out.println(e);}
-	}
-
-	private void setCheminsImage()
-	{
-		this.imagePlateauVierge = this.images[0];
-		this.lstJoueurs.get(0).setCheminImage(this.images[1]);
-		this.lstJoueurs.get(1).setCheminImage(this.images[2]);
 	}
 
 	private String getDonnee(String lig)

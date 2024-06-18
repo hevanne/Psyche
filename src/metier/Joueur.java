@@ -19,8 +19,6 @@ public class Joueur
 
 	private Ressource[][] tabRessources;
 
-	private String image;
-
 	private int tabScore[];
 	
 	// Constructeurs
@@ -32,8 +30,6 @@ public class Joueur
 		this.lstSommets     = new ArrayList<Sommet>();
 		this.tabRessources = new Ressource[4][8];
 		this.tabScore = new int[this.tabRessources[0].length];
-
-		this.image = "";
 
 		this.nouveauJoueur();
 	}
@@ -48,10 +44,7 @@ public class Joueur
 
 	public Ressource getRessource (int i, int j) { return this.tabRessources[i][j]; }
 
-	public String getImage () { return this.image; }
-
-	// Modificateurs
-	public void setCheminImage (String image) { this.image = image; }
+	public Ressource[][] getTabRessources () { return this.tabRessources; }
 
 	// Autres Méthodes
 	public void nouveauJoueur()
@@ -193,7 +186,7 @@ public class Joueur
 
 	public void varierNbPossessions (int nb)
 	{
-		if(this.nbPossessions + nb >= 0)
+		if(nb >= 0)
 			this.nbPossessions += nb;
 	}
 

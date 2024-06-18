@@ -1,34 +1,32 @@
 package ihm;
 
 import controleur.Controleur;
-import metier.Joueur;
 
 import javax.swing.*;
 
 public class FrameJoueur extends JFrame
 {
 	private Controleur  ctrl;
-	private PanelJoueur pnlJoueur;
+	private int         largeur, hauteur;
+	private PanelJoueur panelJoueur;
 
-	public FrameJoueur(Controleur ctrl, int numJoueur)
+	public FrameJoueur(Controleur ctrl, int numJoueur, int largeur, int hauteur)
 	{
-		this.ctrl = ctrl;
-		
-		this.setTitle(this.ctrl.getJoueur(numJoueur).getNom());
-		this.setLocation(50,50);
-		this.setSize(553, 435);
+		this.ctrl    = ctrl;
+		this.largeur = largeur;
+		this.hauteur = hauteur;
 
 		/* Création des composants */
 
-		this.pnlJoueur = new PanelJoueur(ctrl, numJoueur);
+		this.panelJoueur = new PanelJoueur(ctrl, numJoueur, largeur, hauteur);
 
 		/* Positionnement des composants */
 
-		this.add(pnlJoueur);
+		this.add(panelJoueur);
 
 		/* Activation des composants */
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
 	}
+
+	
 }

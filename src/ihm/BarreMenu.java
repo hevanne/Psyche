@@ -7,9 +7,10 @@ import controleur.Controleur;
 public class BarreMenu extends JMenuBar implements ActionListener
 {
 	private Controleur ctrl;
-	private String[][] modeleBarre = { { "M", "Etapes",           "E"                 },
-	                                   { "I", "Etape suivante",   "D", "CTRL+SHIFT+Z" },
-									   { "I", "Etape précédente", "Q", "CTRL+Z"       }, };
+	private String[][] modeleBarre = { { "M", "Etape",             "E"                 },
+	                                   { "I", "Etape suivante",     "D", "CTRL+SHIFT+Z" },
+									   { "I", "Etape précédente",   "Q", "CTRL+Z"       },
+									   { "I", "Sélectionner étape", "S", "CTRL+SHIFT+O" }, };
 
 	public BarreMenu(Controleur ctrl)
 	{
@@ -64,5 +65,7 @@ public class BarreMenu extends JMenuBar implements ActionListener
 			this.ctrl.parcourirEtape(this.ctrl.getNumTour()+1);
 		if ( "Etape précédente".equals(((JMenuItem)e.getSource()).getText()) )
 			this.ctrl.parcourirEtape(this.ctrl.getNumTour()-1);
+		if ( "Sélectionner étape".equals(((JMenuItem)e.getSource()).getText()) )
+			this.ctrl.selectionnerEtape();
 	}
 }
