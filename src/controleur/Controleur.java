@@ -75,5 +75,10 @@ public class Controleur
 		return this.metier.calculerScoresTrajet(trajet); 
 	}
 
-	public void majIHM() { this.ihm.majTout(); }
+	public void majIHM()
+	{
+		this.metier.getJoueur(0).triTabRessource();
+		this.metier.getJoueur(1).triTabRessource();
+		this.ihm.majTout();
+	}
 }

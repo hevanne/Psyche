@@ -200,7 +200,7 @@ public class Jeu
 					retour.add(trajet);
 				}
 
-				trajet.removeLast();
+				//trajet.removeLast();
 			}
 
 			voisins = smt.getVoisinsPrp();

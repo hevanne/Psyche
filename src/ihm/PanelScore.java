@@ -1,7 +1,7 @@
 package ihm;
 
 import controleur.Controleur;
-import metier.Joueur;
+import metier.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 public class PanelScore extends JPanel
 {
@@ -32,6 +33,9 @@ public class PanelScore extends JPanel
 		this.ctrl = ctrl;
 		this.j1 = this.ctrl.getJoueur(0);
 		this.j2 = this.ctrl.getJoueur(1);
+
+		calculerNbPossessions(j1);
+		calculerNbPossessions(j2);
 
 		this.setLayout(new BorderLayout());
 
@@ -225,5 +229,18 @@ public class PanelScore extends JPanel
 			return 10;
 
 		return 0;
+	}
+
+	private int calculerNbPossessions(Joueur j)
+	{
+		List<Route> lstRoutes = this.ctrl.getLstRoutes();
+
+		for(Route r : lstRoutes)
+		{
+			if(r.aProprietaire() && r.getProprietaire().equals(j))
+				j.varierNbPossessions(r.getNbSection());
+		}
+
+		return j.getNbPossessions();
 	}
 }

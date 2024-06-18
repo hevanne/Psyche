@@ -269,28 +269,49 @@ public class Joueur
 
 	public void triTabRessource()
 	{
-		for (int i=0; i<this.tabScore.length; i++)
+		int[] resourceCounts = new int[tabRessources[0].length];
+
+		// Calculer le nombre de ressources dans chaque colonne
+		for (int j = 0; j < tabRessources[0].length; j++)
 		{
-			for (int j = 0; j < this.tabScore.length - 1; j++) {
-				// Si l'élément actuel est plus grand que l'élément suivant
-				if (tabScore[j] > tabScore[j + 1]) {
-					// Échange des éléments
-					int temp = tabScore[j];
-					tabScore[j] = tabScore[j + 1];
-					tabScore[j + 1] = temp;
-					this.permuter(j, (j+1));
+			int count = 0;
+			for (int i = 0; i < tabRessources.length; i++)
+			{
+				if (tabRessources[i][j] != null)
+					count++;
+			}
+			resourceCounts[j] = count;
+		}
+
+		// Tri à bulles des colonnes en fonction du nombre de ressources
+		boolean swapped;
+		for (int i = 0; i < resourceCounts.length - 1; i++)
+		{
+			swapped = false;
+			for (int j = 0; j < resourceCounts.length - 1 - i; j++)
+			{
+				if (resourceCounts[j] < resourceCounts[j + 1])
+				{
+					// Échange des compteurs
+					int tempCount = resourceCounts[j];
+					resourceCounts[j] = resourceCounts[j + 1];
+					resourceCounts[j + 1] = tempCount;
+					// Échange des colonnes correspondantes dans tabRessources
+					permuter(j, j + 1);
+					swapped = true;
 				}
-			} 
+			}
+			if (!swapped) break;
 		}
 	}
 
 	private void permuter(int i, int j)
 	{
-		for (int cpt=0; cpt<this.tabRessources.length; cpt++)
+		for (int cpt = 0; cpt < tabRessources.length; cpt++)
 		{
-			Ressource tmp = this.tabRessources[cpt][i];
-			this.tabRessources[cpt][i] = this.tabRessources[cpt][j];
-			this.tabRessources[cpt][j] = tmp;
+			Ressource tmp = tabRessources[cpt][i];
+			tabRessources[cpt][i] = tabRessources[cpt][j];
+			tabRessources[cpt][j] = tmp;
 		}
 	}
 
