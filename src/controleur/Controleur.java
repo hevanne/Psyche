@@ -3,12 +3,15 @@ package controleur;
 import metier.*;
 import ihm.*;
 
+
 import java.util.List;
 
 public class Controleur
 {
 	private Jeu metier;
 	private IHM ihm;
+	private FrameVille frameVille;
+	private FrameRoute frameRoute;
 
 	// Constructeurs
 	public Controleur()
@@ -21,6 +24,7 @@ public class Controleur
 	}
 
 	// Accesseurs
+	public IHM getIHM(){ return this.ihm;}
 	public int    getNumTour    () { return this.metier.getNumTour    (); }
 	public Joueur getJoueurActif() { return this.metier.getJoueurActif(); }
 
@@ -75,4 +79,18 @@ public class Controleur
 	}
 
 	public void majIHM() { this.ihm.majTout(); }
+
+	public void setModifier()
+	{
+		this.frameVille = new FrameVille(this);
+		this.frameRoute = new FrameRoute(this);
+	}
+
+	public void setJouer()
+	{
+		System.out.println("rerere");
+			this.frameRoute.dispose();
+			this.frameVille.dispose();
+
+	}
 }

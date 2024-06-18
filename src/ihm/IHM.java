@@ -41,7 +41,7 @@ public class IHM
 			this.tabFrameJoueur[i].setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
        
-		this.framePlateau = new FramePlateau(this.ctrl, this.largeurPlateau, this.hauteurPlateau);
+		this.framePlateau = new FramePlateau(this.ctrl, this.largeurPlateau, this.hauteurPlateau, true);
 		this.framePlateau.setTitle("Plateau principal");
 		this.framePlateau.setSize(this.largeurPlateau, this.hauteurPlateau);
 		this.framePlateau.setResizable(false);
@@ -54,6 +54,10 @@ public class IHM
 	}
 
 	// Accesseurs
+	public FramePlateau getFramePlateau()
+	{
+		return this.framePlateau;
+	}
 
 
 	// Autres Méthodes

@@ -10,7 +10,7 @@ public class FramePlateau extends JFrame
 	private int          largeur, hauteur;
 	private PanelPlateau panelPlateau;
 
-	public FramePlateau(Controleur ctrl, int largeur, int hauteur)
+	public FramePlateau(Controleur ctrl, int largeur, int hauteur, boolean bool)
 	{    
 		this.ctrl    = ctrl;
 		this.largeur = largeur;
@@ -20,7 +20,7 @@ public class FramePlateau extends JFrame
 
 		/* Création des composants */
 
-		this.panelPlateau = new PanelPlateau(ctrl, this.largeur, this.hauteur);
+		this.panelPlateau = new PanelPlateau(ctrl, this.largeur, this.hauteur, bool);
 
 		/* Positionnement des composants */
 
@@ -28,5 +28,10 @@ public class FramePlateau extends JFrame
 
 		/* Activation des composants */
 
+	}
+
+	public PanelPlateau getPanelPlateau()
+	{
+		return this.panelPlateau;
 	}
 }
