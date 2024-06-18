@@ -97,5 +97,12 @@ public class Controleur
 
 	public void afficherScore     () { new FrameScore(this); }
 	public void selectionnerEtape () { new FrameEtape(this); }
-	public void majIHM            () { this.ihm.majTout();   }
+
+	public void majIHM()
+	{
+		this.metier.getJoueur(0).triTabRessource();
+		this.metier.getJoueur(1).triTabRessource();
+		this.ihm.majTout();
+	}
+
 }

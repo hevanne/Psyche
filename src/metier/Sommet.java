@@ -18,7 +18,7 @@ public class Sommet
 	private List<Route> lstRoutes = new ArrayList<Route>();
 
 
-	private  Sommet (int valeur, Couleur couleur,int x, int y)
+	private Sommet (int valeur, Couleur couleur,int x, int y)
 	{
 		this.num     = nbSommet++;
 		this.valeur  = valeur;

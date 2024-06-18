@@ -225,6 +225,7 @@ public class Jeu
 					retour.clear();
 					retour.add(trajet);
 				}
+
 			}
 
 			smtVoisins = smt.getVoisins();

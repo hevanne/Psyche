@@ -66,6 +66,7 @@ public class PanelPlateau extends JPanel
 				g2.fillOval(mx-5, my-5, 10, 10);
 			}
 
+			// Pion
 			if (r.aProprietaire())
 			{
 				url = "../theme/distrib_images_2/"+this.ctrl.getImagePionJoueur(r.getProprietaire().getNum());
@@ -76,16 +77,16 @@ public class PanelPlateau extends JPanel
 
 				if (r.getNbSection() == 1)
 				{
-					g2.drawImage(img, mx-IHM.RAYON_PION, my-IHM.RAYON_PION, mx+IHM.RAYON_PION, my+IHM.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					g2.drawImage(img, mx-IHM.RAYON_PION, my-IHM.RAYON_PION, mx+IHM.RAYON_PION*2, my+IHM.RAYON_PION*2, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 				}
 				else
 				{
 					x1 = (mx+x1)/2;
 					y1 = (my+y1)/2;
-					g2.drawImage(img, x1-IHM.RAYON_PION, y1-IHM.RAYON_PION, x1+IHM.RAYON_PION, y1+IHM.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					g2.drawImage(img, x1-IHM.RAYON_PION, y1-IHM.RAYON_PION, x1+IHM.RAYON_PION*2, y1+IHM.RAYON_PION*2, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 					x2 = (mx+x2)/2;
 					y2 = (my+y2)/2;
-					g2.drawImage(img, x2-IHM.RAYON_PION, y2-IHM.RAYON_PION, x2+IHM.RAYON_PION, y2+IHM.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					g2.drawImage(img, x2-IHM.RAYON_PION, y2-IHM.RAYON_PION, x2+IHM.RAYON_PION*2, y2+IHM.RAYON_PION*2, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 				}
 			}
 		}
