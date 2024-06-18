@@ -43,6 +43,16 @@ public class Jeu
 		
 		this.lstEtapes     = new ArrayList<String>();
 
+		this.initTheme();
+		this.initMap();
+
+		int indRes = 0;
+		for(int i = 1; i < this.lstSommets.size(); i++)
+		{
+			indRes = (int)(Math.random() * this.lstRessources.size());
+			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
+		}
+
 		this.nouveauJeu();
 	}
 
@@ -68,24 +78,6 @@ public class Jeu
 		return null;
 	}
 
-	public List<Sommet> getSommetsPrp()
-	{
-		List<Sommet> retour;
-		Sommet       s;
-
-		retour = new ArrayList<Sommet>();
-		retour.add(this.getDepart());
-
-		for(int i = 0; i < this.lstSommets.size(); i++)
-		{
-			s = this.lstSommets.get(i);
-			if(s.aProprietaire())
-				retour.add(s);
-		}
-
-		return retour;
-	}
-
 	public String getImagePlateauVierge () { return this.images[0]; }
 	public String getImageDepart        () { return this.images[5]; } 
 	public String getImagePiece         () { return this.images[6]; } 
@@ -96,9 +88,10 @@ public class Jeu
 	public void nouveauJeu()
 	{
 		this.numTour = 1;
-		this.initTheme();
-		this.initMap();
 
+		for( Joueur j   : this.lstJoueurs ) j.initJoueur();
+		for( Sommet smt : this.lstSommets ) smt.reinit();
+		for( Route  r   : this.lstRoutes  )  r.reinit();
 		/*
 		 * Le sommet d'indice 0 est toujours considéré le départ.
 		 * setDepart lui ajoute un joueur invisible comme proprietaire.
@@ -106,13 +99,6 @@ public class Jeu
 		 * que le sommet de Départ ne peut pas être pris par un joueur.
 		 */
 		this.getDepart().setDepart();
-
-		int indRes = 0;
-		for(int i = 1; i < this.lstSommets.size(); i++)
-		{
-			indRes = (int)(Math.random() * this.lstRessources.size());
-			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
-		}
 	}
 
 	public void incrementerNumTour () { this.numTour++; }
@@ -178,60 +164,60 @@ public class Jeu
 		return scores;
 	}
 
-	public List<List<Sommet>> plusCourtsChemins(Sommet smt)
+	public List<List<Sommet>> plusCourtsTrajets(Sommet smtDep, Sommet smtArr)
 	{
 		Queue<Sommet>  file;
-		Sommet         s;
 		List<Sommet>   trajet, voisins, marque;
 		List<List<Sommet>> retour;
+		Sommet         smt;
 
 		retour = new ArrayList<List<Sommet>>();
 		
 		marque = new ArrayList<Sommet>();
 		trajet = new ArrayList<Sommet>();
-		trajet.add(smt);
 
 		// Cf cours de graph
 		// Parcours en largeur
 		file = new LinkedList<Sommet>();
-		file.add(smt);
-		marque.add(smt);
+		file.add(smtDep);
+		marque.add(smtDep);
 		while(!file.isEmpty())
 		{
 			System.out.println(file);
-			s = file.remove();
-			voisins = s.getVoisinsPrp();
-			System.out.println("voisins de " + s + " : " + voisins);
+			smt = file.poll();
+			trajet.add(smt);
+			System.out.println(smt);
+
+			if(smt == smtArr)
+			{
+				if (retour.size() == 0 || trajet.size() == retour.get(0).size())
+				{
+					retour.add(new ArrayList<Sommet>(trajet));
+				}
+				else if (trajet.size() < retour.get(0).size())
+				{
+					retour.clear();
+					retour.add(trajet);
+				}
+
+				trajet.removeLast();
+			}
+
+			voisins = smt.getVoisinsPrp();
+			System.out.println("voisins de " + smt + " : " + voisins);
+			int cpt = 0;
 			for(int i = 0; i < voisins.size(); i++)
 			{
-				s = voisins.get(i);
-
-				if(s == this.getDepart())
+				Sommet tmp = voisins.get(i);
+				if(marque.indexOf(tmp) == -1) 
 				{
-					trajet.add(s);
-
-					if (retour.size() == 0 || trajet.size() == retour.get(0).size())
-					{
-						retour.add(new ArrayList<Sommet>(trajet));
-					}
-					else if (trajet.size() < retour.get(0).size())
-					{
-						retour.clear();
-						retour.add(trajet);
-					}
-
-					if (!trajet.isEmpty()) {
-						trajet.remove(trajet.size() - 1);
-					}
+					file.add(tmp);
+					marque.add(tmp);
 				}
-				else if(marque.indexOf(s) == -1) 
-				{
-					file.add(s);
-					marque.add(s);
-
-					trajet.add(s);
-				}
+				else cpt++;
 			}
+			if(cpt == voisins.size()) trajet.remove(smt);
+			System.out.println(trajet);
 		}
 
 		for(int i = 0; i < retour.size(); i++)
@@ -395,7 +381,6 @@ public class Jeu
 
 	public void parcourirEtape(int etape)
 	{
-		Scanner  scFic;
 		String[] tabLig;
 		Sommet   smtDep, smtArr;
 		int[]    scores;
@@ -403,38 +388,28 @@ public class Jeu
 		List<List<Sommet>> lstTrajets;
 		int                indiceTrajetChoisi;
 
-		this.lstJoueurs    = new ArrayList<Joueur>();
-		this.lstCouleurs   = new ArrayList<Couleur>();
-		this.lstRessources = new ArrayList<IRessource>();
-		this.lstSommets    = new ArrayList<Sommet>();
-		this.lstRoutes     = new ArrayList<Route>();
-		
-		this.nouveauJeu();
-		System.out.println(etape);
+		if(etape <= 0)                    etape = 1;
+		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
 
-		try {
-			scFic = new Scanner(new FileInputStream ( "../data/etapes.data" ));
-			for(this.numTour = 1; this.numTour <= etape; this.numTour++)
+		this.nouveauJeu();
+		for(this.numTour = 1; this.numTour < etape; this.numTour++)
 			{
-				tabLig = scFic.nextLine().split("\t");
+				tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
 
 				smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
 				smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
 				this.prendreSommet(smtDep, smtArr);
-				
 
-				lstTrajets = this.plusCourtsChemins(smtArr);
+				lstTrajets = this.plusCourtsTrajets(smtArr, this.getDepart());
 				indiceTrajetChoisi = 0;
 				if(tabLig.length == 4)
 					indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
 
-				scores = this.calculerScoresTrajet(lstTrajets.get(indiceTrajetChoisi));
+				//scores = this.calculerScoresTrajet(lstTrajets.get(indiceTrajetChoisi));
 
-				this.lstJoueurs.get(0).varierScoreRoute(scores[0]);
-				this.lstJoueurs.get(1).varierScoreRoute(scores[1]);
+				//this.lstJoueurs.get(0).varierScoreRoute(scores[0]);
+				//this.lstJoueurs.get(1).varierScoreRoute(scores[1]);
 			}
-
-		} catch (Exception e) {System.out.println(e);}
 	}
 
 	public void ajouterEtape(Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi)

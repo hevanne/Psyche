@@ -12,9 +12,15 @@ public class FrameEtape extends JFrame
 	public FrameEtape(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
-		this.panelEtape = new PanelEtape(this.ctrl);
+		this.setTitle("Plateau principal");
+		this.setLocation(100, 100);
+		this.setResizable(false);
+		this.setVisible( true );
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		this.panelEtape = new PanelEtape(this.ctrl, this);
 		this.add(this.panelEtape);
-		this.setVisible(true);
+
 		this.pack();
 	}
 }

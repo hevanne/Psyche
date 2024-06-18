@@ -31,7 +31,7 @@ public class Joueur
 		this.tabRessources = new Ressource[4][8];
 		this.tabScore = new int[this.tabRessources[0].length];
 
-		this.nouveauJoueur();
+		this.initJoueur();
 	}
 
 	// Accesseurs
@@ -50,7 +50,7 @@ public class Joueur
 	public Sommet getSommet (int i) { return this.lstSommets.get(i); }
 
 	// Autres Méthodes
-	public void nouveauJoueur()
+	public void initJoueur()
 	{
 		this.lstSommets.clear();
 		

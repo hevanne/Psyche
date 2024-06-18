@@ -63,8 +63,8 @@ public class PanelJoueur extends JPanel
 				}
 		}
 
-		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getTabRessources().length-1; i++)
-			for(int j = 0; j < this.ctrl.getJoueur(numJoueur).getTabRessources()[i].length-1; j++)
+		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getTabRessources().length; i++)
+			for(int j = 0; j < this.ctrl.getJoueur(numJoueur).getTabRessources()[i].length; j++)
 			{
 				Ressource res = this.ctrl.getJoueur(numJoueur).getRessource(i, j);
 				if(res != null)
