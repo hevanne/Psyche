@@ -46,6 +46,9 @@ public class Joueur
 
 	public Ressource[][] getTabRessources () { return this.tabRessources; }
 
+	public List<Sommet> getLstSommets () { return this.lstSommets; }
+	public Sommet getSommet (int i) { return this.lstSommets.get(i); }
+
 	// Autres Méthodes
 	public void nouveauJoueur()
 	{
@@ -126,6 +129,80 @@ public class Joueur
 		if(val > 0) this.scoreRoute += val;
 	}
 
+	public int cacluclerScorePiece()
+	{
+		int scorePiece = 0;
+
+		switch (this.nbPiece) 
+		{
+			case 2  -> scorePiece += 4;	
+			case 3  -> scorePiece += 9;
+			case 4  -> scorePiece += 16;
+			case 5  -> scorePiece += 25;
+			case 6  -> scorePiece += 36;
+			case 7  -> scorePiece += 49;
+			case 8  -> scorePiece += 64;
+			default -> scorePiece += 0;
+		}
+
+		return scorePiece;
+	}
+
+	public int calculerScoreColonne()
+	{
+		int scoreColonne = 0;
+
+		for (int y=0; y<this.tabRessources[0].length; y++)
+		{
+			int cpt=0;
+			for (int x=0; x<tabRessources.length; x++)
+			{
+				if (tabRessources[x][y] != null)
+					cpt++;
+			}
+			switch (cpt) 
+			{
+				case 2  -> scoreColonne += 2;	
+				case 3  -> scoreColonne += 10;
+				case 4  -> scoreColonne += 20;
+				default -> scoreColonne += 0;
+			}
+		}
+
+		return scoreColonne;
+	}
+
+	public int calculerScoreLigne()
+	{
+		int scoreLigne = 0;
+
+		for (int x=0; x<tabRessources.length; x++)
+		{
+			int cpt=0;
+			for (int y=0; y<tabRessources[x].length; y++)
+			{
+				if (tabRessources[x][y] != null)
+				{
+					cpt++;
+				}
+					
+			}
+			switch (cpt) 
+			{
+				case 2  -> scoreLigne += 2;	
+				case 3  -> scoreLigne += 5;
+				case 4  -> scoreLigne += 9;
+				case 5  -> scoreLigne += 14;
+				case 6  -> scoreLigne += 20;
+				case 7  -> scoreLigne += 32;
+				case 8  -> scoreLigne += 46;
+				default -> scoreLigne += 0;
+			}
+		}
+
+		return scoreLigne;
+	}
+	
 	public void calculerScore ()
 	{
 		this.score = 0;

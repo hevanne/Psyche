@@ -4,6 +4,12 @@ ihm/FramePlateau.java
 ihm/PanelPlateau.java
 ihm/FrameJoueur.java
 ihm/PanelJoueur.java
+ihm/BarreMenu.java
+ihm/FrameEtape.java
+ihm/PanelEtape.java
+ihm/IHM.java
+ihm/FrameScore.java
+ihm/PanelScore.java
 
 metier/Jeu.java
 metier/Joueur.java
