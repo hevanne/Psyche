@@ -46,6 +46,7 @@ public class Controleur
 	{ 
 		return this.metier.prendreSommet(smtDep, smtArr); 
 	}
+
 	public void incrementerNumTour () 
 	{ 
 		if(!this.metier.estFinJeu())
@@ -71,8 +72,7 @@ public class Controleur
 
 	public void parcourirEtape (int etape) 
 	{ 
-		this.metier.parcourirEtape(etape); 
-		this.majIHM();
+		this.metier.parcourirEtape(etape);
 	}
 
 	public void ajouterEtape (Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi) 
