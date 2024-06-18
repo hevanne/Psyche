@@ -46,6 +46,9 @@ public class Joueur
 
 	public Ressource[][] getTabRessources () { return this.tabRessources; }
 
+	public List<Sommet> getLstSommets () { return this.lstSommets; }
+	public Sommet getSommet (int i) { return this.lstSommets.get(i); }
+
 	// Autres Méthodes
 	public void nouveauJoueur()
 	{
