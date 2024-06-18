@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+import java.io.*;
+import java.util.*;
+
+import ihm.IHM;
+
 public class Jeu
 {
 

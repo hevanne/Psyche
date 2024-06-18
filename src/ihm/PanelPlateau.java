@@ -168,21 +168,11 @@ public class PanelPlateau extends JPanel
 		
 		public void mouseReleased(MouseEvent e) 
 		{
-<<<<<<< HEAD
 			if (!PanelPlateau.this.BModif())
-=======
-			List<List<Sommet>> lstTrajets;
-			
-			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			System.out.println("s2 : "+this.sommetsActifs[1]);
-			
-			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
->>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 			{
 				List<List<Sommet>> lstTrajets;
 				int[]              scores;
 				
-<<<<<<< HEAD
 				scores = new int[2];
 				this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
 				System.out.println("s2 : "+this.sommetsActifs[1]);
@@ -196,25 +186,9 @@ public class PanelPlateau extends JPanel
 					{
 						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
-=======
-				lstTrajets = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-				System.out.println(lstTrajets != null && lstTrajets.size() != 0);
-				
-				if(lstTrajets != null && lstTrajets.size() != 0)
-				{
-					// Affectation du Joueur actif aux routes composant le trajet
-					PanelPlateau.this.ctrl.affecterPrpRoute(lstTrajets.get(0));
-					
-					// Calculs des scores
-					lstTrajets = PanelPlateau.this.ctrl.trajetsSommetDepart(this.sommetsActifs[1]);
-					System.out.println(lstTrajets);
-					if(lstTrajets.size() == 1)
-						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0));
->>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 					else
 						PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
 
-<<<<<<< HEAD
 					System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());
 					System.out.println(scores[0]);
 					System.out.println(scores[1]);
@@ -230,10 +204,6 @@ public class PanelPlateau extends JPanel
 			if (PanelPlateau.this.BModif())
 			{
 				
-=======
-					PanelPlateau.this.ctrl.incrementerNumTour();
-				}
->>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 			}
 		}
 	}

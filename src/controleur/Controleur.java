@@ -109,8 +109,6 @@ public class Controleur
 		this.ihm.majTout();
 	}
 
-<<<<<<< HEAD
-	public void majIHM() { this.ihm.majTout(); }
 
 	public void setModifier()
 	{
@@ -120,7 +118,6 @@ public class Controleur
 
 	public void setJouer()
 	{
-		System.out.println("rerere");
 			this.frameRoute.dispose();
 			this.frameVille.dispose();
 
@@ -132,6 +129,4 @@ public class Controleur
 		this.metier.ajouterVille(num, val, coul, x, y);
 		
 	}
-=======
->>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 }
