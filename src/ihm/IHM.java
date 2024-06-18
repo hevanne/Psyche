@@ -40,7 +40,7 @@ public class IHM
 			this.tabFrameJoueur[i].setVisible( true );
 			this.tabFrameJoueur[i].setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
-       
+
 		this.framePlateau = new FramePlateau(this.ctrl, this.largeurPlateau, this.hauteurPlateau);
 		this.framePlateau.setTitle("Plateau principal");
 		this.framePlateau.setSize(this.largeurPlateau, this.hauteurPlateau);
@@ -62,5 +62,8 @@ public class IHM
 		this.tabFrameJoueur[0].repaint();
 		this.tabFrameJoueur[1].repaint();
 		this.framePlateau.repaint();
+
+		if(this.ctrl.estFinJeu())
+			new FrameScore(ctrl);
 	}
 }

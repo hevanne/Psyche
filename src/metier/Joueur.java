@@ -129,7 +129,7 @@ public class Joueur
 		if(val > 0) this.scoreRoute += val;
 	}
 
-	public int cacluclerScorePiece()
+	public int calculerScorePiece()
 	{
 		int scorePiece = 0;
 
@@ -209,7 +209,7 @@ public class Joueur
 
 		switch (this.nbPiece) 
 		{
-			case 2  -> this.score += 4;	
+			case 2  -> this.score += 4;
 			case 3  -> this.score += 9;
 			case 4  -> this.score += 16;
 			case 5  -> this.score += 25;
@@ -249,7 +249,7 @@ public class Joueur
 			}
 			switch (cpt) 
 			{
-				case 2  -> this.score += 2;	
+				case 2  -> this.score += 2;
 				case 3  -> this.score += 5;
 				case 4  -> this.score += 9;
 				case 5  -> this.score += 14;

@@ -13,14 +13,14 @@ public class FrameScore extends JFrame
 	public FrameScore(Controleur ctrl)
 	{
 		this.setTitle("Score");
-		this.setLocation(50,50);
-		this.setSize(600, 600);
+		this.setLocation(50,0);
+		this.setSize(600, 820);
 
 		this.ctrl = ctrl;
 
 		/* Création des composants */
 
-		this.pnlScore = new PanelScore();
+		this.pnlScore = new PanelScore(this.ctrl);
 
 		/* Positionnement des composants */
 
