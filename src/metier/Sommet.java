@@ -80,32 +80,7 @@ public class Sommet
 				autreSmt = r.getSmtDep();
 
 			retour.add(autreSmt);
-		}
 
-		return retour;
-	}
-
-	public List<Sommet> getVoisinsPrp   () 
-	{
-		List<Sommet> retour;
-		Route        r;
-		Sommet       autreSmt;
-
-		retour = new ArrayList<Sommet>();
-
-		for(int i = 0; i < this.lstRoutes.size(); i++)
-		{
-			r = this.lstRoutes.get(i);
-
-			if  (r.getSmtDep() == this) 
-				autreSmt = r.getSmtArr();
-			else
-				autreSmt = r.getSmtDep();
-
-			if(autreSmt.aProprietaire())
-			{
-				retour.add(autreSmt);
-			}
 		}
 
 		return retour;
@@ -143,8 +118,5 @@ public class Sommet
 	public boolean aProprietaire () { return this.proprietaire != null;     }
 	public boolean estDepart     () { return this.num == 0;                 }
 
-	public String  toString      ()
-	{
-		return this.nom;
-	}
+	public String  toString      () { return this.nom;                      }
 }

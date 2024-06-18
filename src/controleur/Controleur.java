@@ -42,24 +42,39 @@ public class Controleur
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.metier.estFinJeu(); }
 	
-	public boolean prendreSommet (Sommet smtDep, Sommet smtArr) 
+	public List<List<Sommet>> prendreSommet (Sommet smtDep, Sommet smtArr) 
 	{ 
 		return this.metier.prendreSommet(smtDep, smtArr); 
 	}
-
 	public void incrementerNumTour () 
 	{ 
-		this.metier.incrementerNumTour(); 
+		if(!this.metier.estFinJeu())
+		{
+			this.metier.incrementerNumTour();
+		}
+		else
+		{
+			this.afficherScore();
+		}
+		this.majIHM();
 	} 
 
-	public void afficherScore      () { new FrameScore(this); }
-	public void selectionnerEtape  () { new FrameEtape(this); }
+	public void selectionnerTrajet (List<List<Sommet>> lstTrajets) 
+	{
+		new FrameTrajet(this, lstTrajets);
+	}
+
+	public void affecterPrpRoute(List<Sommet> lstTrajets)
+	{
+		this.metier.affecterPrpRoute(lstTrajets);
+	}
 
 	public void parcourirEtape (int etape) 
 	{ 
 		this.metier.parcourirEtape(etape); 
 		this.majIHM();
 	}
+
 	public void ajouterEtape (Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi) 
 	{ 
 		this.metier.ajouterEtape(smtDep, smtArr, indiceTrajetChoisi); 
@@ -70,10 +85,17 @@ public class Controleur
 		return this.metier.plusCourtsTrajets(smtDep, smtArr);
 	}
 
-	public int[] calculerScoresTrajet(List<Sommet> trajet) 
+	public List<List<Sommet>> trajetsSommetDepart(Sommet smt) 
 	{ 
-		return this.metier.calculerScoresTrajet(trajet); 
+		return this.metier.trajetsSommetDepart(smt);
 	}
 
-	public void majIHM() { this.ihm.majTout(); }
+	public void ajouterScoresTrajet(List<Sommet> trajet) 
+	{ 
+		this.metier.ajouterScoresTrajet(trajet); 
+	}
+
+	public void afficherScore     () { new FrameScore(this); }
+	public void selectionnerEtape () { new FrameEtape(this); }
+	public void majIHM            () { this.ihm.majTout();   }
 }

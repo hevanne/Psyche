@@ -12,7 +12,7 @@ public class FrameEtape extends JFrame
 	public FrameEtape(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
-		this.setTitle("Plateau principal");
+		this.setTitle("Etape");
 		this.setLocation(100, 100);
 		this.setResizable(false);
 		this.setVisible( true );

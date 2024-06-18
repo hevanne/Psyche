@@ -16,11 +16,6 @@ public class PanelJoueur extends JPanel
 	private int        largeur, hauteur;
 	private Image      imgPlateau, imgPiece;
 
-
-	private static final int ECART_VERTICAL   = 55;
-	private static final int ECART_HORIZONTAL = 55;
-	private static final int RAYON_RESSOURCE  = 36;
-
 	public PanelJoueur(Controleur ctrl, int numJoueur, int largeur, int hauteur)
 	{
 		this.ctrl      = ctrl;
@@ -57,7 +52,7 @@ public class PanelJoueur extends JPanel
 					img = getToolkit().getImage(url);
 					x = 30 + i%6 * 50;
 					y = 300 + 60 * (int) Math.floor(i/6);
-					g2.drawImage(img, x, y, x+Jeu.LARGEUR_SOMMET, y+Jeu.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
+					g2.drawImage(img, x, y, x+IHM.LARGEUR_SOMMET, y+IHM.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
 					g2.setColor(Color.BLACK);
 					g2.drawString(""+smt.getValeur(), x+13, y+19);
 				}
@@ -71,17 +66,17 @@ public class PanelJoueur extends JPanel
 				{
 					url = "../theme/distrib_images_2/ressources/" + res.getCouleur().getNom().toUpperCase() + ".png";
 					img = getToolkit().getImage(url);
-					x = 40  + j * PanelJoueur.RAYON_RESSOURCE;
-					y = 143 - i * PanelJoueur.RAYON_RESSOURCE;
-					g2.drawImage(img, x, y, x+PanelJoueur.RAYON_RESSOURCE, y+PanelJoueur.RAYON_RESSOURCE, 0, 0, img.getWidth(this), img.getHeight(this),  this);
+					x = 40  + j * IHM.RAYON_RESSOURCE;
+					y = 143 - i * IHM.RAYON_RESSOURCE;
+					g2.drawImage(img, x, y, x+IHM.RAYON_RESSOURCE, y+IHM.RAYON_RESSOURCE, 0, 0, img.getWidth(this), img.getHeight(this),  this);
 				}
 			}
 	
 		for(int i = 0; i < this.ctrl.getJoueur(this.numJoueur).getNbPieces(); i++)
 		{
-			x = 40 + PanelJoueur.RAYON_RESSOURCE*i;
+			x = 40 + IHM.RAYON_RESSOURCE*i;
 			y = hauteur - 349;
-			g2.drawImage(this.imgPiece, x, y, x+PanelJoueur.RAYON_RESSOURCE, y+PanelJoueur.RAYON_RESSOURCE, 0, 0, this.imgPiece.getWidth(this), this.imgPiece.getHeight(this),  this);
+			g2.drawImage(this.imgPiece, x, y, x+IHM.RAYON_RESSOURCE, y+IHM.RAYON_RESSOURCE, 0, 0, this.imgPiece.getWidth(this), this.imgPiece.getHeight(this),  this);
 		}
 	}
 }
