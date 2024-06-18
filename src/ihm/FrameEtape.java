@@ -17,8 +17,4 @@ public class FrameEtape extends JFrame
 		this.setVisible(true);
 		this.pack();
 	}
-
-	public static void main(String[] args) {
-		new FrameEtape(new Controleur());
-	}
 }
