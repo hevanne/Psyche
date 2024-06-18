@@ -55,8 +55,8 @@ public class PanelJoueur extends JPanel
 				{
 					url = "../theme/distrib_images_2/ressources/" + res.getCouleur().getNom().toUpperCase() + ".png";
 					img = getToolkit().getImage(url);
-					x = 40  + i * PanelJoueur.RAYON_RESSOURCE;
-					y = 143 - j * PanelJoueur.RAYON_RESSOURCE;
+					x = 40  + j * PanelJoueur.RAYON_RESSOURCE;
+					y = 143 - i * PanelJoueur.RAYON_RESSOURCE;
 					g2.drawImage(img, x, y, x+PanelJoueur.RAYON_RESSOURCE, y+PanelJoueur.RAYON_RESSOURCE, 0, 0, img.getWidth(this), img.getHeight(this),  this);
 				}
 			}
