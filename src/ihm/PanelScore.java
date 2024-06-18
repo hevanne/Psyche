@@ -11,6 +11,9 @@ import java.awt.Image;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class PanelScore extends JPanel
 {
