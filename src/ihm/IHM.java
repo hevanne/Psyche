@@ -7,6 +7,12 @@ import javax.swing.JFrame;
 
 public class IHM 
 {
+	public static final int RAYON_SOMMET     = 12;
+	public static final int RAYON_IRESSOURCE = 12;
+	public static final int LARGEUR_SOMMET   = 32;
+	public static final int HAUTEUR_SOMMET   = 56;
+	public static final int RAYON_PION       = 10;
+	public static final int RAYON_RESSOURCE  = 36;
 
 	private Controleur ctrl;
 	
@@ -66,5 +72,8 @@ public class IHM
 		this.tabFrameJoueur[0].repaint();
 		this.tabFrameJoueur[1].repaint();
 		this.framePlateau.repaint();
+
+		if(this.ctrl.estFinJeu())
+			new FrameScore(ctrl);
 	}
 }

@@ -13,11 +13,6 @@ import java.util.Scanner;
 
 public class Jeu
 {
-	public static final int RAYON_SOMMET     = 12;
-	public static final int RAYON_IRESSOURCE = 12;
-	public static final int LARGEUR_SOMMET   = 32;
-	public static final int HAUTEUR_SOMMET   = 56;
-	public static final int RAYON_PION       = 10;
 
 	private int      numTour;
 	private String[] vocab;
@@ -54,7 +49,7 @@ public class Jeu
 			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
 		}
 
-		this.nouveauJeu();
+		this.nouveauIHM();
 	}
 
 	// Accesseurs
@@ -73,7 +68,7 @@ public class Jeu
 	public Sommet getSommet(int x, int y)
 	{
 		for(Sommet smt : this.lstSommets)
-			if(x >= smt.getX() && y >= smt.getY() && x <= smt.getX()+Jeu.LARGEUR_SOMMET && y <= smt.getY()+Jeu.HAUTEUR_SOMMET)
+			if(x >= smt.getX() && y >= smt.getY() && x <= smt.getX()+IHM.LARGEUR_SOMMET && y <= smt.getY()+IHM.HAUTEUR_SOMMET)
 				return smt;
 
 		return null;
@@ -86,13 +81,13 @@ public class Jeu
 	public String getImagePionJoueur    (int numJoueur) { return this.images[2+numJoueur]; } 
 
 	// Autres Méthodes
-	public void nouveauJeu()
+	public void nouveauIHM()
 	{
 		this.numTour = 1;
 
 		for( Joueur j   : this.lstJoueurs ) j.initJoueur();
 		for( Sommet smt : this.lstSommets ) smt.reinit();
-		for( Route  r   : this.lstRoutes  )  r.reinit();
+		for( Route  r   : this.lstRoutes  ) r.reinit();
 		/*
 		 * Le sommet d'indice 0 est toujours considéré le départ.
 		 * setDepart lui ajoute un joueur invisible comme proprietaire.
@@ -113,14 +108,14 @@ public class Jeu
 		return true;
 	}
 
-	public boolean prendreSommet(Sommet smtDep, Sommet smtArr)
+	public List<List<Sommet>> prendreSommet(Sommet smtDep, Sommet smtArr)
 	{
-		if(smtDep == null || smtArr == null || smtDep.getRoute(smtArr) == null) return false;
+		if(smtDep == null || smtArr == null) return null;
 
-		Joueur joueurActif;
-		Route  route;
+		Joueur             joueurActif;
+		List<List<Sommet>> trajets;
 
-		route       = smtDep.getRoute(smtArr);
+		trajets     = this.plusCourtsTrajets(smtDep, smtArr);
 		joueurActif = this.getJoueurActif();
 		/*
 		 * Pour prendre une mine, le joueur doit :
@@ -130,67 +125,103 @@ public class Jeu
 		 */
 		if(!((smtDep == this.getDepart() || (smtDep != this.getDepart() && smtDep.aProprietaire()))
 		   && !smtArr.aProprietaire()
-		   && !route.aProprietaire())) return false;
+		   && trajets.size() != 0)) return null;
 
 		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
  		if(smtArr.setProprietaire(joueurActif))
 		{
-			route.setProprietaire(joueurActif);
-			return true;
+			System.out.println(trajets);
+			return trajets;
 		}
-		return false;
+		return null;
 	}
 
-	// trouver le plus court trajet entre smt et Nouvelle Rome
-	// parcourir le trajet en ajoutant les points
-	public int[] calculerScoresTrajet(List<Sommet> trajet)
+	public void affecterPrpRoute(List<Sommet> trajet) 
 	{
-		int[]    scores;
-		Route    r;
+		Sommet smtDep, smtArr;
+		Route r;
 		
-		scores = new int[this.lstJoueurs.size()];
+		for(int i = 0; i < trajet.size()-1; i++)
+		{
+			smtDep = trajet.get(i);
+			smtArr = trajet.get(i+1);
+			r = smtDep.getRoute(smtArr);
+			if(!r.aProprietaire())
+				r.setProprietaire(this.getJoueurActif());
+		}
+	}
+	
+	// parcours le trajet en calculant les scores
+	public void ajouterScoresTrajet(List<Sommet> trajet)
+	{
+		int[]  scores;
+		Route  r;
+		Sommet smtFin;
+		
+		scores = new int[2];
+		smtFin = trajet.get(trajet.size()-1);
 		
 		for(int i = 0; i < trajet.size()-1; i++)
 		{
 			r = trajet.get(i).getRoute(trajet.get(i+1));
-			System.out.println(r.getProprietaire().getNum());
 			scores[r.getProprietaire().getNum() - 1] += r.getNbSection();
 		}
 		
-		if(   trajet.get(0).getRessource().getType() == 'R' 
-		   && ((Ressource)trajet.get(0).getRessource()).getDoubler())
+		if(	  smtFin != this.getDepart()
+		   && smtFin.getRessource().getType() == 'R' 
+		   && ((Ressource)smtFin.getRessource()).getDoubler())
 			for(int i = 0; i < scores.length; i++)
 				scores[i] = scores[i] * 2;
 
-		return scores;
+		System.out.println(scores[0]);
+		System.out.println(scores[1]);
+		for(int i = 0; i < this.lstJoueurs.size(); i++)
+			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
 	}
 
 	public List<List<Sommet>> plusCourtsTrajets(Sommet smtDep, Sommet smtArr)
 	{
-		Queue<Sommet>  file;
-		List<Sommet>   trajet, voisins, marque;
 		List<List<Sommet>> retour;
-		Sommet         smt;
+		
+		Queue<Sommet> file;
+		List<Sommet>  trajet;
+		List<Sommet>  smtVoisins;
+		Sommet        smt, tmp;
+
+		boolean[] marque;
+		int[]     indiceSmtPrec;
+
 
 		retour = new ArrayList<List<Sommet>>();
-		
-		marque = new ArrayList<Sommet>();
 		trajet = new ArrayList<Sommet>();
+		
+		marque        = new boolean[this.lstSommets.size()];
+		indiceSmtPrec = new int    [this.lstSommets.size()];
+
 
 		// Cf cours de graph
 		// Parcours en largeur
 		file = new LinkedList<Sommet>();
 		file.add(smtDep);
-		marque.add(smtDep);
+		marque[smtDep.getNum()] = true;
+		indiceSmtPrec[smtDep.getNum()] = -1;
+
 		while(!file.isEmpty())
 		{
-			System.out.println(file);
 			smt = file.poll();
-			trajet.add(smt);
-			System.out.println(smt);
 
 			if(smt == smtArr)
 			{
+				trajet.clear();
+
+				tmp = smtArr;
+				while (indiceSmtPrec[tmp.getNum()] != -1) 
+				{
+					trajet.add(tmp);
+					tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
+				}
+				trajet.add(smtDep);
+
 				if (retour.size() == 0 || trajet.size() == retour.get(0).size())
 				{
 					retour.add(new ArrayList<Sommet>(trajet));
@@ -204,25 +235,90 @@ public class Jeu
 				//trajet.removeLast();
 			}
 
-			voisins = smt.getVoisinsPrp();
-			System.out.println("voisins de " + smt + " : " + voisins);
-			int cpt = 0;
-			for(int i = 0; i < voisins.size(); i++)
+			smtVoisins = smt.getVoisins();
+			smtVoisins.removeIf(smtVoisin -> !smtVoisin.aProprietaire() && smtVoisin != smtArr);
+
+			for(Sommet smtVoisin : smtVoisins)
 			{
-				Sommet tmp = voisins.get(i);
-				if(marque.indexOf(tmp) == -1) 
+				if(!marque[smtVoisin.getNum()]) 
 				{
-					file.add(tmp);
-					marque.add(tmp);
+					file.offer(smtVoisin);
+					indiceSmtPrec[smtVoisin.getNum()] = smt.getNum();
+					marque[smtVoisin.getNum()] = true;
 				}
-				else cpt++;
 			}
-			if(cpt == voisins.size()) trajet.remove(smt);
-			System.out.println(trajet);
 		}
 
-		for(int i = 0; i < retour.size(); i++)
-			System.out.println(retour.get(i));
+		return retour;
+	}
+
+	public List<List<Sommet>> trajetsSommetDepart(Sommet smtArr)
+	{
+		List<List<Sommet>> retour;
+		Queue<Sommet> file;
+		List<Sommet>  trajet;
+		List<Sommet>  smtVoisins, smtVoisinsPrp;
+		Sommet        smt, tmp;
+		boolean[] marque;
+		int[]     indiceSmtPrec;
+
+		retour = new ArrayList<List<Sommet>>();
+		trajet = new ArrayList<Sommet>();
+		marque        = new boolean[this.lstSommets.size()];
+		indiceSmtPrec = new int    [this.lstSommets.size()];
+
+		// Parcours en largeur
+		file = new LinkedList<Sommet>();
+		file.add(smtArr);
+		marque[smtArr.getNum()] = true;
+		indiceSmtPrec[smtArr.getNum()] = -1;
+
+		while(!file.isEmpty())
+		{
+			smt = file.poll();
+			System.out.println(smt);
+
+			if(smt == this.getDepart())
+			{
+				trajet.clear();
+				tmp = this.getDepart();
+				while (indiceSmtPrec[tmp.getNum()] != -1) 
+				{
+					trajet.add(tmp);
+					tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
+				}
+				trajet.add(smtArr);
+
+				if (retour.size() == 0 || trajet.size() == retour.get(0).size())
+				{
+					retour.add(new ArrayList<Sommet>(trajet));
+				}
+				else if (trajet.size() < retour.get(0).size())
+				{
+					retour.clear();
+					retour.add(trajet);
+				}
+			}
+
+			smtVoisins = smt.getVoisins();
+			smtVoisinsPrp = new ArrayList<Sommet>();
+
+			for(Sommet voisin : smtVoisins)
+				if(voisin.getRoute(smt).aProprietaire())
+					smtVoisinsPrp.add(voisin);
+			
+			smtVoisinsPrp.removeIf(smtVoisin -> !smtVoisin.aProprietaire() && smtVoisin != smtArr);
+
+			for(Sommet smtVoisin : smtVoisinsPrp)
+			{
+				if(!marque[smtVoisin.getNum()]) 
+				{
+					file.offer(smtVoisin);
+					indiceSmtPrec[smtVoisin.getNum()] = smt.getNum();
+					marque[smtVoisin.getNum()] = true;
+				}
+			}
+		}
 
 		return retour;
 	}
@@ -384,7 +480,6 @@ public class Jeu
 	{
 		String[] tabLig;
 		Sommet   smtDep, smtArr;
-		int[]    scores;
 		
 		List<List<Sommet>> lstTrajets;
 		int                indiceTrajetChoisi;
@@ -392,7 +487,7 @@ public class Jeu
 		if(etape <= 0)                    etape = 1;
 		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
 
-		this.nouveauJeu();
+		this.nouveauIHM();
 		for(this.numTour = 1; this.numTour < etape; this.numTour++)
 			{
 				tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
@@ -406,10 +501,7 @@ public class Jeu
 				if(tabLig.length == 4)
 					indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
 
-				//scores = this.calculerScoresTrajet(lstTrajets.get(indiceTrajetChoisi));
-
-				//this.lstJoueurs.get(0).varierScoreRoute(scores[0]);
-				//this.lstJoueurs.get(1).varierScoreRoute(scores[1]);
+				this.affecterPrpRoute(lstTrajets.get(indiceTrajetChoisi));
 			}
 	}
 

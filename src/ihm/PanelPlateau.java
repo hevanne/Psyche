@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PanelPlateau extends JPanel
@@ -53,10 +52,10 @@ public class PanelPlateau extends JPanel
 
 		for (Route r: lstRoutes)
 		{
-			x1 = r.getSmtDep().getX() + Jeu.LARGEUR_SOMMET/2;
-			y1 = r.getSmtDep().getY() + Jeu.HAUTEUR_SOMMET/2;
-			x2 = r.getSmtArr().getX() + Jeu.LARGEUR_SOMMET/2;
-			y2 = r.getSmtArr().getY() + Jeu.HAUTEUR_SOMMET/2;
+			x1 = r.getSmtDep().getX() + IHM.LARGEUR_SOMMET/2;
+			y1 = r.getSmtDep().getY() + IHM.HAUTEUR_SOMMET/2;
+			x2 = r.getSmtArr().getX() + IHM.LARGEUR_SOMMET/2;
+			y2 = r.getSmtArr().getY() + IHM.HAUTEUR_SOMMET/2;
 			
 			g2.fillOval(x1-5, y1-5, 10, 10);
 			g2.fillOval(x2-5, y2-5, 10, 10);
@@ -70,6 +69,7 @@ public class PanelPlateau extends JPanel
 				g2.fillOval(mx-5, my-5, 10, 10);
 			}
 
+			// Pion
 			if (r.aProprietaire())
 			{
 				url = "../theme/distrib_images_2/"+this.ctrl.getImagePionJoueur(r.getProprietaire().getNum());
@@ -80,16 +80,16 @@ public class PanelPlateau extends JPanel
 
 				if (r.getNbSection() == 1)
 				{
-					g2.drawImage(img, mx-Jeu.RAYON_PION, my-Jeu.RAYON_PION, mx+Jeu.RAYON_PION, my+Jeu.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					g2.drawImage(img, mx-IHM.RAYON_PION, my-IHM.RAYON_PION, mx+IHM.RAYON_PION*2, my+IHM.RAYON_PION*2, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 				}
 				else
 				{
 					x1 = (mx+x1)/2;
 					y1 = (my+y1)/2;
-					g2.drawImage(img, x1-Jeu.RAYON_PION, y1-Jeu.RAYON_PION, x1+Jeu.RAYON_PION, y1+Jeu.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					g2.drawImage(img, x1-IHM.RAYON_PION, y1-IHM.RAYON_PION, x1+IHM.RAYON_PION*2, y1+IHM.RAYON_PION*2, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 					x2 = (mx+x2)/2;
 					y2 = (my+y2)/2;
-					g2.drawImage(img, x2-Jeu.RAYON_PION, y2-Jeu.RAYON_PION, x2+Jeu.RAYON_PION, y2+Jeu.RAYON_PION, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+					g2.drawImage(img, x2-IHM.RAYON_PION, y2-IHM.RAYON_PION, x2+IHM.RAYON_PION*2, y2+IHM.RAYON_PION*2, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 				}
 			}
 		}
@@ -98,7 +98,7 @@ public class PanelPlateau extends JPanel
 		
 		// Déssiner Sommet de Départ
 		smt = lstSommets.get(0);
-		g2.drawImage (this.imgDepart, smt.getX(), smt.getY(), smt.getX()+Jeu.LARGEUR_SOMMET, smt.getY()+Jeu.LARGEUR_SOMMET, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
+		g2.drawImage (this.imgDepart, smt.getX(), smt.getY(), smt.getX()+IHM.LARGEUR_SOMMET, smt.getY()+IHM.LARGEUR_SOMMET, 0, 0, this.imgDepart.getWidth(this), this.imgDepart.getHeight(this), this);
 
 		
 		for(int i = 1; i < lstSommets.size(); i++)
@@ -110,24 +110,24 @@ public class PanelPlateau extends JPanel
 				// Sommet
 				url = "../theme/distrib_images_2/transparent/" + this.ctrl.getVocab(0) +"_"+ smt.getCouleur().getNom() + ".png";
 				img = getToolkit().getImage(url);
-				g2.drawImage (img, smt.getX(), smt.getY(), smt.getX()+Jeu.LARGEUR_SOMMET, smt.getY()+Jeu.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
+				g2.drawImage (img, smt.getX(), smt.getY(), smt.getX()+IHM.LARGEUR_SOMMET, smt.getY()+IHM.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
 				g2.setColor(Color.BLACK);
 				g2.drawString(""+smt.getValeur(), smt.getX()+13, smt.getY()+19);
 
 				// Ressource
 				url = "../theme/distrib_images_2/ressources/" + smt.getRessource().getCouleur().getNom().toUpperCase() + ".png";
 				img = getToolkit().getImage(url);
-				x1  = smt.getX()+Jeu.LARGEUR_SOMMET/2-Jeu.LARGEUR_SOMMET/2;
-				y1  = smt.getY()+Jeu.HAUTEUR_SOMMET-Jeu.LARGEUR_SOMMET;
-				x2  = x1+Jeu.LARGEUR_SOMMET;
-				y2  = y1+Jeu.LARGEUR_SOMMET;
+				x1  = smt.getX()+IHM.LARGEUR_SOMMET/2-IHM.LARGEUR_SOMMET/2;
+				y1  = smt.getY()+IHM.HAUTEUR_SOMMET-IHM.LARGEUR_SOMMET;
+				x2  = x1+IHM.LARGEUR_SOMMET;
+				y2  = y1+IHM.LARGEUR_SOMMET;
 				g2.drawImage (img, x1, y1, x2, y2, 0, 0, img.getWidth(this), img.getHeight(this), this);
 			}
 			else
 			{
 				url = "../theme/distrib_images_2/transparent/" + this.ctrl.getVocab(0) + "_" + smt.getCouleur().getNom() + "_clair.png";
 				img = getToolkit().getImage(url);
-				g2.drawImage (img, smt.getX(), smt.getY(), smt.getX()+Jeu.LARGEUR_SOMMET, smt.getY()+Jeu.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
+				g2.drawImage (img, smt.getX(), smt.getY(), smt.getX()+IHM.LARGEUR_SOMMET, smt.getY()+IHM.HAUTEUR_SOMMET, 0, 0, img.getWidth(this), img.getHeight(this), this);
 			}
  			
 		}
@@ -168,11 +168,21 @@ public class PanelPlateau extends JPanel
 		
 		public void mouseReleased(MouseEvent e) 
 		{
+<<<<<<< HEAD
 			if (!PanelPlateau.this.BModif())
+=======
+			List<List<Sommet>> lstTrajets;
+			
+			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+			System.out.println("s2 : "+this.sommetsActifs[1]);
+			
+			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
+>>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 			{
 				List<List<Sommet>> lstTrajets;
 				int[]              scores;
 				
+<<<<<<< HEAD
 				scores = new int[2];
 				this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
 				System.out.println("s2 : "+this.sommetsActifs[1]);
@@ -186,11 +196,25 @@ public class PanelPlateau extends JPanel
 					{
 						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
 					}
+=======
+				lstTrajets = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
+				System.out.println(lstTrajets != null && lstTrajets.size() != 0);
+				
+				if(lstTrajets != null && lstTrajets.size() != 0)
+				{
+					// Affectation du Joueur actif aux routes composant le trajet
+					PanelPlateau.this.ctrl.affecterPrpRoute(lstTrajets.get(0));
+					
+					// Calculs des scores
+					lstTrajets = PanelPlateau.this.ctrl.trajetsSommetDepart(this.sommetsActifs[1]);
+					System.out.println(lstTrajets);
+					if(lstTrajets.size() == 1)
+						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0));
+>>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 					else
-					{
-						//scores = PanelPlateau.this.ctrl.calculerScoresTrajet(lstTrajets.get(0));
-					}
+						PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
 
+<<<<<<< HEAD
 					System.out.println(PanelPlateau.this.ctrl.getJoueurActif().getNom());
 					System.out.println(scores[0]);
 					System.out.println(scores[1]);
@@ -206,6 +230,10 @@ public class PanelPlateau extends JPanel
 			if (PanelPlateau.this.BModif())
 			{
 				
+=======
+					PanelPlateau.this.ctrl.incrementerNumTour();
+				}
+>>>>>>> cb386694fad7bef10095e247b282af0802d2b5dd
 			}
 		}
 	}
