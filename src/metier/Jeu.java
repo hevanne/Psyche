@@ -14,6 +14,8 @@ import java.util.Scanner;
 import java.io.*;
 import java.util.*;
 
+import controleur.Controleur;
+
 import ihm.IHM;
 
 public class Jeu
@@ -31,8 +33,11 @@ public class Jeu
 
 	private List<String>     lstEtapes;
 
-	public Jeu()
+	private Controleur ctrl;
+
+	public Jeu(Controleur ctrl)
 	{
+		this.ctrl = ctrl;
 		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
 		this.images  = new String[7];
 
@@ -687,6 +692,7 @@ public class Jeu
 		if(!this.sommetExiste(x, y))
 		{
 			this.lstSommets.add((Sommet.nvSommet(val, this.lstCouleurs.get(coul),x,y)));
+			this.ctrl.getFrameRoute().getPanelRoute().getPanelAjoutRoute().ajouterSommet(this.lstSommets.get(num).getNom());
 		}
 
 		System.out.println("---------------------------------------------------------------------------");
@@ -719,5 +725,60 @@ public class Jeu
 			}
 		}
 		return false;
+	}
+
+	public boolean routeExiste(String sommetD, String sommetA)
+	{
+		for (Route r: this.lstRoutes)
+		{
+			if (sommetD.equals(r.getSmtDep().getNom()) && sommetA.equals(r.getSmtArr().getNom()))
+				return true;
+		}
+		return false;
+	}
+
+	public void ajouterRoute(String sommetD, String sommetA, String tronc)
+	{
+		String sRet = "";
+		try
+		{
+			Scanner sc = new Scanner ( new FileInputStream ( "../theme/map.txt" ) );
+
+			while ( sc.hasNextLine() )
+			{
+				String ligne = sc.nextLine();
+				sRet += ligne + "\n";
+			}
+
+			sc.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+
+		if (!routeExiste(sommetD, sommetA))
+		{
+			sRet += sommetD + "\t" + sommetA + "\t" + tronc;
+			//System.out.println("sommet existe pas");
+			//System.out.println(sRet);
+			this.ecrire(sRet);
+			Sommet sommetTmpD, sommetTmpA;
+			sommetTmpD = sommetTmpA = null;
+			for (Sommet s: this.lstSommets)
+			{
+				if(sommetA.equals(s.getNom()))
+				{
+					sommetTmpA = s;
+					System.out.println("alright2");
+				}
+
+				if(sommetD.equals(s.getNom()))
+				{
+					sommetTmpD = s;
+					System.out.println("alrigth1");
+				}
+			}
+
+			this.lstRoutes.add(Route.nvRoute(sommetTmpD, sommetTmpA, Integer.parseInt(tronc)));
+		}
+
 	}
 }

@@ -72,8 +72,5 @@ public class IHM
 		this.tabFrameJoueur[0].repaint();
 		this.tabFrameJoueur[1].repaint();
 		this.framePlateau.repaint();
-
-		if(this.ctrl.estFinJeu())
-			new FrameScore(ctrl);
 	}
 }
