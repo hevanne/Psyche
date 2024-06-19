@@ -69,6 +69,7 @@ public class BarreMenu extends JMenuBar implements ActionListener
 			this.ctrl.parcourirEtape(this.ctrl.getNumTour()-1);
 		if ( "Sélectionner étape".equals(((JMenuItem)e.getSource()).getText()) )
 			this.ctrl.selectionnerEtape();
+		/*
 		if ( "Modifier Map".equals(((JMenuItem)e.getSource()).getText()) )
 		{
 			this.ctrl.getIHM().getFramePlateau().getPanelPlateau().setModif();
@@ -80,5 +81,6 @@ public class BarreMenu extends JMenuBar implements ActionListener
 			this.ctrl.getIHM().getFramePlateau().getPanelPlateau().setJouer();
 			this.ctrl.setJouer();
 		}
+		*/
 	}
 }

@@ -14,15 +14,12 @@ public class PanelPlateau extends JPanel
 	private Controleur ctrl;
 	private int        largeur, hauteur;
 	private Image      imgPlateau, imgDepart;
-	private boolean modifier;
 
-	public PanelPlateau(Controleur ctrl, int largeur, int hauteur, boolean modifier)
+	public PanelPlateau(Controleur ctrl, int largeur, int hauteur)
 	{
 		this.ctrl    = ctrl;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
-
-		this.modifier = modifier;
 
 		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getImagePlateauVierge());
 		this.imgDepart  = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getImageDepart());
@@ -133,79 +130,53 @@ public class PanelPlateau extends JPanel
 		}
 	}
 
-	private boolean BModif()
-	{
-		return this.modifier;
-	}
-
-	public void setModif()
-	{
-		this.modifier = true;
-		System.out.println("Le plateau peut est modifié");
-	}
-
-	public void setJouer()
-	{
-		this.modifier = false;
-		System.out.println("Vous pouvez jouer");
-	}
-
 	private class GereSouris extends MouseAdapter
 	{
-		
 		Sommet[] sommetsActifs = new Sommet[2];
 		
 		public void mousePressed(MouseEvent e)
 		{
-			if (!PanelPlateau.this.BModif())
-			{
-				System.out.println("rere");
-				this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-				System.out.println("s1 : "+this.sommetsActifs[0]);
-			}
+			this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+			System.out.println("s1 : "+this.sommetsActifs[0]);
 		}
 
 		
 		public void mouseReleased(MouseEvent e) 
 		{
-			if (!PanelPlateau.this.BModif())
+			List<List<Sommet>> lstTrajets;
+			List<Sommet>       trajet;
+			
+			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+			System.out.println("s2 : "+this.sommetsActifs[1]);
+			
+			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
 			{
-				List<List<Sommet>> lstTrajets;
 				
-				this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-				System.out.println("s2 : "+this.sommetsActifs[1]);
+				trajet = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
+				System.out.println("Sommet pris");
+				System.out.println(trajet);
+				System.out.println(trajet != null && trajet.size() != 0);
 				
-				if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
+				if(trajet != null && trajet.size() != 0)
 				{
-					lstTrajets = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-					System.out.println(lstTrajets != null && lstTrajets.size() != 0);
+					// Affectation du Joueur actif aux routes composant le trajet
+					PanelPlateau.this.ctrl.affecterPrpRoute(trajet);
 					
-					if(lstTrajets != null && lstTrajets.size() != 0)
-					{
-						// Affectation du Joueur actif aux routes composant le trajet
-						PanelPlateau.this.ctrl.affecterPrpRoute(lstTrajets.get(0));
-						
-						// Calculs des scores
-						lstTrajets = PanelPlateau.this.ctrl.trajetsSommetDepart(this.sommetsActifs[1]);
-						System.out.println(lstTrajets);
-						if(lstTrajets.size() == 1)
-							PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0));
-						else
-							PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
-	
-						PanelPlateau.this.ctrl.incrementerNumTour();
-					}
+					// Calculs et ajout des scores
+					lstTrajets = PanelPlateau.this.ctrl.getTrajets(this.sommetsActifs[1], PanelPlateau.this.ctrl.getDepart(), true);
+					System.out.println("Trajet Sommet Depart");
+					System.out.println(lstTrajets);
+					
+					if(lstTrajets.size() == 1)
+						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0));
+					else
+						//PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
+						new FrameTrajet(ctrl, lstTrajets);
+
+					PanelPlateau.this.ctrl.incrementerNumTour();
 				}
-				this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 			}
-
-
-
-
-			if (PanelPlateau.this.BModif())
-			{
-				
-			}
+			this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 		}
 	}
 }

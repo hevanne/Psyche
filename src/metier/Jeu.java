@@ -61,7 +61,7 @@ public class Jeu
 	public Sommet getDepart      () { return this.lstSommets.get(0); }
 	public int    getNumTour     () { return this.numTour;                 }
 	public int    getNbJoueur    () { return this.lstJoueurs.size();       }
-	public Joueur getJoueurActif () { return this.lstJoueurs.get((this.numTour+1) % (this.lstJoueurs.size())); }
+	public Joueur getJoueurActif () { return this.lstJoueurs.get((this.numTour+1) % 2); }
 
 	public Joueur getJoueur (int i) { return this.lstJoueurs.get(i); }
 	public String getVocab  (int i) { return this.vocab[i];          }
@@ -106,6 +106,11 @@ public class Jeu
 
 	public boolean estFinJeu()
 	{
+		for(Joueur j : this.lstJoueurs)
+		{
+			if(j.getNbPions() == 0) return false;
+		}
+		
 		for (int i = 1; i < this.lstSommets.size(); i++)
 			if (!this.lstSommets.get(i).aProprietaire())
 				return false;
@@ -113,15 +118,17 @@ public class Jeu
 		return true;
 	}
 
-	public List<List<Sommet>> prendreSommet(Sommet smtDep, Sommet smtArr)
+	public List<Sommet> prendreSommet(Sommet smtDep, Sommet smtArr)
 	{
 		if(smtDep == null || smtArr == null) return null;
 
 		Joueur             joueurActif;
 		List<List<Sommet>> trajets;
+		List<Sommet>       retour;
 
-		trajets     = this.plusCourtsTrajets(smtDep, smtArr);
+		trajets     = this.getTrajets(smtDep, smtArr, false);
 		joueurActif = this.getJoueurActif();
+
 		/*
 		 * Pour prendre une mine, le joueur doit :
 		 * - Partir soit d’une Mine qui a déjà été prise, soit de la nouvelle Rome.
@@ -130,15 +137,46 @@ public class Jeu
 		 */
 		if(!((smtDep == this.getDepart() || (smtDep != this.getDepart() && smtDep.aProprietaire()))
 		   && !smtArr.aProprietaire()
-		   && trajets.size() != 0)) return null;
+		   && trajets.size() != 0)) 
+		return null;
+
+		// On récupère le trajet
+		retour = trajets.get(0);
+		if(trajets.size() > 1)
+		{
+			for(List<Sommet> trajet : trajets)
+				if(trajet.size() < retour.size()) retour = trajet;
+		}
+		
+		// Verifier que le joueur possède suffisament de pions
+		if(Jeu.calculerCoutTrajet(retour) != -1 && Jeu.calculerCoutTrajet(retour) <= this.getJoueurActif().getNbPions())
+		return null;
 
 		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
- 		if(smtArr.setProprietaire(joueurActif))
-		{
-			System.out.println(trajets);
-			return trajets;
-		}
+ 		if(!smtArr.setProprietaire(joueurActif))
 		return null;
+
+		return retour;
+		
+	}
+
+	private static int calculerCoutTrajet(List<Sommet> trajet)
+	{
+		if(Jeu.trajetRouteExiste(trajet)) return -1;
+
+		Route r;
+		int   retour;
+		
+		retour = 0;
+		
+		for(int i = 0; i < trajet.size() - 1; i++)
+		{
+			r = trajet.get(i).getRoute(trajet.get(i+1));
+			if(!r.aProprietaire())
+				retour += r.getNbSection();
+		}
+
+		return retour;
 	}
 
 	public void affecterPrpRoute(List<Sommet> trajet) 
@@ -152,7 +190,10 @@ public class Jeu
 			smtArr = trajet.get(i+1);
 			r = smtDep.getRoute(smtArr);
 			if(!r.aProprietaire())
+			{
+				this.getJoueurActif().varierNbPions(r.getNbSection());
 				r.setProprietaire(this.getJoueurActif());
+			}
 		}
 	}
 	
@@ -184,8 +225,9 @@ public class Jeu
 			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
 	}
 
-	public List<List<Sommet>> plusCourtsTrajets(Sommet smtDep, Sommet smtArr)
+	public List<List<Sommet>> getTrajets(Sommet smtDep, Sommet smtArr, boolean routePrp)
 	{
+		System.out.println("smtDep : " + smtDep + " smtArr : " + smtArr);
 		List<List<Sommet>> retour;
 		
 		Queue<Sommet> file;
@@ -199,17 +241,17 @@ public class Jeu
 
 		retour = new ArrayList<List<Sommet>>();
 		trajet = new ArrayList<Sommet>();
-		
 		marque        = new boolean[this.lstSommets.size()];
 		indiceSmtPrec = new int    [this.lstSommets.size()];
 
-
-		// Cf cours de graph
 		// Parcours en largeur
 		file = new LinkedList<Sommet>();
 		file.add(smtDep);
-		marque[smtDep.getNum()] = true;
-		indiceSmtPrec[smtDep.getNum()] = -1;
+		marque[smtDep.getNum()]  = true;
+		indiceSmtPrec[smtArr.getNum()] = -1;
+		for(int i = 0; i < indiceSmtPrec.length; i++)
+			indiceSmtPrec[i] = -1;
+		
 
 		while(!file.isEmpty())
 		{
@@ -217,30 +259,54 @@ public class Jeu
 
 			if(smt == smtArr)
 			{
-				trajet.clear();
+				smtVoisins = smtArr.getVoisins();
 
-				tmp = smtArr;
-				while (indiceSmtPrec[tmp.getNum()] != -1) 
+				System.out.println("voisins de " + smtArr + " : " + smtVoisins);
+
+				for(Sommet smtVoisin : smtVoisins)
 				{
+					trajet.clear();
+					trajet.add(smtArr);
+					tmp = smtVoisin;
 					trajet.add(tmp);
-					tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
-				}
-				trajet.add(smtDep);
+					while (indiceSmtPrec[tmp.getNum()] != -1) 
+					{
+						tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
+						trajet.add(tmp);
+						System.out.println("Sommet : " + tmp);
+					}
+					Collections.reverse(trajet);
+					System.out.println("trajet : " + trajet);
 
-				if (retour.size() == 0 || trajet.size() == retour.get(0).size())
-				{
-					retour.add(new ArrayList<Sommet>(trajet));
-				}
-				else if (trajet.size() < retour.get(0).size())
-				{
-					retour.clear();
-					retour.add(trajet);
+					if(routePrp)
+					{
+						if(trajet.get(0) == smtDep && Jeu.trajetRouteExiste(trajet))
+							retour.add(new ArrayList<Sommet>(trajet));
+					}
+					else
+					{
+						if(trajet.get(0) == smtDep)
+							retour.add(new ArrayList<Sommet>(trajet));
+					}
 				}
 
-				//trajet.removeLast();
+				System.out.println("Retour : " + retour);
+				return retour;
 			}
 
 			smtVoisins = smt.getVoisins();
+
+			if(routePrp)
+			{
+				List<Sommet> lstTmp = new ArrayList<Sommet>();
+				
+				for(Sommet smtVoisin : smtVoisins)
+					if(smtVoisin.getRoute(smt).aProprietaire())
+						lstTmp.add(smtVoisin);
+
+				smtVoisins = lstTmp;
+			}
+
 			smtVoisins.removeIf(smtVoisin -> !smtVoisin.aProprietaire() && smtVoisin != smtArr);
 
 			for(Sommet smtVoisin : smtVoisins)
@@ -254,78 +320,16 @@ public class Jeu
 			}
 		}
 
-		return retour;
+		return null;
 	}
 
-	public List<List<Sommet>> trajetsSommetDepart(Sommet smtArr)
-	{
-		List<List<Sommet>> retour;
-		Queue<Sommet> file;
-		List<Sommet>  trajet;
-		List<Sommet>  smtVoisins, smtVoisinsPrp;
-		Sommet        smt, tmp;
-		boolean[] marque;
-		int[]     indiceSmtPrec;
+	private static boolean trajetRouteExiste(List<Sommet> trajet)
+	{		
+		for(int i = 0; i < trajet.size() - 1; i++)
+			if(!trajet.get(i).getRoute(trajet.get(i+1)).aProprietaire())
+				return false;
 
-		retour = new ArrayList<List<Sommet>>();
-		trajet = new ArrayList<Sommet>();
-		marque        = new boolean[this.lstSommets.size()];
-		indiceSmtPrec = new int    [this.lstSommets.size()];
-
-		// Parcours en largeur
-		file = new LinkedList<Sommet>();
-		file.add(smtArr);
-		marque[smtArr.getNum()] = true;
-		indiceSmtPrec[smtArr.getNum()] = -1;
-
-		while(!file.isEmpty())
-		{
-			smt = file.poll();
-			System.out.println(smt);
-
-			if(smt == this.getDepart())
-			{
-				trajet.clear();
-				tmp = this.getDepart();
-				while (indiceSmtPrec[tmp.getNum()] != -1) 
-				{
-					trajet.add(tmp);
-					tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
-				}
-				trajet.add(smtArr);
-
-				if (retour.size() == 0 || trajet.size() == retour.get(0).size())
-				{
-					retour.add(new ArrayList<Sommet>(trajet));
-				}
-				else if (trajet.size() < retour.get(0).size())
-				{
-					retour.clear();
-					retour.add(trajet);
-				}
-			}
-
-			smtVoisins = smt.getVoisins();
-			smtVoisinsPrp = new ArrayList<Sommet>();
-
-			for(Sommet voisin : smtVoisins)
-				if(voisin.getRoute(smt).aProprietaire())
-					smtVoisinsPrp.add(voisin);
-			
-			smtVoisinsPrp.removeIf(smtVoisin -> !smtVoisin.aProprietaire() && smtVoisin != smtArr);
-
-			for(Sommet smtVoisin : smtVoisinsPrp)
-			{
-				if(!marque[smtVoisin.getNum()]) 
-				{
-					file.offer(smtVoisin);
-					indiceSmtPrec[smtVoisin.getNum()] = smt.getNum();
-					marque[smtVoisin.getNum()] = true;
-				}
-			}
-		}
-
-		return retour;
+		return true;
 	}
 
 	private void initTheme ()
@@ -501,7 +505,7 @@ public class Jeu
 				smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
 				this.prendreSommet(smtDep, smtArr);
 
-				lstTrajets = this.plusCourtsTrajets(smtArr, this.getDepart());
+				lstTrajets = this.getTrajets(smtArr, this.getDepart(), false);
 				indiceTrajetChoisi = 0;
 				if(tabLig.length == 4)
 					indiceTrajetChoisi = Integer.parseInt(tabLig[3]);

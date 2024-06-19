@@ -8,7 +8,7 @@ public class Joueur
 	private static int nbJoueurs;
 
 	private int numJoueur;
-	private int nbPossessions;
+	private int nbPions;
 	private int nbPiece;
 	private int score;
 	private int scoreRoute;
@@ -27,19 +27,20 @@ public class Joueur
 		this.nomJouer      = nomJouer;
 		this.numJoueur     = ++Joueur.nbJoueurs;
 
-		this.lstSommets     = new ArrayList<Sommet>();
+		this.lstSommets    = new ArrayList<Sommet>();
 		this.tabRessources = new Ressource[4][8];
-		this.tabScore = new int[this.tabRessources[0].length];
+		this.tabScore      = new int[this.tabRessources[0].length];
 
 		this.initJoueur();
 	}
 
 	// Accesseurs
-	public int getNum           () { return this.numJoueur;     }
-	public int getNbPossessions () { return this.nbPossessions; }
-	public int getNbPieces      () { return this.nbPiece;       }
-	public int getScore         () { return this.score;         }
-	
+	public int getNum        () { return this.numJoueur;     }
+	public int getNbPions    () { return this.nbPions;       }
+	public int getNbPieces   () { return this.nbPiece;       }
+	public int getScore      () { return this.score;         }
+	public int getScoreRoute () { return this.scoreRoute;    }
+
 	public String getNom() { return this.nomJouer; }
 
 	public Ressource getRessource (int i, int j) { return this.tabRessources[i][j]; }
@@ -54,10 +55,10 @@ public class Joueur
 	{
 		this.lstSommets.clear();
 		
-		this.nbPossessions = 0;
-		this.nbPiece       = 0;
-		this.score         = 0;
-		this.scoreRoute    = 0;
+		this.nbPions    = 0;
+		this.nbPiece    = 0;
+		this.score      = 0;
+		this.scoreRoute = 0;
 
 		for(int i = 0; i < this.tabRessources.length; i++)
 			for(int j = 0; j < this.tabRessources.length; j++)
@@ -261,10 +262,10 @@ public class Joueur
 		}
 	}
 
-	public void varierNbPossessions (int nb)
+	public void varierNbPions (int nb)
 	{
 		if(nb >= 0)
-			this.nbPossessions += nb;
+			this.nbPions += nb;
 	}
 
 	public void triTabRessource()

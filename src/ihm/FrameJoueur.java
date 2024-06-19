@@ -2,13 +2,16 @@ package ihm;
 
 import controleur.Controleur;
 
+import java.awt.BorderLayout;
+
 import javax.swing.*;
 
 public class FrameJoueur extends JFrame
 {
-	private Controleur  ctrl;
-	private int         largeur, hauteur;
-	private PanelJoueur panelJoueur;
+	private Controleur      ctrl;
+	private int             largeur, hauteur;
+	private PanelJoueur     panelJoueur;
+	private PanelJoueurInfo panelJoueurInfo;
 
 	public FrameJoueur(Controleur ctrl, int numJoueur, int largeur, int hauteur)
 	{
@@ -18,11 +21,13 @@ public class FrameJoueur extends JFrame
 
 		/* Création des composants */
 
-		this.panelJoueur = new PanelJoueur(ctrl, numJoueur, largeur, hauteur);
+		this.panelJoueur     = new PanelJoueur     (ctrl, numJoueur, largeur, hauteur);
+		this.panelJoueurInfo = new PanelJoueurInfo (ctrl, numJoueur);
 
 		/* Positionnement des composants */
 
-		this.add(panelJoueur);
+		this.add( panelJoueurInfo, BorderLayout.NORTH  );
+		this.add( panelJoueur    , BorderLayout.CENTER );
 
 		/* Activation des composants */
 

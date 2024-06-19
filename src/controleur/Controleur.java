@@ -46,7 +46,7 @@ public class Controleur
 	// Autres Méthodes
 	public boolean estFinJeu () { return this.metier.estFinJeu(); }
 	
-	public List<List<Sommet>> prendreSommet (Sommet smtDep, Sommet smtArr) 
+	public List<Sommet> prendreSommet (Sommet smtDep, Sommet smtArr) 
 	{ 
 		return this.metier.prendreSommet(smtDep, smtArr); 
 	}
@@ -84,14 +84,9 @@ public class Controleur
 		this.metier.ajouterEtape(smtDep, smtArr, indiceTrajetChoisi); 
 	}
 
-	public List<List<Sommet>> plusCourtsTrajets(Sommet smtDep, Sommet smtArr) 
+	public List<List<Sommet>> getTrajets(Sommet smtDep, Sommet smtArr, boolean routePrp) 
 	{ 
-		return this.metier.plusCourtsTrajets(smtDep, smtArr);
-	}
-
-	public List<List<Sommet>> trajetsSommetDepart(Sommet smt) 
-	{ 
-		return this.metier.trajetsSommetDepart(smt);
+		return this.metier.getTrajets(smtDep, smtArr, routePrp);
 	}
 
 	public void ajouterScoresTrajet(List<Sommet> trajet) 

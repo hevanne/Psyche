@@ -34,8 +34,6 @@ public class PanelScore extends JPanel
 		this.j1 = this.ctrl.getJoueur(0);
 		this.j2 = this.ctrl.getJoueur(1);
 
-		calculerNbPossessions(j1);
-		calculerNbPossessions(j2);
 
 		this.setLayout(new BorderLayout());
 
@@ -169,8 +167,8 @@ public class PanelScore extends JPanel
 		//vingtième ligne
 
 		this.pnlScore.add(creerCase("Jetons Possession restants", null));
-		this.pnlScore.add(creerCase("" + (25 - this.j1.getNbPossessions()), null));
-		this.pnlScore.add(creerCase("" + (25 - this.j2.getNbPossessions()), null));
+		this.pnlScore.add(creerCase("" + (25 - this.j1.getNbPions()), null));
+		this.pnlScore.add(creerCase("" + (25 - this.j2.getNbPions()), null));
 
 		//vingt-et-unième ligne
 
@@ -225,22 +223,9 @@ public class PanelScore extends JPanel
 
 	public int bonus(Joueur j1, Joueur j2)
 	{
-		if(j1.getNbPossessions() < j2.getNbPossessions())
+		if(j1.getNbPions() < j2.getNbPions())
 			return 10;
 
 		return 0;
-	}
-
-	private int calculerNbPossessions(Joueur j)
-	{
-		List<Route> lstRoutes = this.ctrl.getLstRoutes();
-
-		for(Route r : lstRoutes)
-		{
-			if(r.aProprietaire() && r.getProprietaire().equals(j))
-				j.varierNbPossessions(r.getNbSection());
-		}
-
-		return j.getNbPossessions();
 	}
 }
