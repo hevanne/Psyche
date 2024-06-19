@@ -17,6 +17,7 @@ import java.util.*;
 import controleur.Controleur;
 
 import ihm.IHM;
+import java.io.InputStream;
 
 public class Jeu
 {
