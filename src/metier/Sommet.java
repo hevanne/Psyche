@@ -100,6 +100,11 @@ public class Sommet
 		return false;
 	}
 
+	public static void resetNum()
+	{
+		nbSommet = 0;
+	}
+
 	public void setRessource(IRessource ressource)
 	{
 		if (this.proprietaire == null)

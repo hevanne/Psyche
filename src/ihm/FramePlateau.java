@@ -24,7 +24,7 @@ public class FramePlateau extends JFrame
 
 		/* Création des composants */
 
-		this.panelPlateau     = new PanelPlateau(ctrl, this.largeur, this.hauteur);
+		this.panelPlateau     = new PanelPlateau(ctrl, this.largeur, this.hauteur, bool);
 		this.panelPlateauInfo = new JPanel      (new GridLayout(1, 4, 5, 5));
 
 		this.lblNumTour       = new JLabel( ""+this.ctrl.getNumTour()              );

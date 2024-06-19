@@ -11,11 +11,13 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+import java.io.*;
 import java.util.*;
 
 import controleur.Controleur;
 
 import ihm.IHM;
+import java.io.InputStream;
 
 public class Jeu
 {
@@ -147,7 +149,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".run" ));
+			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".txt" ));
 			
 			lig = scFic.nextLine();
 			while(!"".equals(lig))
@@ -592,16 +594,10 @@ public class Jeu
 		if(etape <= 0)                    etape = 1;
 		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
 
-		System.out.println("etape : " + etape);
-		System.out.println(this.lstEtapes.size());
-
 		this.nouveauJeu();
 		for(this.numTour = 1; this.numTour < etape; this.numTour++)
 		{
 			tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
-			System.out.println(tabLig[0]);
-			System.out.println(tabLig[1]);
-			System.out.println(tabLig[2]);
 
 			smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
 			smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
@@ -613,7 +609,7 @@ public class Jeu
 			indiceTrajetChoisi = 0;
 			if(tabLig.length == 4)
 				indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
-			this.calculerCoutTrajet(lstTrajets.get(indiceTrajetChoisi));
+			this.ajouterScoresTrajet(lstTrajets.get(indiceTrajetChoisi), smtArr);
 		}
 	}
 
@@ -629,7 +625,6 @@ public class Jeu
 
 	private void sauvegarderEtapes()
 	{
-		System.out.println("sauvegarder");
 		try
 		{
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("../data/etapes.data"), "UTF8" ));
@@ -642,65 +637,101 @@ public class Jeu
 		catch (Exception e){}
 	}
 
-	public void ajouterVille(int num, int val, int coul, int x, int y)
+	public void ajouterVille(List<Sommet> lstS)
 	{
-
-		FileReader fr;
+		for (int i = 0; i < lstS.size() - 1; i++) {
+            for (int j = 0; j > lstS.size() - i - 1; j++) {
+                if (lstS.get(j).getNum() < lstS.get(j + 1).getNum()) {
+                    Sommet temp = lstS.get(j);
+                    lstS.set(j, lstS.get(j + 1));
+                    lstS.set(j + 1, temp);
+                }
+            }
+		}
 		String sRet = "";
-		boolean estPasse = false;
+		sRet = 		"# SOMMETS" + "\n" +
+					"# indice \\t valeur \\t indice couleur \\t x \\t y" + "\n" +
+					"# Sommet de départ" + "\n" +
+					"# region jaune" + "\n" +
+					"# region bleue"+ "\n" +
+					"# region grise"+ "\n" +
+					"# region verte"+ "\n" +
+					"# region rouge"+ "\n" +
+					"# region orange"+ "\n" +
+					"\n" +
+					"# ROUTES"+ "\n" +
+					"# '/!\' On utilise les noms des sommets pour aider avec la lisibilité"+ "\n" +
+					"#     (Un nom est plus parlant qu'une indice)"+ "\n" +
+					"# sommet_depart (indice+couleur+valeur) \\t sommet_arrivee (couleur+valeur) \\t nombre_sections";
 
-		estPasse = this.sommetExiste(x, y);
 
-		try
+		for (Route r: this.lstRoutes)
 		{
-			fr = new FileReader ( "../theme/map.txt" );
-			Scanner sc = new Scanner ( fr );
-			sRet += sc.nextLine()+"\n";
-			sRet += sc.nextLine()+"\n";
-			sRet += sc.nextLine()+"\n";
-			if (num == 0 && !estPasse)
-			{
-				sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-				fr.close();
-			}
-				while ( sc.hasNextLine())
-				{
-					String ligne = sc.nextLine();
-					sRet += ligne + "\n";
-					String[] mots = ligne.split("\t");
-
-					if(mots.length>1 && !estPasse)
-					{
-
-						if (mots[2].equals("1") && coul == 1){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-																		estPasse = true;}
-						if (mots[2].equals("2") && coul == 2){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-																		estPasse = true;}
-						if (mots[2].equals("3") && coul == 3){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-																		estPasse = true;}
-						if (mots[2].equals("4") && coul == 4){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-																		estPasse = true;}
-						if (mots[2].equals("5") && coul == 5 && !estPasse){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-																		estPasse = true;}
-						if (mots[2].equals("6") && coul == 6){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
-																		estPasse = true;}
-					}
-				
-				}
-
-			fr.close();
-			sc.close();
-		}
-		catch (Exception e){ e.printStackTrace(); }
-
-		if(!this.sommetExiste(x, y))
-		{
-			this.lstSommets.add((Sommet.nvSommet(val, this.lstCouleurs.get(coul),x,y)));
-			this.ctrl.getFrameRoute().getPanelRoute().getPanelAjoutRoute().ajouterSommet(this.lstSommets.get(num).getNom());
+			sRet += "\n" + r.getSmtDep().getNom() + "\t" + r.getSmtArr().getNom() + "\t" + r.getNbSection();
 		}
 
-		System.out.println("---------------------------------------------------------------------------");
 		this.ecrire(sRet);
+		sRet = "# SOMMETS";
+		for(Sommet s: lstS)
+		{
+			try
+			{
+				Scanner sc = new Scanner ( new FileInputStream ( "../theme/map.txt" ) );
+				String ligne = sc.nextLine();
+	
+				while ( sc.hasNextLine() )
+				{
+					ligne = sc.nextLine();
+					sRet += "\n" + ligne;
+					if (s.getNum() == 0 && ligne.equals("# Sommet de départ"))
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t" + 0 +"\t" + s.getX() + "\t" + s.getY();
+					}
+
+					int cpt = 0;
+					int couleur = 0;
+					for (Couleur c: this.lstCouleurs)
+					{
+						if (c.getNom().equals(s.getCouleur().getNom()))
+						{
+							couleur = cpt;
+						}
+						cpt++;
+					}
+
+					if (couleur == 1 && ligne.equals("# region jaune") && s.getNum() != 0)
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t"+ couleur + "\t" + s.getX() + "\t" + s.getY();
+					}
+					if (couleur == 2 && ligne.equals("# region bleue"))
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t"+ couleur + "\t" + s.getX() + "\t" + s.getY();
+					}
+					if (couleur == 3 && ligne.equals("# region grise"))
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t"+ couleur + "\t" + s.getX() + "\t" + s.getY();
+					}
+					if (couleur == 4 && ligne.equals("# region verte"))
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t"+ couleur + "\t" + s.getX() + "\t" + s.getY();
+					}
+					if (couleur == 5 && ligne.equals("# region rouge"))
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t"+ couleur + "\t" + s.getX() + "\t" + s.getY();
+					}
+					if (couleur == 6 && ligne.equals("# region orange"))
+					{
+						sRet += "\n" + s.getNum() + "\t" + s.getValeur() + "\t"+ couleur + "\t" + s.getX() + "\t" + s.getY();
+					}
+				}
+				this.ecrire(sRet);
+	
+				sc.close();
+				sRet = "# SOMMETS";
+			}
+			catch (Exception e){ e.printStackTrace(); }
+		}
+		
 	}
 
 	private void ecrire(String s)
@@ -784,5 +815,15 @@ public class Jeu
 			this.lstRoutes.add(Route.nvRoute(sommetTmpD, sommetTmpA, Integer.parseInt(tronc)));
 		}
 
+	}
+
+	public void resetNumSommet()
+	{
+		Sommet.resetNum();
+	}
+
+	public Couleur getCouleur(int i)
+	{
+		return this.lstCouleurs.get(i);
 	}
 }
