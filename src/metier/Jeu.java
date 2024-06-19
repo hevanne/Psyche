@@ -62,6 +62,32 @@ public class Jeu
 		this.nouveauIHM();
 	}
 
+	public Jeu(int numScenario)
+	{
+		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
+		this.images  = new String[7];
+
+		this.lstJoueurs    = new ArrayList<Joueur>();
+		this.lstCouleurs   = new ArrayList<Couleur>();
+		this.lstRessources = new ArrayList<IRessource>();
+		this.lstSommets    = new ArrayList<Sommet>();
+		this.lstRoutes     = new ArrayList<Route>();
+		
+		this.lstEtapes     = new ArrayList<String>();
+
+		this.initTheme();
+		this.initMap();
+
+		int indRes = 0;
+		for(int i = 1; i < this.lstSommets.size(); i++)
+		{
+			indRes = (int)(Math.random() * this.lstRessources.size());
+			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
+		}
+
+		this.nouveauIHM(numScenario);
+	}
+
 	// Accesseurs
 	public Sommet getDepart      () { return this.lstSommets.get(0); }
 	public int    getNumTour     () { return this.numTour;                 }
@@ -106,6 +132,79 @@ public class Jeu
 		 */
 		this.getDepart().setDepart();
 	}
+
+	public void nouveauIHM(int numScenario)
+	{
+		Scanner scFic;
+		String  lig, tabLig[], nom;
+		Sommet  smtDep, smtArr;
+		Couleur couleur;
+		boolean doubler;
+		Joueur joueur;
+		int cptLig = 0;
+
+		for( Sommet smt : this.lstSommets ) { smt.reinit(); }
+		for( Route  r   : this.lstRoutes  )  r.reinit();
+		for( Joueur j   : this.lstJoueurs ) { j.initJoueur(); }
+
+		try
+		{
+			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".run" ));
+			
+			lig = scFic.nextLine();
+			while(!"".equals(lig))
+			{
+				if( lig.charAt(0) != '#' )
+				{
+					tabLig = lig.split("\t");
+
+					nom      = tabLig[2];
+					couleur  = this.lstCouleurs.get(Integer.parseInt(tabLig[3]));
+					doubler  = false;
+					if (tabLig.length == 5) doubler = true;
+					
+					if(tabLig[1].charAt(0) == 'R')
+					{
+						getSommet(Integer.parseInt(tabLig[0])).setRessource(new Ressource(nom, couleur, doubler));
+					}
+					if(tabLig[1].charAt(0) == 'P')
+					{
+						getSommet(Integer.parseInt(tabLig[0])).setRessource(new Piece (1, couleur));
+					}
+
+				}
+				lig = scFic.nextLine();
+			}
+
+			// Routes
+			lig = scFic.nextLine();
+			while(scFic.hasNextLine() && !"".equals(lig))
+			{
+				if( lig.charAt(0) != '#' )
+				{
+					tabLig = lig.split("\t");
+
+					smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
+					smtArr = this.lstSommets.get(Integer.parseInt(tabLig[2].substring(0, 2)));
+
+					joueur = getJoueur(Integer.parseInt(tabLig[0]) % 2);
+
+					smtArr.setProprietaire(joueur);
+					smtDep.getRoute(smtArr).setProprietaire(joueur);
+
+					cptLig++;
+				}
+				lig = scFic.nextLine();
+			}
+
+			scFic.close();
+		}
+		catch (Exception e){e.printStackTrace(System.out);}
+
+		this.numTour = cptLig;
+		this.getDepart().setDepart();
+	}
+
 
 	public void incrementerNumTour () { this.numTour++; }
 
@@ -386,7 +485,7 @@ public class Jeu
 			lig = scFic.nextLine();
 			while(!"".equals(lig))
 			{
-				if( lig.charAt(0) != '#' )
+				if( lig.charAt(0) != '#')
 				{
 					tabLig = lig.split("\t");
 

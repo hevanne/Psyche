@@ -23,6 +23,15 @@ public class Controleur
 		this.majIHM();
 	}
 
+	public Controleur(int numScenario)
+	{
+
+		this.metier = new Jeu(numScenario);
+		this.ihm    = new IHM(this);
+
+		this.majIHM();
+	}
+
 	// Accesseurs
 	public IHM getIHM(){ return this.ihm;}
 	public int    getNumTour    () { return this.metier.getNumTour    (); }
