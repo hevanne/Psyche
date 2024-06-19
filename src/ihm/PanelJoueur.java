@@ -56,6 +56,8 @@ public class PanelJoueur extends JPanel
 				}
 		}
 
+		final int ECART = 1;
+
 		for(int i = 0; i < this.ctrl.getJoueur(numJoueur).getTabRessources().length; i++)
 			for(int j = 0; j < this.ctrl.getJoueur(numJoueur).getTabRessources()[i].length; j++)
 			{
@@ -64,7 +66,7 @@ public class PanelJoueur extends JPanel
 				{
 					url = "../theme/distrib_images_2/ressources/" + res.getCouleur().getNom().toUpperCase() + ".png";
 					img = getToolkit().getImage(url);
-					x = 40  + j * IHM.RAYON_RESSOURCE;
+					x = 40  + j * (IHM.RAYON_RESSOURCE - ECART);
 					y = 143 - i * IHM.RAYON_RESSOURCE;
 					g2.drawImage(img, x, y, x+IHM.RAYON_RESSOURCE, y+IHM.RAYON_RESSOURCE, 0, 0, img.getWidth(this), img.getHeight(this),  this);
 				}
@@ -72,7 +74,7 @@ public class PanelJoueur extends JPanel
 	
 		for(int i = 0; i < this.ctrl.getJoueur(this.numJoueur).getNbPieces(); i++)
 		{
-			x = 40 + IHM.RAYON_RESSOURCE*i;
+			x = 40 + (IHM.RAYON_RESSOURCE - ECART)*i;
 			y = hauteur - 349;
 			g2.drawImage(this.imgPiece, x, y, x+IHM.RAYON_RESSOURCE, y+IHM.RAYON_RESSOURCE, 0, 0, this.imgPiece.getWidth(this), this.imgPiece.getHeight(this),  this);
 		}
