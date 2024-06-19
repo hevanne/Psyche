@@ -78,5 +78,6 @@ public class IHM
 		
 		for(FrameJoueur frameJoueur : this.tabFrameJoueur)	
 			frameJoueur.majInfo();
+		framePlateau.majInfo();
 	}
 }

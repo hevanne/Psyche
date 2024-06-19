@@ -6,6 +6,9 @@ import metier.Sommet;
 
 import java.awt.*;
 import javax.swing.*;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class PanelJoueur extends JPanel
 {

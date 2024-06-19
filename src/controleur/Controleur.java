@@ -88,9 +88,10 @@ public class Controleur
 		this.metier.affecterPrpRoute(lstTrajets);
 	}
 
-	public void parcourirEtape (int etape) 
+	public void parcourirEtape (int numEtape) 
 	{ 
-		this.metier.parcourirEtape(etape);
+		this.metier.parcourirEtape(numEtape);
+		this.majIHM();
 	}
 
 	public void ajouterEtape (Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi) 
