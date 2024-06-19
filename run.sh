@@ -16,7 +16,7 @@ echo "4. Jeu sans scenario"
 
 read -p "Choix : " scenario
 
-while [ $scenario -ne 1 ] && [ $scenario -ne 2 ] && [ $scenario -ne 3 ] && [ $scenario -ne 4 ]
+while ! [[ $scenario =~ ^[0-9]+$ ]] || [ $scenario -lt 1 ] || [ $scenario -gt 4 ]
 do
 	echo "Choix invalide"
 	read -p "Choix : " scenario
@@ -24,13 +24,13 @@ done
 
 if [ $scenario -eq 1 ]
 then
-	java Psyche scenario1
+	java Psyche scenario_1.run
 elif [ $scenario -eq 2 ]
 then
-	java Psyche scenario2
+	java Psyche scenario_2.run
 elif [ $scenario -eq 3 ]
 then
-	java Psyche scenario3
+	java Psyche scenario_3.run
 elif [ $scenario -eq 4 ]
 then
 	java Psyche

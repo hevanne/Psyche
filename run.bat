@@ -16,6 +16,7 @@ echo 3 - Scenario 3
 echo 4 - Jeu sans scenario
 
 set /p scenario=Choix : 
+if not defined scenario goto choix
 
 if %scenario%==1 (
 	java Psyche scenario_1.run
