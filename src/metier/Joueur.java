@@ -341,4 +341,21 @@ public class Joueur
 			retour += this.tabScore[i] + " | ";
 		return retour;
 	}
+	
+	public int getHauteRessource(String nomCouleur)
+	{
+		int res = 0;
+
+		for (Sommet smt : this.lstSommets)
+		{
+			if (smt.getCouleur().getNom().equals(nomCouleur))
+			{
+				if (smt.getValeur() > res)
+				{
+					res = smt.getValeur();
+				}
+			}
+		}
+		return res;
+	}
 }
