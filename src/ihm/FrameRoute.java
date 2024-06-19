@@ -12,7 +12,7 @@ import javax.swing.*;
 public class FrameRoute extends JFrame
 {
 	private Controleur ctrl;
-	//private PanelRoute pnlRoute;
+	private PanelRoute pnlRoute;
 
 	public FrameRoute(Controleur ctrl) 
 	{
@@ -21,18 +21,16 @@ public class FrameRoute extends JFrame
 		this.setSize  (800,300);
 		this.setLocation(700, 500);
 
-		//this.pnlRoute = new PanelRoute(this.ctrl, frameReseau);
-		//this.add(pnlRoute);
+		this.pnlRoute = new PanelRoute(this.ctrl);
+		this.add(pnlRoute);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 
-	/*public PanelRoute getPanelRoute()
+	public PanelRoute getPanelRoute()
 	{
-		//return this.pnlRoute;
-
-		return null;
-	}*/
+		return this.pnlRoute;
+	}
 
 }

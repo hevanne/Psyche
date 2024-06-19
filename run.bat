@@ -16,19 +16,20 @@ echo 3 - Scenario 3
 echo 4 - Jeu sans scenario
 
 set /p scenario=Choix : 
+if not defined scenario goto choix
 
 if %scenario%==1 (
-	java Psyche scenario1
+	java Psyche scenario_1.run
 	goto fin
 )
 
 if %scenario%==2 (
-	java Psyche scenario2
+	java Psyche scenario_2.run
 	goto fin
 )
 
 if %scenario%==3 (
-	java Psyche scenario3
+	java Psyche scenario_3.run
 	goto fin
 )
 

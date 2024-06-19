@@ -73,7 +73,6 @@ public class IHM
 		this.tabFrameJoueur[1].repaint();
 		this.framePlateau.repaint();
 		
-		
 		for(FrameJoueur frameJoueur : this.tabFrameJoueur)	
 			frameJoueur.majInfo();
 	}
