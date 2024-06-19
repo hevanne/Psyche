@@ -193,8 +193,8 @@ public class PanelPlateau extends JPanel
 						else
 							PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
 
-					PanelPlateau.this.ctrl.ajouterEtape(this.sommetsActifs[0], this.sommetsActifs[1], null);
-					PanelPlateau.this.ctrl.incrementerNumTour();
+						PanelPlateau.this.ctrl.ajouterEtape(this.sommetsActifs[0], this.sommetsActifs[1], null);
+						PanelPlateau.this.ctrl.incrementerNumTour();
 					}				
 				}
 			}

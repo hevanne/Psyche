@@ -61,7 +61,7 @@ public class Joueur
 		this.scoreRoute = 0;
 
 		for(int i = 0; i < this.tabRessources.length; i++)
-			for(int j = 0; j < this.tabRessources.length; j++)
+			for(int j = 0; j < this.tabRessources[0].length; j++)
 				this.tabRessources[i][j] = null;
 		
 		for(int i = 0; i < this.tabScore.length; i++)
