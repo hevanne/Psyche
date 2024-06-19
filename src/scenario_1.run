@@ -6,33 +6,57 @@
 5	R	Fer	11	4
 6	R	Nickel	12	4
 7	R	Platine	13	4
-8	R	Titane	14	4R	Aluminum	7	4
-9	R	Argent	8	4
-10	R	Or	9	4	doubler
-11	R	Cobalt	10	4
-12	R	Fer	11	4
-13	R	Nickel	12	4
-14	R	Platine	13	4
-15	R	Titane	14	4R	Aluminum	7	4
-16	R	Argent	8	4
-17	R	Or	9	4	doubler
-18	R	Cobalt	10	4
-19	R	Fer	11	4
-20	R	Nickel	12	4
-21	R	Platine	13	4
-22	R	Titane	14	4R	Aluminum	7	4
-23	R	Argent	8	4
-24	R	Or	9	4	doubler
-25	R	Cobalt	10	4
-26	R	Fer	11	4
-27	R	Nickel	12	4
-28	R	Platine	13	4
-29	R	Titane	14	4
-30	R	Titane	14	4
+8	R	Titane	14	4
+9	R	Aluminum	7	4
+10	R	Argent	8	4
+11	R	Or	9	4	doubler
+12	R	Cobalt	10	4
+13	R	Fer	11	4
+14	R	Nickel	12	4
+15	R	Platine	13	4
+16	R	Titane	14	4
+17	R	Aluminum	7	4
+18	R	Argent	8	4
+19	R	Or	9	4	doubler
+20	R	Cobalt	10	4
+21	R	Fer	11	4
+22	R	Nickel	12	4
+23	R	Platine	13	4
+24	R	Titane	14	4
+25	R	Aluminum	7	4
+26	R	Argent	8	4
+27	R	Or	9	4	doubler
+28	R	Cobalt	10	4
+29	R	Fer	11	4
+30	R	Nickel	12	4
 
 # sommet_depart (indice+couleur+valeur) \t sommet_arrivee (couleur+valeur) \t nombre_sections
-1	00D0	26M1
-2	26M1	12G1
-3	12G1	14G3
-4	14G3	01J1
-5	00D0	06B2
+1	00D0	27M2
+2	27M2	07B3
+3	07B3	08B4
+4	08B4	10B8
+5	10B8	09B6
+6	09B6	19V6
+7	19V6	16V2
+8	16V2	20V8
+9	20V8	18V4
+10	18V4	17V3
+11	10B8	06B2
+12	06B2	13G2
+13	13G2	15G4
+14	15G4	04J3
+15	04J3	05J4
+16	05J4	01J1
+17	01J1	11G0
+18	11G0	14G3
+19	14G3	12G1
+20	12G1	26M1
+21	26M1	29M4
+22	29M4	28M3
+23	28M3	30M5
+24	30M5	22R2
+25	22R2	24R4
+26	24R4	25R5
+27	25R5	23R3
+28	07B3	21R1
+29	21R1	23R3

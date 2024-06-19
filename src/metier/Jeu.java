@@ -201,7 +201,7 @@ public class Jeu
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
 
-		this.numTour = cptLig;
+		this.numTour = cptLig + 1;
 		this.getDepart().setDepart();
 	}
 
@@ -693,6 +693,7 @@ public class Jeu
 				}
 
 			fr.close();
+			sc.close();
 		}
 		catch (Exception e){ e.printStackTrace(); }
 
