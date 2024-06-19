@@ -39,6 +39,7 @@ public class Joueur
 	public int getNbPossessions () { return this.nbPossessions; }
 	public int getNbPieces      () { return this.nbPiece;       }
 	public int getScore         () { return this.score;         }
+	public int getScoreRoute    () { return this.scoreRoute;    }
 	
 	public String getNom() { return this.nomJouer; }
 
