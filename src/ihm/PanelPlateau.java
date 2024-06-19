@@ -137,7 +137,7 @@ public class PanelPlateau extends JPanel
 		public void mousePressed(MouseEvent e)
 		{
 			this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			System.out.println("s1 : "+this.sommetsActifs[0]);
+			//System.out.println("s1 : "+this.sommetsActifs[0]);
 		}
 
 		
@@ -147,15 +147,12 @@ public class PanelPlateau extends JPanel
 			List<Sommet>       trajet;
 			
 			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			System.out.println("s2 : "+this.sommetsActifs[1]);
+			//System.out.println("s2 : "+this.sommetsActifs[1]);
 			
 			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null && !PanelPlateau.this.ctrl.estFinJeu())
 			{
 				
 				trajet = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-				System.out.println("Sommet pris");
-				System.out.println(trajet);
-				System.out.println(trajet != null && trajet.size() != 0);
 				
 				if(trajet != null && trajet.size() != 0)
 				{
@@ -164,9 +161,7 @@ public class PanelPlateau extends JPanel
 					
 					// Calculs et ajout des scores
 					lstTrajets = PanelPlateau.this.ctrl.getTrajets(this.sommetsActifs[1], PanelPlateau.this.ctrl.getDepart(), true);
-					System.out.println("Trajet Sommet Depart");
-					System.out.println(lstTrajets);
-					
+
 					if(lstTrajets.size() == 1)
 						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0), lstTrajets.get(0).get(0));
 					else

@@ -17,7 +17,6 @@ import java.util.*;
 import controleur.Controleur;
 
 import ihm.IHM;
-import java.io.InputStream;
 
 public class Jeu
 {
@@ -150,7 +149,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".txt" ));
+			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".run" ));
 			
 			lig = scFic.nextLine();
 			while(!"".equals(lig))
@@ -202,7 +201,7 @@ public class Jeu
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
 
-		this.numTour = cptLig + 1;
+		this.numTour = cptLig;
 		this.getDepart().setDepart();
 	}
 
@@ -326,15 +325,12 @@ public class Jeu
 			for(int i = 0; i < scores.length; i++)
 				scores[i] = scores[i] * 2;
 
-		System.out.println(scores[0]);
-		System.out.println(scores[1]);
 		for(int i = 0; i < this.lstJoueurs.size(); i++)
 			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
 	}
 
 	public List<List<Sommet>> getTrajets(Sommet smtDep, Sommet smtArr, boolean routePrp)
 	{
-		System.out.println("smtDep : " + smtDep + " smtArr : " + smtArr);
 		List<List<Sommet>> retour;
 		
 		Queue<Sommet> file;
@@ -366,10 +362,7 @@ public class Jeu
 
 			if(smt == smtArr)
 			{
-				System.out.println(parcours);
 				smtVoisins = smtArr.getVoisins();
-
-				//System.out.println("voisins de " + smtArr + " : " + smtVoisins);
 
 				for(Sommet smtVoisin : smtVoisins)
 				{
@@ -381,10 +374,8 @@ public class Jeu
 					{
 						tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
 						trajet.add(tmp);
-						//System.out.println("Sommet : " + tmp);
 					}
 					Collections.reverse(trajet);
-					//System.out.println("trajet : " + trajet);
 
 					if(routePrp)
 					{
@@ -397,8 +388,6 @@ public class Jeu
 							retour.add(new ArrayList<Sommet>(trajet));
 					}
 				}
-
-				System.out.println("Retour : " + retour);
 				return retour;
 			}
 
@@ -694,7 +683,6 @@ public class Jeu
 				}
 
 			fr.close();
-			sc.close();
 		}
 		catch (Exception e){ e.printStackTrace(); }
 

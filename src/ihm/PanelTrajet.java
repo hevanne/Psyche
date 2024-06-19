@@ -16,7 +16,6 @@ public class PanelTrajet extends JPanel implements ActionListener
 	private FrameTrajet         frameTrajet;
 	private List<List<Sommet>> lstTrajets;
 
-
 	private JComboBox<String> ddlstTrajets;
 	private JButton           btnValider;
 

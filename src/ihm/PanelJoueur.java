@@ -1,8 +1,6 @@
 package ihm;
 
 import controleur.Controleur;
-import metier.Jeu;
-import metier.Joueur;
 import metier.Ressource;
 import metier.Sommet;
 
