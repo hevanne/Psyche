@@ -85,44 +85,44 @@ public class PanelScore extends JPanel
 		//sixième ligne vide
 
 		this.pnlScore.add(creerCaseImg("../theme/distrib_images_2/icon/Mine_Jaune.png","" ,null));
-		this.pnlScore.add(creerCase("5", null));
-		this.pnlScore.add(creerCase("4", null));
+		this.pnlScore.add(creerCase("", null));
+		this.pnlScore.add(creerCase("", null));
 
 		//septième ligne vide
 
 		this.pnlScore.add(creerCaseImg("../theme/distrib_images_2/icon/Mine_Bleu.png","" ,null));
-		this.pnlScore.add(creerCase("4", null));
-		this.pnlScore.add(creerCase("8", null));
+		this.pnlScore.add(creerCase("", null));
+		this.pnlScore.add(creerCase("", null));
 
 		//huitième ligne vide
 
 		this.pnlScore.add(creerCaseImg("../theme/distrib_images_2/icon/Mine_Gris.png","" ,null));
-		this.pnlScore.add(creerCase("2", null));
-		this.pnlScore.add(creerCase("4", null));
+		this.pnlScore.add(creerCase("", null));
+		this.pnlScore.add(creerCase("", null));
 
 		//neuvième ligne vide
 
 		this.pnlScore.add(creerCaseImg("../theme/distrib_images_2/icon/Mine_Vert.png","" ,null));
-		this.pnlScore.add(creerCase("6", null));
-		this.pnlScore.add(creerCase("8", null));
+		this.pnlScore.add(creerCase("", null));
+		this.pnlScore.add(creerCase("", null));
 
 		//dixième ligne vide
 
 		this.pnlScore.add(creerCaseImg("../theme/distrib_images_2/icon/Mine_Rouge.png","" ,null));
-		this.pnlScore.add(creerCase("5", null));
-		this.pnlScore.add(creerCase("0", null));
+		this.pnlScore.add(creerCase("", null));
+		this.pnlScore.add(creerCase("", null));
 
 		//onzième ligne vide
 
 		this.pnlScore.add(creerCaseImg("../theme/distrib_images_2/icon/Mine_Marron.png","" ,null));
-		this.pnlScore.add(creerCase("4", null));
-		this.pnlScore.add(creerCase("5", null));
+		this.pnlScore.add(creerCase("", null));
+		this.pnlScore.add(creerCase("", null));
 
 		//douzième ligne
 
 		this.pnlScore.add(creerCase("S/Total", clrJauneClair));
-		this.pnlScore.add(creerCase("26", clrJauneClair));
-		this.pnlScore.add(creerCase("29", clrJauneClair));
+		this.pnlScore.add(creerCase("", clrJauneClair));
+		this.pnlScore.add(creerCase("", clrJauneClair));
 
 		//treizième ligne vide
 
@@ -196,7 +196,7 @@ public class PanelScore extends JPanel
 		/* Activation des composants */
 	}
 
-	public JPanel creerCase(String values,Color clr)
+	private JPanel creerCase(String values,Color clr)
 	{
 		JPanel pnl = new JPanel();
 		JLabel lbl = new JLabel(values);
@@ -206,7 +206,7 @@ public class PanelScore extends JPanel
 		return pnl;
 	}
 
-	public JPanel creerCaseImg(String img, String lbl, Color clr)
+	private JPanel creerCaseImg(String img, String lbl, Color clr)
 	{
 		JPanel pnl = new JPanel();
 		
@@ -225,7 +225,7 @@ public class PanelScore extends JPanel
 		return pnl;
 	}
 
-	public int bonus(Joueur j1, Joueur j2)
+	private int bonus(Joueur j1, Joueur j2)
 	{
 		if(j1.getNbPossessions() < j2.getNbPossessions())
 			return 10;
