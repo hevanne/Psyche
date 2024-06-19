@@ -149,7 +149,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".run" ));
+			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".txt" ));
 			
 			lig = scFic.nextLine();
 			while(!"".equals(lig))
