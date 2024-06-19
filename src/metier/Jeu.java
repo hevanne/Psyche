@@ -149,12 +149,12 @@ public class Jeu
 		}
 		
 		// Verifier que le joueur possède suffisament de pions
-		if(Jeu.calculerCoutTrajet(retour) != -1 && Jeu.calculerCoutTrajet(retour) <= this.getJoueurActif().getNbPions())
-		return null;
+		if(Jeu.calculerCoutTrajet(retour) == -1 && Jeu.calculerCoutTrajet(retour) > this.getJoueurActif().getNbPions())
+			return null;
 
 		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
  		if(!smtArr.setProprietaire(joueurActif))
-		return null;
+			return null;
 
 		return retour;
 		
@@ -191,7 +191,7 @@ public class Jeu
 			r = smtDep.getRoute(smtArr);
 			if(!r.aProprietaire())
 			{
-				this.getJoueurActif().varierNbPions(r.getNbSection());
+				this.getJoueurActif().varierNbPions(-r.getNbSection());
 				r.setProprietaire(this.getJoueurActif());
 			}
 		}

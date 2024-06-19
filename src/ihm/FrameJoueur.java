@@ -32,4 +32,9 @@ public class FrameJoueur extends JFrame
 		/* Activation des composants */
 
 	}
+
+	public void majInfo()
+	{
+		this.panelJoueurInfo.majInfo();
+	}
 }

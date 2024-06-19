@@ -16,7 +16,7 @@ public class PanelJoueurInfo extends JPanel
 		this.ctrl      = ctrl;
 		this.numJoueur = numJoueur;
 
-		this.setLayout(new GridLayout(2, 2, 5, 5));
+		this.setLayout(new GridLayout(1, 4, 5, 5));
 
 		/* Création des composants */
 
@@ -25,8 +25,14 @@ public class PanelJoueurInfo extends JPanel
 
 		/* Positionnement des composants */
 		this.add(new JLabel("Score route : ", SwingConstants.RIGHT));
-		this.add(this.lblScoreRoute, SwingConstants.LEFT);
-		this.add(new JLabel("Score route : ", SwingConstants.RIGHT));
-		this.add(this.lblNbPion, SwingConstants.LEFT);
+		this.add(this.lblScoreRoute);
+		this.add(new JLabel("Nb Pion : ", SwingConstants.RIGHT));
+		this.add(this.lblNbPion);
+	}
+
+	public void majInfo()
+	{
+		this.lblScoreRoute.setText ( ""+this.ctrl.getJoueur(this.numJoueur).getScoreRoute() );
+		this.lblNbPion.setText     ( ""+this.ctrl.getJoueur(this.numJoueur).getNbPions()    );
 	}
 }

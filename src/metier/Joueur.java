@@ -35,11 +35,11 @@ public class Joueur
 	}
 
 	// Accesseurs
-	public int getNum        () { return this.numJoueur;     }
-	public int getNbPions    () { return this.nbPions;       }
-	public int getNbPieces   () { return this.nbPiece;       }
-	public int getScore      () { return this.score;         }
-	public int getScoreRoute () { return this.scoreRoute;    }
+	public int getNum        () { return this.numJoueur;  }
+	public int getNbPions    () { return this.nbPions;    }
+	public int getNbPieces   () { return this.nbPiece;    }
+	public int getScore      () { return this.score;      }
+	public int getScoreRoute () { return this.scoreRoute; }
 
 	public String getNom() { return this.nomJouer; }
 
@@ -55,7 +55,7 @@ public class Joueur
 	{
 		this.lstSommets.clear();
 		
-		this.nbPions    = 0;
+		this.nbPions    = 25;
 		this.nbPiece    = 0;
 		this.score      = 0;
 		this.scoreRoute = 0;
@@ -264,8 +264,7 @@ public class Joueur
 
 	public void varierNbPions (int nb)
 	{
-		if(nb >= 0)
-			this.nbPions += nb;
+		this.nbPions += nb;
 	}
 
 	public void triTabRessource()
