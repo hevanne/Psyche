@@ -640,13 +640,13 @@ public class Jeu
 	public void ajouterVille(List<Sommet> lstS)
 	{
 		for (int i = 0; i < lstS.size() - 1; i++) {
-            for (int j = 0; j > lstS.size() - i - 1; j++) {
-                if (lstS.get(j).getNum() < lstS.get(j + 1).getNum()) {
-                    Sommet temp = lstS.get(j);
-                    lstS.set(j, lstS.get(j + 1));
-                    lstS.set(j + 1, temp);
-                }
-            }
+			for (int j = 0; j < lstS.size() - i - 1; j++) {
+				if (lstS.get(j).getNum() < lstS.get(j + 1).getNum()) {
+					Sommet temp = lstS.get(j);
+					lstS.set(j, lstS.get(j + 1));
+					lstS.set(j + 1, temp);
+				}
+			}
 		}
 		String sRet = "";
 		sRet = 		"# SOMMETS" + "\n" +
