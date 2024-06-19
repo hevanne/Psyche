@@ -240,7 +240,6 @@ public class Jeu
 		   && trajets.size() != 0)) 
 		return null;
 
-		System.out.println("v1");
 		// On récupère le trajet
 		retour = trajets.get(0);
 		if(trajets.size() > 1)
@@ -253,12 +252,10 @@ public class Jeu
 		if(this.calculerCoutTrajet(retour) == -1 && this.calculerCoutTrajet(retour) > this.getJoueurActif().getNbPions())
 			return null;
 
-			System.out.println("v2");
 		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
  		if(!smtArr.setProprietaire(joueurActif))
 			return null;
 
-			System.out.println("v3");
 		return retour;
 		
 	}
@@ -286,8 +283,7 @@ public class Jeu
 	{
 		Sommet smtDep, smtArr;
 		Route r;
-		
-		System.out.println(trajet);
+
 		for(int i = 0; i < trajet.size()-1; i++)
 		{
 			smtDep = trajet.get(i);
@@ -598,11 +594,7 @@ public class Jeu
 			smtDep = this.getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
 			smtArr = this.getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
 			
-			System.out.println(smtDep);
-			System.out.println(smtArr);
 			trajet = this.prendreSommet(smtDep, smtArr);
-			System.out.println(trajet);
-			System.out.println(this.getDepart());
 			this.affecterPrpRoute(trajet);
 
 			lstTrajets = this.getTrajets(smtArr, this.getDepart(), true);
