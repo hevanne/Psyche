@@ -1,0 +1,38 @@
+# num_sommet \t type \t nom_ressource \t indice_couleur (\t doubler)
+1	R	Aluminum	7	4
+2	R	Argent	8	4
+3	R	Or	9	4	doubler
+4	R	Cobalt	10	4
+5	R	Fer	11	4
+6	R	Nickel	12	4
+7	R	Platine	13	4
+8	R	Titane	14	4R	Aluminum	7	4
+9	R	Argent	8	4
+10	R	Or	9	4	doubler
+11	R	Cobalt	10	4
+12	R	Fer	11	4
+13	R	Nickel	12	4
+14	R	Platine	13	4
+15	R	Titane	14	4R	Aluminum	7	4
+16	R	Argent	8	4
+17	R	Or	9	4	doubler
+18	R	Cobalt	10	4
+19	R	Fer	11	4
+20	R	Nickel	12	4
+21	R	Platine	13	4
+22	R	Titane	14	4R	Aluminum	7	4
+23	R	Argent	8	4
+24	R	Or	9	4	doubler
+25	R	Cobalt	10	4
+26	R	Fer	11	4
+27	R	Nickel	12	4
+28	R	Platine	13	4
+29	R	Titane	14	4
+30	R	Titane	14	4
+
+# sommet_depart (indice+couleur+valeur) \t sommet_arrivee (couleur+valeur) \t nombre_sections
+1	00D0	26M1
+2	26M1	12G1
+3	12G1	14G3
+4	14G3	01J1
+5	00D0	06B2
