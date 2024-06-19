@@ -168,7 +168,7 @@ public class PanelPlateau extends JPanel
 					System.out.println(lstTrajets);
 					
 					if(lstTrajets.size() == 1)
-						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0));
+						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0), lstTrajets.get(0).get(0));
 					else
 						PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
 

@@ -243,7 +243,8 @@ public class Jeu
 		 * Il est tout à fait possible de passer par plusieurs Mines vides.
 		 */
 		if(!((smtDep == this.getDepart() || (smtDep != this.getDepart() && smtDep.aProprietaire()))
-		   && !smtArr.aProprietaire()
+		   && !smtArr.aProprietaire()		  
+		   && trajets != null   
 		   && trajets.size() != 0)) 
 		return null;
 
@@ -305,14 +306,12 @@ public class Jeu
 	}
 	
 	// parcours le trajet en calculant les scores
-	public void ajouterScoresTrajet(List<Sommet> trajet)
+	public void ajouterScoresTrajet(List<Sommet> trajet, Sommet smtFin)
 	{
 		int[]  scores;
 		Route  r;
-		Sommet smtFin;
 		
 		scores = new int[2];
-		smtFin = trajet.get(trajet.size()-1);
 		
 		for(int i = 0; i < trajet.size()-1; i++)
 		{
@@ -338,16 +337,15 @@ public class Jeu
 		List<List<Sommet>> retour;
 		
 		Queue<Sommet> file;
-		List<Sommet>  trajet;
-		List<Sommet>  smtVoisins;
+		List<Sommet>  parcours, trajet, smtVoisins;
 		Sommet        smt, tmp;
 
 		boolean[] marque;
 		int[]     indiceSmtPrec;
 
-
-		retour = new ArrayList<List<Sommet>>();
-		trajet = new ArrayList<Sommet>();
+		retour        = new ArrayList<List<Sommet>>();
+		trajet        = new ArrayList<Sommet>();
+		parcours      = new ArrayList<Sommet>();
 		marque        = new boolean[this.lstSommets.size()];
 		indiceSmtPrec = new int    [this.lstSommets.size()];
 
@@ -363,12 +361,14 @@ public class Jeu
 		while(!file.isEmpty())
 		{
 			smt = file.poll();
+			parcours.add(smt);
 
 			if(smt == smtArr)
 			{
+				System.out.println(parcours);
 				smtVoisins = smtArr.getVoisins();
 
-				System.out.println("voisins de " + smtArr + " : " + smtVoisins);
+				//System.out.println("voisins de " + smtArr + " : " + smtVoisins);
 
 				for(Sommet smtVoisin : smtVoisins)
 				{
@@ -380,10 +380,10 @@ public class Jeu
 					{
 						tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
 						trajet.add(tmp);
-						System.out.println("Sommet : " + tmp);
+						//System.out.println("Sommet : " + tmp);
 					}
 					Collections.reverse(trajet);
-					System.out.println("trajet : " + trajet);
+					//System.out.println("trajet : " + trajet);
 
 					if(routePrp)
 					{

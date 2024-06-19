@@ -60,7 +60,8 @@ public class PanelTrajet extends JPanel implements ActionListener
 	{
 		if (e.getSource() == this.btnValider)
 		{
-			this.ctrl.ajouterScoresTrajet(this.lstTrajets.get(this.ddlstTrajets.getSelectedIndex()));
+			int indice = this.ddlstTrajets.getSelectedIndex();
+			this.ctrl.ajouterScoresTrajet(this.lstTrajets.get(indice), this.lstTrajets.get(indice).get(0));
 			this.frameTrajet.dispose();
 		}
 	}
