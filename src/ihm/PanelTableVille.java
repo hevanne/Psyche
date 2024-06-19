@@ -10,8 +10,6 @@ import metier.*;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.*;
 import javax.swing.table.DefaultTableModel;
 

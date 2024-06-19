@@ -73,9 +73,14 @@ public class Controleur
 		this.majIHM();
 	} 
 
+	public void selectionnerEtape () 
+	{ 
+		new FrameEtape(this, this.ihm.getXPrincipal(), this.ihm.getYPrincipal()); 
+	}
+
 	public void selectionnerTrajet (List<List<Sommet>> lstTrajets) 
 	{
-		new FrameTrajet(this, lstTrajets);
+		new FrameTrajet(this, lstTrajets, this.ihm.getXPrincipal(), this.ihm.getYPrincipal());
 	}
 
 	public void affecterPrpRoute(List<Sommet> lstTrajets)
@@ -104,7 +109,6 @@ public class Controleur
 	}
 
 	public void afficherScore     () { new FrameScore(this); }
-	public void selectionnerEtape () { new FrameEtape(this); }
 
 	public void majIHM()
 	{

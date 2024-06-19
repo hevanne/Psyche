@@ -65,6 +65,9 @@ public class IHM
 		return this.framePlateau;
 	}
 
+	public int getXPrincipal() { return this.framePlateau.getX(); }
+	public int getYPrincipal() { return this.framePlateau.getY(); }
+
 
 	// Autres Méthodes
 	public void majTout()

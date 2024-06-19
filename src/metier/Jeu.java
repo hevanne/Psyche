@@ -206,14 +206,17 @@ public class Jeu
 	}
 
 
-	public void incrementerNumTour () { this.numTour++; }
+	public void incrementerNumTour () 
+	{ 
+		this.numTour++; 
+		if(this.getJoueurActif().getNbPions() <= 0) this.numTour++;
+	}
 
 	public boolean estFinJeu()
 	{
-		for(Joueur j : this.lstJoueurs)
-		{
-			if(j.getNbPions() == 0) return false;
-		}
+		if(   this.lstJoueurs.get(0).getNbPions() <= 0
+		   && this.lstJoueurs.get(0).getNbPions() <= 0) 
+		   return false;
 		
 		for (int i = 1; i < this.lstSommets.size(); i++)
 			if (!this.lstSommets.get(i).aProprietaire())

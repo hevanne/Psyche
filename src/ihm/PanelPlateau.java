@@ -149,7 +149,7 @@ public class PanelPlateau extends JPanel
 			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
 			System.out.println("s2 : "+this.sommetsActifs[1]);
 			
-			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null )
+			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null && !PanelPlateau.this.ctrl.estFinJeu())
 			{
 				
 				trajet = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
@@ -170,8 +170,7 @@ public class PanelPlateau extends JPanel
 					if(lstTrajets.size() == 1)
 						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0));
 					else
-						//PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
-						new FrameTrajet(ctrl, lstTrajets);
+						PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
 
 					PanelPlateau.this.ctrl.incrementerNumTour();
 				}
