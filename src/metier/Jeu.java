@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
-import java.io.*;
 import java.util.*;
 
 import controleur.Controleur;
@@ -20,7 +19,6 @@ import ihm.IHM;
 
 public class Jeu
 {
-
 	private int      numTour;
 	private String[] vocab;
 	private String[] images;
@@ -59,7 +57,7 @@ public class Jeu
 			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
 		}
 
-		this.nouveauIHM();
+		this.nouveauJeu();
 	}
 
 	public Jeu(int numScenario)
@@ -85,7 +83,7 @@ public class Jeu
 			this.lstSommets.get(i).setRessource(this.lstRessources.remove(indRes));
 		}
 
-		this.nouveauIHM(numScenario);
+		this.nouveauJeu(numScenario);
 	}
 
 	// Accesseurs
@@ -117,7 +115,7 @@ public class Jeu
 	public String getImagePionJoueur    (int numJoueur) { return this.images[2+numJoueur]; } 
 
 	// Autres Méthodes
-	public void nouveauIHM()
+	public void nouveauJeu()
 	{
 		this.numTour = 1;
 
@@ -130,10 +128,10 @@ public class Jeu
 		 * Cela permet d'éviter des bug qui peuvent appaître par le fait 
 		 * que le sommet de Départ ne peut pas être pris par un joueur.
 		 */
-		this.getDepart().setDepart();
+		this.lstSommets.get(0).setDepart();
 	}
 
-	public void nouveauIHM(int numScenario)
+	public void nouveauJeu(int numScenario)
 	{
 		Scanner scFic;
 		String  lig, tabLig[], nom;
@@ -257,7 +255,7 @@ public class Jeu
 		}
 		
 		// Verifier que le joueur possède suffisament de pions
-		if(Jeu.calculerCoutTrajet(retour) == -1 && Jeu.calculerCoutTrajet(retour) > this.getJoueurActif().getNbPions())
+		if(this.calculerCoutTrajet(retour) == -1 && this.calculerCoutTrajet(retour) > this.getJoueurActif().getNbPions())
 			return null;
 
 		// /!\ Sommet.setProprietaire(joueur) s'occupe de l'ajout du sommet et du ressource au joueur
@@ -268,9 +266,9 @@ public class Jeu
 		
 	}
 
-	private static int calculerCoutTrajet(List<Sommet> trajet)
+	private int calculerCoutTrajet(List<Sommet> trajet)
 	{
-		if(Jeu.trajetRouteExiste(trajet)) return -1;
+		if(this.trajetRouteExiste(trajet)) return -1;
 
 		Route r;
 		int   retour;
@@ -353,7 +351,6 @@ public class Jeu
 		indiceSmtPrec[smtArr.getNum()] = -1;
 		for(int i = 0; i < indiceSmtPrec.length; i++)
 			indiceSmtPrec[i] = -1;
-		
 
 		while(!file.isEmpty())
 		{
@@ -377,7 +374,7 @@ public class Jeu
 					}
 					Collections.reverse(trajet);
  
-					if(routePrp && trajet.get(0) == smtDep && Jeu.trajetRouteExiste(trajet))
+					if(routePrp && trajet.get(0) == smtDep && this.trajetRouteExiste(trajet))
 					{
 						if(retour.size() != 0 && retour.get(0).size() <= trajet.size())
 							retour.clear();	
@@ -422,7 +419,7 @@ public class Jeu
 		return null;
 	}
 
-	private static boolean trajetRouteExiste(List<Sommet> trajet)
+	private boolean trajetRouteExiste(List<Sommet> trajet)
 	{		
 		for(int i = 0; i < trajet.size() - 1; i++)
 			if(!trajet.get(i).getRoute(trajet.get(i+1)).aProprietaire())
@@ -595,22 +592,29 @@ public class Jeu
 		if(etape <= 0)                    etape = 1;
 		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
 
-		this.nouveauIHM();
+		System.out.println("etape : " + etape);
+		System.out.println(this.lstEtapes.size());
+
+		this.nouveauJeu();
 		for(this.numTour = 1; this.numTour < etape; this.numTour++)
-			{
-				tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
+		{
+			tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
+			System.out.println(tabLig[0]);
+			System.out.println(tabLig[1]);
+			System.out.println(tabLig[2]);
 
-				smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
-				smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
-				this.prendreSommet(smtDep, smtArr);
+			smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
+			smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
+			
+			this.affecterPrpRoute(this.prendreSommet(smtDep, smtArr));
 
-				lstTrajets = this.getTrajets(smtArr, this.getDepart(), false);
-				indiceTrajetChoisi = 0;
-				if(tabLig.length == 4)
-					indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
-
-				this.affecterPrpRoute(lstTrajets.get(indiceTrajetChoisi));
-			}
+			lstTrajets = this.getTrajets(smtArr, this.getDepart(), true);
+			System.out.println(lstTrajets);
+			indiceTrajetChoisi = 0;
+			if(tabLig.length == 4)
+				indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
+			this.calculerCoutTrajet(lstTrajets.get(indiceTrajetChoisi));
+		}
 	}
 
 	public void ajouterEtape(Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi)
@@ -620,11 +624,12 @@ public class Jeu
 			str += "\t" + indiceTrajetChoisi;
 
 		this.lstEtapes.add(str);
-		this.sauvegarder();
+		this.sauvegarderEtapes();
 	}
 
-	public void sauvegarder()
+	private void sauvegarderEtapes()
 	{
+		System.out.println("sauvegarder");
 		try
 		{
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("../data/etapes.data"), "UTF8" ));
@@ -645,7 +650,6 @@ public class Jeu
 		boolean estPasse = false;
 
 		estPasse = this.sommetExiste(x, y);
-
 
 		try
 		{
@@ -685,6 +689,7 @@ public class Jeu
 				}
 
 			fr.close();
+			sc.close();
 		}
 		catch (Exception e){ e.printStackTrace(); }
 
