@@ -376,16 +376,18 @@ public class Jeu
 						trajet.add(tmp);
 					}
 					Collections.reverse(trajet);
-
-					if(routePrp)
+ 
+					if(routePrp && trajet.get(0) == smtDep && Jeu.trajetRouteExiste(trajet))
 					{
-						if(trajet.get(0) == smtDep && Jeu.trajetRouteExiste(trajet))
-							retour.add(new ArrayList<Sommet>(trajet));
+						if(retour.size() != 0 && retour.get(0).size() <= trajet.size())
+							retour.clear();	
+						retour.add(new ArrayList<Sommet>(trajet));
 					}
-					else
+					else if(!routePrp && trajet.get(0) == smtDep)
 					{
-						if(trajet.get(0) == smtDep)
-							retour.add(new ArrayList<Sommet>(trajet));
+						if(retour.size() != 0 && retour.get(0).size() <= trajet.size())
+							retour.clear();	
+						retour.add(new ArrayList<Sommet>(trajet));
 					}
 				}
 				return retour;
