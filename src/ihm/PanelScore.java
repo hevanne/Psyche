@@ -121,8 +121,8 @@ public class PanelScore extends JPanel
 		//douzième ligne
 
 		this.pnlScore.add(creerCase("S/Total", clrJauneClair));
-		this.pnlScore.add(creerCase("" + calculerTotalCouleurMine(j1), clrJauneClair));
-		this.pnlScore.add(creerCase("" + calculerTotalCouleurMine(j2), clrJauneClair));
+		this.pnlScore.add(creerCase("" + calculerSTotalCouleurMine(j1), clrJauneClair));
+		this.pnlScore.add(creerCase("" + calculerSTotalCouleurMine(j2), clrJauneClair));
 
 		//treizième ligne vide
 
@@ -187,8 +187,8 @@ public class PanelScore extends JPanel
 		//vingt-troisième ligne
 
 		this.pnlScore.add(creerCase("Total", clrJauneFonce));
-		this.pnlScore.add(creerCase("182", clrJauneFonce));
-		this.pnlScore.add(creerCase("174", clrJauneFonce));
+		this.pnlScore.add(creerCase("" + scoreTotal(j1), clrJauneFonce));
+		this.pnlScore.add(creerCase("" + scoreTotal(j2), clrJauneFonce));
 
 		this.add(pnlTitre, BorderLayout.NORTH);
 		this.add(pnlScore, BorderLayout.CENTER);
@@ -225,9 +225,9 @@ public class PanelScore extends JPanel
 		return pnl;
 	}
 
-	public int bonus(Joueur j1, Joueur j2)
+	private int bonus(Joueur j1, Joueur j2)
 	{
-		if(j1.getNbPossessions() < j2.getNbPossessions())
+		if(j1.getNbPossessions() <= j2.getNbPossessions())
 			return 10;
 
 		return 0;
@@ -251,9 +251,20 @@ public class PanelScore extends JPanel
 		return j.calculerScorePiece() + j.calculerScoreColonne() + j.calculerScoreLigne();
 	}
 
-	private int calculerTotalCouleurMine(Joueur j)
+	private int calculerSTotalCouleurMine(Joueur j)
 	{
 		return j.getHauteRessource("Jaune") + j.getHauteRessource("Marron") + j.getHauteRessource("Vert") +
-		       j.getHauteRessource("Gris")  + j.getHauteRessource("Bleu")   + j.getHauteRessource("Rouge");
+			   j.getHauteRessource("Gris")  + j.getHauteRessource("Bleu")   + j.getHauteRessource("Rouge");
+	}
+
+	private int scoreTotal(Joueur j)
+	{
+		if(j == this.j1)
+			return j.getScoreRoute() + calculerSTotalCouleurMine(j) + calculerSTotalPlateauIndividuel(j) + bonus(this.j1, this.j2);
+
+		if(j == this.j2)
+			return j.getScoreRoute() + calculerSTotalCouleurMine(j) + calculerSTotalPlateauIndividuel(j) + bonus(this.j2, this.j1);
+
+		return 0;
 	}
 }
