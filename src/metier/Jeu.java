@@ -11,6 +11,7 @@ import java.util.*;
 import controleur.Controleur;
 
 import ihm.IHM;
+import java.io.InputStream;
 
 public class Jeu
 {
@@ -143,7 +144,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".run" ));
+			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".txt" ));
 			
 			lig = scFic.nextLine();
 			while(!"".equals(lig))
@@ -237,7 +238,8 @@ public class Jeu
 		 * Il est tout à fait possible de passer par plusieurs Mines vides.
 		 */
 		if(!((smtDep == this.getDepart() || (smtDep != this.getDepart() && smtDep.aProprietaire()))
-		   && !smtArr.aProprietaire()
+		   && !smtArr.aProprietaire()		  
+		   && trajets != null   
 		   && trajets.size() != 0)) 
 		return null;
 
@@ -299,14 +301,12 @@ public class Jeu
 	}
 	
 	// parcours le trajet en calculant les scores
-	public void ajouterScoresTrajet(List<Sommet> trajet)
+	public void ajouterScoresTrajet(List<Sommet> trajet, Sommet smtFin)
 	{
 		int[]  scores;
 		Route  r;
-		Sommet smtFin;
 		
 		scores = new int[2];
-		smtFin = trajet.get(trajet.size()-1);
 		
 		for(int i = 0; i < trajet.size()-1; i++)
 		{
@@ -320,28 +320,24 @@ public class Jeu
 			for(int i = 0; i < scores.length; i++)
 				scores[i] = scores[i] * 2;
 
-		System.out.println(scores[0]);
-		System.out.println(scores[1]);
 		for(int i = 0; i < this.lstJoueurs.size(); i++)
 			this.lstJoueurs.get(i).varierScoreRoute(scores[i]);
 	}
 
 	public List<List<Sommet>> getTrajets(Sommet smtDep, Sommet smtArr, boolean routePrp)
 	{
-		System.out.println("smtDep : " + smtDep + " smtArr : " + smtArr);
 		List<List<Sommet>> retour;
 		
 		Queue<Sommet> file;
-		List<Sommet>  trajet;
-		List<Sommet>  smtVoisins;
+		List<Sommet>  parcours, trajet, smtVoisins;
 		Sommet        smt, tmp;
 
 		boolean[] marque;
 		int[]     indiceSmtPrec;
 
-
-		retour = new ArrayList<List<Sommet>>();
-		trajet = new ArrayList<Sommet>();
+		retour        = new ArrayList<List<Sommet>>();
+		trajet        = new ArrayList<Sommet>();
+		parcours      = new ArrayList<Sommet>();
 		marque        = new boolean[this.lstSommets.size()];
 		indiceSmtPrec = new int    [this.lstSommets.size()];
 
@@ -357,12 +353,11 @@ public class Jeu
 		while(!file.isEmpty())
 		{
 			smt = file.poll();
+			parcours.add(smt);
 
 			if(smt == smtArr)
 			{
 				smtVoisins = smtArr.getVoisins();
-
-				System.out.println("voisins de " + smtArr + " : " + smtVoisins);
 
 				for(Sommet smtVoisin : smtVoisins)
 				{
@@ -374,24 +369,22 @@ public class Jeu
 					{
 						tmp = this.getSommet(indiceSmtPrec[tmp.getNum()]);
 						trajet.add(tmp);
-						System.out.println("Sommet : " + tmp);
 					}
 					Collections.reverse(trajet);
-					System.out.println("trajet : " + trajet);
-
-					if(routePrp)
+ 
+					if(routePrp && trajet.get(0) == smtDep && Jeu.trajetRouteExiste(trajet))
 					{
-						if(trajet.get(0) == smtDep && Jeu.trajetRouteExiste(trajet))
-							retour.add(new ArrayList<Sommet>(trajet));
+						if(retour.size() != 0 && retour.get(0).size() <= trajet.size())
+							retour.clear();	
+						retour.add(new ArrayList<Sommet>(trajet));
 					}
-					else
+					else if(!routePrp && trajet.get(0) == smtDep)
 					{
-						if(trajet.get(0) == smtDep)
-							retour.add(new ArrayList<Sommet>(trajet));
+						if(retour.size() != 0 && retour.get(0).size() <= trajet.size())
+							retour.clear();	
+						retour.add(new ArrayList<Sommet>(trajet));
 					}
 				}
-
-				System.out.println("Retour : " + retour);
 				return retour;
 			}
 

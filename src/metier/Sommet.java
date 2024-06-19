@@ -123,5 +123,5 @@ public class Sommet
 	public boolean aProprietaire () { return this.proprietaire != null;     }
 	public boolean estDepart     () { return this.num == 0;                 }
 
-	public String  toString      () { return this.nom;                      }
+	public String  toString      () { return this.nom.substring(2);                      }
 }

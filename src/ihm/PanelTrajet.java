@@ -16,7 +16,6 @@ public class PanelTrajet extends JPanel implements ActionListener
 	private FrameTrajet         frameTrajet;
 	private List<List<Sommet>> lstTrajets;
 
-
 	private JComboBox<String> ddlstTrajets;
 	private JButton           btnValider;
 
@@ -60,7 +59,8 @@ public class PanelTrajet extends JPanel implements ActionListener
 	{
 		if (e.getSource() == this.btnValider)
 		{
-			this.ctrl.ajouterScoresTrajet(this.lstTrajets.get(this.ddlstTrajets.getSelectedIndex()));
+			int indice = this.ddlstTrajets.getSelectedIndex();
+			this.ctrl.ajouterScoresTrajet(this.lstTrajets.get(indice), this.lstTrajets.get(indice).get(0));
 			this.frameTrajet.dispose();
 		}
 	}

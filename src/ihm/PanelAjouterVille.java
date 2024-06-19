@@ -9,8 +9,7 @@ import controleur.Controleur;
 
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.*;
 
 public class PanelAjouterVille extends JPanel implements ActionListener

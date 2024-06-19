@@ -103,9 +103,9 @@ public class Controleur
 		return this.metier.getTrajets(smtDep, smtArr, routePrp);
 	}
 
-	public void ajouterScoresTrajet(List<Sommet> trajet) 
+	public void ajouterScoresTrajet(List<Sommet> trajet, Sommet smtFin) 
 	{ 
-		this.metier.ajouterScoresTrajet(trajet); 
+		this.metier.ajouterScoresTrajet(trajet, smtFin); 
 	}
 
 	public void afficherScore     () { new FrameScore(this); }
