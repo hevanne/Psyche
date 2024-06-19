@@ -17,6 +17,7 @@ import java.util.*;
 import controleur.Controleur;
 
 import ihm.IHM;
+import java.io.InputStream;
 
 public class Jeu
 {
@@ -149,7 +150,7 @@ public class Jeu
 
 		try
 		{
-			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".run" ));
+			scFic = new Scanner(new FileInputStream ( "../src/scenario_" + numScenario + ".txt" ));
 			
 			lig = scFic.nextLine();
 			while(!"".equals(lig))
@@ -201,7 +202,7 @@ public class Jeu
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
 
-		this.numTour = cptLig;
+		this.numTour = cptLig + 1;
 		this.getDepart().setDepart();
 	}
 
@@ -693,6 +694,7 @@ public class Jeu
 				}
 
 			fr.close();
+			sc.close();
 		}
 		catch (Exception e){ e.printStackTrace(); }
 

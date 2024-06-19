@@ -1,0 +1,33 @@
+# num_sommet \t type \t nom_ressource \t indice_couleur (\t doubler)
+1	R	Aluminum	7	4
+2	R	Argent	8	4
+3	R	Or	9	4	doubler
+4	R	Cobalt	10	4
+5	P	1	15
+6	R	Nickel	12	4
+7	R	Platine	13	4
+8	R	Titane	14	4
+9	R	Aluminum	7	4
+10	P	1	15
+11	R	Or	9	4	doubler
+12	R	Cobalt	10	4
+13	P	1	15
+14	R	Nickel	12	4
+15	R	Platine	13	4
+16	R	Titane	14	4
+17	R	Aluminum	7	4
+18	P	1	15
+19	R	Or	9	4	doubler
+20	R	Cobalt	10	4
+21	R	Fer	11	4
+22	P	1	15
+23	R	Platine	13	4
+24	R	Titane	14	4
+25	P	1	15
+26	R	Argent	8	4
+27	R	Or	9	4	doubler
+28	R	Cobalt	10	4
+29	R	Fer	11	4
+30	R	Nickel	12	4
+
+#
