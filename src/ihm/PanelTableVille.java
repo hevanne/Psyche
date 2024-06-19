@@ -11,6 +11,9 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.table.DefaultTableModel;
 
 
@@ -103,21 +106,20 @@ public class PanelTableVille extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
+		this.ctrl.resetNumSommet();
+		List<Sommet>     lstSommets = new ArrayList<Sommet>();;
 		if (e.getSource() == this.btnModifier)
 		{
-			this.ctrl.majSommet(Integer.parseInt(model.getValueAt(0, 0)+""),
-								Integer.parseInt(model.getValueAt(0, 1)+""),
-								0,
-								Integer.parseInt(model.getValueAt(0, 3)+""),
-								Integer.parseInt(model.getValueAt(0, 4)+"")); 
+			lstSommets.add(Sommet.nvSommet(Integer.parseInt(model.getValueAt(0, 1)+""), this.ctrl.getCouleur(1),
+										Integer.parseInt(model.getValueAt(0, 3)+""), Integer.parseInt(model.getValueAt(0, 4)+"")));
 			for (int i=1; i<this.model.getRowCount(); i++)
 			{
-				this.ctrl.majSommet(Integer.parseInt(model.getValueAt(i, 0)+""),
-									Integer.parseInt(model.getValueAt(i, 1)+""),
-									Integer.parseInt(model.getValueAt(i, 2)+""),
-									Integer.parseInt(model.getValueAt(i, 3)+""),
-									Integer.parseInt(model.getValueAt(i, 4)+"")); 
+				lstSommets.add(Sommet.nvSommet(Integer.parseInt(model.getValueAt(i, 1)+""), this.ctrl.getCouleur(Integer.parseInt(model.getValueAt(i, 2)+"")),
+												 Integer.parseInt(model.getValueAt(i, 3)+""), Integer.parseInt(model.getValueAt(i, 4)+"")));
+				
 			}
+
+			this.ctrl.majSommet(lstSommets);
 		}
 	}
 }

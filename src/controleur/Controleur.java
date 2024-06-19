@@ -137,10 +137,10 @@ public class Controleur
 		return this.frameRoute;
 	}
 
-	public void majSommet(int num, int val, int coul, int x, int y)
+	public void majSommet(List<Sommet> lstS)
 	{
-		System.out.println("ajout de ville num : " + num);
-		this.metier.ajouterVille(num, val, coul, x, y);
+		System.out.println("ajout de ville");
+		this.metier.ajouterVille(lstS);
 		this.ihm.getFramePlateau().getPanelPlateau().repaint();
 	}
 
@@ -148,5 +148,15 @@ public class Controleur
 	{
 		this.metier.ajouterRoute(sommetD, sommetA, tronc);
 		this.ihm.getFramePlateau().getPanelPlateau().repaint();
+	}
+
+	public Couleur getCouleur(int i)
+	{
+		return this.metier.getCouleur( i);
+	}
+
+	public void resetNumSommet()
+	{
+		this.metier.resetNumSommet();
 	}
 }

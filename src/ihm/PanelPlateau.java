@@ -15,11 +15,14 @@ public class PanelPlateau extends JPanel
 	private int        largeur, hauteur;
 	private Image      imgPlateau, imgDepart;
 
-	public PanelPlateau(Controleur ctrl, int largeur, int hauteur)
+	private boolean modif;
+
+	public PanelPlateau(Controleur ctrl, int largeur, int hauteur, boolean modif)
 	{
 		this.ctrl    = ctrl;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
+		this.modif = modif;
 
 		this.imgPlateau = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getImagePlateauVierge());
 		this.imgDepart  = getToolkit().getImage("../theme/distrib_images_2/"+this.ctrl.getImageDepart());
@@ -130,47 +133,76 @@ public class PanelPlateau extends JPanel
 		}
 	}
 
+	private boolean BModif()
+	{
+		return this.modif;
+	}
+
+	public void setModif()
+	{
+		this.modif = true;
+		System.out.println("Le plateau peut est modifié");
+	}
+
+	public void setJouer()
+	{
+		this.modif = false;
+		System.out.println("Vous pouvez jouer");
+	}
+
 	private class GereSouris extends MouseAdapter
 	{
 		Sommet[] sommetsActifs = new Sommet[2];
 		
 		public void mousePressed(MouseEvent e)
 		{
-			this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			//System.out.println("s1 : "+this.sommetsActifs[0]);
+			if(!PanelPlateau.this.BModif())
+			{
+				this.sommetsActifs[0] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+				System.out.println("s1 : "+this.sommetsActifs[0]);
+			}
 		}
 
 		
 		public void mouseReleased(MouseEvent e) 
 		{
-			List<List<Sommet>> lstTrajets;
-			List<Sommet>       trajet;
 			
-			this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
-			//System.out.println("s2 : "+this.sommetsActifs[1]);
-			
-			if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null && !PanelPlateau.this.ctrl.estFinJeu())
+			if(!PanelPlateau.this.BModif())
 			{
+				List<List<Sommet>> lstTrajets;
+				List<Sommet>       trajet;
 				
-				trajet = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
+				this.sommetsActifs[1] = PanelPlateau.this.ctrl.getSommet( e.getX(), e.getY() );
+				System.out.println("s2 : "+this.sommetsActifs[1]);
 				
-				if(trajet != null && trajet.size() != 0)
+				if ( this.sommetsActifs[0] != null && this.sommetsActifs[1] != null && !PanelPlateau.this.ctrl.estFinJeu())
 				{
-					// Affectation du Joueur actif aux routes composant le trajet
-					PanelPlateau.this.ctrl.affecterPrpRoute(trajet);
 					
-					// Calculs et ajout des scores
-					lstTrajets = PanelPlateau.this.ctrl.getTrajets(this.sommetsActifs[1], PanelPlateau.this.ctrl.getDepart(), true);
+					trajet = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
+					System.out.println("Sommet pris");
+					System.out.println(trajet);
+					System.out.println(trajet != null && trajet.size() != 0);
+					
+					if(trajet != null && trajet.size() != 0)
+					{
+						// Affectation du Joueur actif aux routes composant le trajet
+						PanelPlateau.this.ctrl.affecterPrpRoute(trajet);
+						
+						// Calculs et ajout des scores
+						lstTrajets = PanelPlateau.this.ctrl.getTrajets(this.sommetsActifs[1], PanelPlateau.this.ctrl.getDepart(), true);
+						System.out.println("Trajet Sommet Depart");
+						System.out.println(lstTrajets);
+						
+						if(lstTrajets.size() == 1)
+							PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0), lstTrajets.get(0).get(0));
+						else
+							PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
 
-					if(lstTrajets.size() == 1)
-						PanelPlateau.this.ctrl.ajouterScoresTrajet(lstTrajets.get(0), lstTrajets.get(0).get(0));
-					else
-						PanelPlateau.this.ctrl.selectionnerTrajet(lstTrajets);
-
-					PanelPlateau.this.ctrl.incrementerNumTour();
+						PanelPlateau.this.ctrl.incrementerNumTour();
+					}
 				}
+				this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 			}
-			this.sommetsActifs[0] = this.sommetsActifs[1] = null;
 		}
 	}
 }

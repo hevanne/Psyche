@@ -20,7 +20,7 @@ public class FramePlateau extends JFrame
 
 		/* Création des composants */
 
-		this.panelPlateau = new PanelPlateau(ctrl, this.largeur, this.hauteur);
+		this.panelPlateau = new PanelPlateau(ctrl, this.largeur, this.hauteur, bool);
 
 		/* Positionnement des composants */
 
