@@ -1,7 +1,20 @@
 package metier;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Scanner;
+
 import java.io.*;
 import java.util.*;
+
+import controleur.Controleur;
 
 import ihm.IHM;
 
@@ -20,8 +33,11 @@ public class Jeu
 
 	private List<String>     lstEtapes;
 
-	public Jeu()
+	private Controleur ctrl;
+
+	public Jeu(Controleur ctrl)
 	{
+		this.ctrl = ctrl;
 		this.vocab   = new String[]{"Sommet","Ressource","Piece","Route"};
 		this.images  = new String[7];
 
@@ -226,6 +242,7 @@ public class Jeu
 					retour.add(trajet);
 				}
 
+				//trajet.removeLast();
 			}
 
 			smtVoisins = smt.getVoisins();
@@ -520,5 +537,149 @@ public class Jeu
 			pw.close();
 		}
 		catch (Exception e){}
+	}
+
+	public void ajouterVille(int num, int val, int coul, int x, int y)
+	{
+
+		FileReader fr;
+		String sRet = "";
+		boolean estPasse = false;
+
+		estPasse = this.sommetExiste(x, y);
+
+
+		try
+		{
+			fr = new FileReader ( "../theme/map.txt" );
+			Scanner sc = new Scanner ( fr );
+			sRet += sc.nextLine()+"\n";
+			sRet += sc.nextLine()+"\n";
+			sRet += sc.nextLine()+"\n";
+			if (num == 0 && !estPasse)
+			{
+				sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+				fr.close();
+			}
+				while ( sc.hasNextLine())
+				{
+					String ligne = sc.nextLine();
+					sRet += ligne + "\n";
+					String[] mots = ligne.split("\t");
+
+					if(mots.length>1 && !estPasse)
+					{
+
+						if (mots[2].equals("1") && coul == 1){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+																		estPasse = true;}
+						if (mots[2].equals("2") && coul == 2){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+																		estPasse = true;}
+						if (mots[2].equals("3") && coul == 3){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+																		estPasse = true;}
+						if (mots[2].equals("4") && coul == 4){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+																		estPasse = true;}
+						if (mots[2].equals("5") && coul == 5 && !estPasse){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+																		estPasse = true;}
+						if (mots[2].equals("6") && coul == 6){sRet += num +"\t" + val +"\t" + coul +"\t" + x +"\t" + y + "\n";
+																		estPasse = true;}
+					}
+				
+				}
+
+			fr.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+
+		if(!this.sommetExiste(x, y))
+		{
+			this.lstSommets.add((Sommet.nvSommet(val, this.lstCouleurs.get(coul),x,y)));
+			this.ctrl.getFrameRoute().getPanelRoute().getPanelAjoutRoute().ajouterSommet(this.lstSommets.get(num).getNom());
+		}
+
+		System.out.println("---------------------------------------------------------------------------");
+		this.ecrire(sRet);
+	}
+
+	private void ecrire(String s)
+	{
+		try
+		{
+			PrintWriter pw = new PrintWriter( new FileOutputStream("../theme/map.txt") );
+
+			pw.println ( s );
+
+
+			pw.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+	}
+
+	public boolean sommetExiste(int x, int y)
+	{
+
+		for(Sommet s: this.lstSommets)
+		{
+			if (x == s.getX() && y==s.getY())
+			{
+				System.out.println("sommet deja existant");
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean routeExiste(String sommetD, String sommetA)
+	{
+		for (Route r: this.lstRoutes)
+		{
+			if (sommetD.equals(r.getSmtDep().getNom()) && sommetA.equals(r.getSmtArr().getNom()))
+				return true;
+		}
+		return false;
+	}
+
+	public void ajouterRoute(String sommetD, String sommetA, String tronc)
+	{
+		String sRet = "";
+		try
+		{
+			Scanner sc = new Scanner ( new FileInputStream ( "../theme/map.txt" ) );
+
+			while ( sc.hasNextLine() )
+			{
+				String ligne = sc.nextLine();
+				sRet += ligne + "\n";
+			}
+
+			sc.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+
+		if (!routeExiste(sommetD, sommetA))
+		{
+			sRet += sommetD + "\t" + sommetA + "\t" + tronc;
+			//System.out.println("sommet existe pas");
+			//System.out.println(sRet);
+			this.ecrire(sRet);
+			Sommet sommetTmpD, sommetTmpA;
+			sommetTmpD = sommetTmpA = null;
+			for (Sommet s: this.lstSommets)
+			{
+				if(sommetA.equals(s.getNom()))
+				{
+					sommetTmpA = s;
+					System.out.println("alright2");
+				}
+
+				if(sommetD.equals(s.getNom()))
+				{
+					sommetTmpD = s;
+					System.out.println("alrigth1");
+				}
+			}
+
+			this.lstRoutes.add(Route.nvRoute(sommetTmpD, sommetTmpA, Integer.parseInt(tronc)));
+		}
+
 	}
 }

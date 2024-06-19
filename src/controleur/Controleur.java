@@ -3,24 +3,28 @@ package controleur;
 import metier.*;
 import ihm.*;
 
+
 import java.util.List;
 
 public class Controleur
 {
 	private Jeu metier;
 	private IHM ihm;
+	private FrameVille frameVille;
+	private FrameRoute frameRoute;
 
 	// Constructeurs
 	public Controleur()
 	{
 
-		this.metier = new Jeu();
+		this.metier = new Jeu(this);
 		this.ihm    = new IHM(this);
 
 		this.majIHM();
 	}
 
 	// Accesseurs
+	public IHM getIHM(){ return this.ihm;}
 	public int    getNumTour    () { return this.metier.getNumTour    (); }
 	public Joueur getJoueurActif() { return this.metier.getJoueurActif(); }
 	public Sommet getDepart     () { return this.metier.getDepart     (); }
@@ -46,6 +50,7 @@ public class Controleur
 	{ 
 		return this.metier.prendreSommet(smtDep, smtArr); 
 	}
+
 	public void incrementerNumTour () 
 	{ 
 		if(!this.metier.estFinJeu())
@@ -71,8 +76,7 @@ public class Controleur
 
 	public void parcourirEtape (int etape) 
 	{ 
-		this.metier.parcourirEtape(etape); 
-		this.majIHM();
+		this.metier.parcourirEtape(etape);
 	}
 
 	public void ajouterEtape (Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi) 
@@ -105,4 +109,36 @@ public class Controleur
 		this.ihm.majTout();
 	}
 
+
+	public void setModifier()
+	{
+		this.frameVille = new FrameVille(this);
+		this.frameRoute = new FrameRoute(this);
+	}
+
+	public void setJouer()
+	{
+			this.frameVille.dispose();
+			this.frameRoute.dispose();
+			this.ihm.getFramePlateau().getPanelPlateau().repaint();
+
+	}
+
+	public FrameRoute getFrameRoute()
+	{
+		return this.frameRoute;
+	}
+
+	public void majSommet(int num, int val, int coul, int x, int y)
+	{
+		System.out.println("ajout de ville num : " + num);
+		this.metier.ajouterVille(num, val, coul, x, y);
+		this.ihm.getFramePlateau().getPanelPlateau().repaint();
+	}
+
+	public void majRoute(String sommetD, String sommetA, String tronc)
+	{
+		this.metier.ajouterRoute(sommetD, sommetA, tronc);
+		this.ihm.getFramePlateau().getPanelPlateau().repaint();
+	}
 }
