@@ -154,9 +154,9 @@ public class PanelScore extends JPanel
 
 		//dix-huitième ligne
 
-		this.pnlScore.add(creerCase("S/Total", null));
-		this.pnlScore.add(creerCase("" + calculerSTotalPlateauIndividuel(this.j1), null));
-		this.pnlScore.add(creerCase("" + calculerSTotalPlateauIndividuel(this.j2), null));
+		this.pnlScore.add(creerCase("S/Total", clrJauneClair));
+		this.pnlScore.add(creerCase("" + calculerSTotalPlateauIndividuel(this.j1), clrJauneClair));
+		this.pnlScore.add(creerCase("" + calculerSTotalPlateauIndividuel(this.j2), clrJauneClair));
 
 		//dix-neuvième ligne vide
 
@@ -167,8 +167,8 @@ public class PanelScore extends JPanel
 		//vingtième ligne
 
 		this.pnlScore.add(creerCase("Jetons Possession restants", null));
-		this.pnlScore.add(creerCase("" + (25 - this.j1.getNbPions()), null));
-		this.pnlScore.add(creerCase("" + (25 - this.j2.getNbPions()), null));
+		this.pnlScore.add(creerCase("" + this.j1.getNbPions(), null));
+		this.pnlScore.add(creerCase("" + this.j2.getNbPions(), null));
 
 		//vingt-et-unième ligne
 
@@ -225,7 +225,7 @@ public class PanelScore extends JPanel
 
 	private int bonus(Joueur j1, Joueur j2)
 	{
-		if(j1.getNbPions() < j2.getNbPions())
+		if(j1.getNbPions() >= j2.getNbPions())
 			return 10;
 
 		return 0;
