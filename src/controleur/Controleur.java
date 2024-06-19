@@ -17,7 +17,7 @@ public class Controleur
 	public Controleur()
 	{
 
-		this.metier = new Jeu();
+		this.metier = new Jeu(this);
 		this.ihm    = new IHM(this);
 
 		this.majIHM();
@@ -118,15 +118,27 @@ public class Controleur
 
 	public void setJouer()
 	{
-			this.frameRoute.dispose();
 			this.frameVille.dispose();
+			this.frameRoute.dispose();
+			this.ihm.getFramePlateau().getPanelPlateau().repaint();
 
+	}
+
+	public FrameRoute getFrameRoute()
+	{
+		return this.frameRoute;
 	}
 
 	public void majSommet(int num, int val, int coul, int x, int y)
 	{
 		System.out.println("ajout de ville num : " + num);
 		this.metier.ajouterVille(num, val, coul, x, y);
-		
+		this.ihm.getFramePlateau().getPanelPlateau().repaint();
+	}
+
+	public void majRoute(String sommetD, String sommetA, String tronc)
+	{
+		this.metier.ajouterRoute(sommetD, sommetA, tronc);
+		this.ihm.getFramePlateau().getPanelPlateau().repaint();
 	}
 }
