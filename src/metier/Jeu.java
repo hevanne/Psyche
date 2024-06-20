@@ -188,8 +188,8 @@ public class Jeu
 				lig = scFic.nextLine();
 			}
 
-			this.sauvegarderEtapes();
-			this.parcourirEtape(this.lstEtapes.size()-1);
+			//this.sauvegarderEtapes();
+			this.parcourirEtape(this.lstEtapes.size());
 			scFic.close();
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
@@ -583,11 +583,11 @@ public class Jeu
 		List<Sommet>       trajet;
 		int                indiceTrajetChoisi;
 
-		if(etape <= 0)                    etape = 1;
-		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
+		if(etape <= 0)                      etape = 1;
+		if(etape > this.lstEtapes.size()+1) etape = this.lstEtapes.size()+1;
 
 		this.nouveauJeu();
-		for(this.numTour = 1; this.numTour < etape; this.numTour++)
+		for(int i = 1; i < etape; i++)
 		{
 			tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
 
@@ -603,41 +603,28 @@ public class Jeu
 			if(tabLig.length == 4)
 				indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
 			this.ajouterScoresTrajet(lstTrajets.get(indiceTrajetChoisi), smtArr);
+
+			this.numTour++;
 		}
-		this.sauvegarderEtapes();
 	}
 
 	public void ajouterEtape(Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi)
 	{
+		System.out.println(this.numTour);
+		System.out.println(this.lstEtapes.size());
 
 		String str = this.numTour + "\t" + smtDep.getNom() + "\t" + smtArr.getNom();
 		if (indiceTrajetChoisi != null) 
 			str += "\t" + indiceTrajetChoisi;
 
-		if(this.numTour < this.lstEtapes.size())
+		int tailleLst = this.lstEtapes.size();
+		if(this.numTour <= tailleLst)
 		{
-			this.lstEtapes.set(this.numTour-1, str);
-			for(int i = this.numTour; i < this.lstEtapes.size(); i++)
-				this.lstEtapes.remove(i);
+			for(int i = this.numTour; i <= tailleLst; i++)
+				this.lstEtapes.removeLast();
 		}
-		else
-			this.lstEtapes.add(str);
-
-		this.sauvegarderEtapes();
-	}
-
-	private void sauvegarderEtapes()
-	{
-		try
-		{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("../data/etapes.data"), "UTF8" ));
-
-			for (String str : this.lstEtapes)
-				pw.println(str);
-			
-			pw.close();
-		}
-		catch (Exception e){}
+		
+		this.lstEtapes.add(str);
 	}
 
 	public void ajouterVille(List<Sommet> lstS)
