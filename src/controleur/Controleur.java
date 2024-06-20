@@ -127,9 +127,12 @@ public class Controleur
 
 	public void setJouer()
 	{
+		if (this.frameVille != null && this.frameRoute != null)
+		{
 			this.frameVille.dispose();
 			this.frameRoute.dispose();
 			this.ihm.getFramePlateau().getPanelPlateau().repaint();
+		}
 
 	}
 
