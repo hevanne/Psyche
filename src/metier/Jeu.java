@@ -665,13 +665,38 @@ public class Jeu
 					"# ROUTES"+ "\n" +
 					"# '/!\' On utilise les noms des sommets pour aider avec la lisibilité"+ "\n" +
 					"#     (Un nom est plus parlant qu'une indice)"+ "\n" +
-					"# sommet_depart (indice+couleur+valeur) \\t sommet_arrivee (couleur+valeur) \\t nombre_sections";
+					"# sommet_depart (indice+couleur+valeur) \\t sommet_arrivee (couleur+valeur) \\t nombre_sections"+"\n";
 
 
-		for (Route r: this.lstRoutes)
+	
+
+		
+				
+		boolean bRoute = false;
+
+		try
 		{
-			sRet += "\n" + r.getSmtDep().getNom() + "\t" + r.getSmtArr().getNom() + "\t" + r.getNbSection();
+			Scanner sc = new Scanner ( new FileInputStream ( "../theme/map.txt" ) );
+
+			while ( sc.hasNextLine() )
+			{
+				String lig = sc.nextLine();
+				if(lig.equals("# sommet_depart (indice+couleur+valeur) \\t sommet_arrivee (couleur+valeur) \\t nombre_sections"))
+				{
+					bRoute = true;
+					lig = sc.nextLine();
+				}
+				if (bRoute)
+				{
+					sRet += lig + "\n";
+				}
+			}
+
+			sc.close();
 		}
+		catch (Exception e){ e.printStackTrace(); }
+
+
 
 		this.ecrire(sRet);
 		sRet = "# SOMMETS";
