@@ -179,7 +179,7 @@ public class PanelPlateau extends JPanel
 				{
 					
 					trajet = PanelPlateau.this.ctrl.prendreSommet(this.sommetsActifs[0], this.sommetsActifs[1]);
-					
+
 					if(trajet != null && trajet.size() != 0)
 					{
 						// Affectation du Joueur actif aux routes composant le trajet

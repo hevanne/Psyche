@@ -376,7 +376,7 @@ public class Jeu
 					}
 					else if(!routePrp && trajet.get(0) == smtDep)
 					{
-						if(retour.size() != 0 && retour.get(0).size() <= trajet.size())
+						if(retour.size() != 0 && retour.get(0).size() > trajet.size())
 							retour.clear();	
 						retour.add(new ArrayList<Sommet>(trajet));
 					}
@@ -584,7 +584,7 @@ public class Jeu
 		int                indiceTrajetChoisi;
 
 		if(etape <= 0)                    etape = 1;
-		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size()-1;
+		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
 
 		this.nouveauJeu();
 		for(this.numTour = 1; this.numTour < etape; this.numTour++)
@@ -604,15 +604,25 @@ public class Jeu
 				indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
 			this.ajouterScoresTrajet(lstTrajets.get(indiceTrajetChoisi), smtArr);
 		}
+		this.sauvegarderEtapes();
 	}
 
 	public void ajouterEtape(Sommet smtDep, Sommet smtArr, Integer indiceTrajetChoisi)
 	{
+
 		String str = this.numTour + "\t" + smtDep.getNom() + "\t" + smtArr.getNom();
 		if (indiceTrajetChoisi != null) 
 			str += "\t" + indiceTrajetChoisi;
 
-		this.lstEtapes.add(str);
+		if(this.numTour < this.lstEtapes.size())
+		{
+			this.lstEtapes.set(this.numTour-1, str);
+			for(int i = this.numTour; i < this.lstEtapes.size(); i++)
+				this.lstEtapes.remove(i);
+		}
+		else
+			this.lstEtapes.add(str);
+
 		this.sauvegarderEtapes();
 	}
 
