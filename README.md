@@ -8,16 +8,16 @@
 ## Table des matières
 
 - [Installation](#installation)
-   - [1. Décompresser l'archive :](#1-decompresser-l'archive)
+   - [1. Décompresser l'archive](#1-decompresser-l'archive)
    - [2. Contenu de l'archive](#2-contenu-de-larchive)
-   - [3. Lancer l'application avec les scripts run :](#3-lancer-lapplication-avec-les-scripts-run)
-     - [a. Sous Linux :](#a-sous-linux)
-     - [b. Sous Windows :](#b-sous-windows)
-   - [3. Lancer l'application depuis le terminal (sans script) :](#3-lancer-lapplication-depuis-le-terminal-sans-script)
+   - [3. Lancer l'application avec les scripts run](#3-lancer-lapplication-avec-les-scripts-run)
+     - [a. Sous Linux](#a-sous-linux)
+     - [b. Sous Windows](#b-sous-windows)
+   - [3. Lancer l'application depuis le terminal (sans script)](#3-lancer-lapplication-depuis-le-terminal-sans-script)
 - [Auteurs](#auteurs)
 
 ## Installation
-### 1. Décompresser l'archive :
+### 1. Décompresser l'archive
    Décompressez l'archive dans un dossier de votre choix, puis ouvrez le dossier L'age_de_Psyche.
 
 ### 2. Contenu de l'archive
@@ -33,15 +33,15 @@
 
    Le fichier compile.list se trouve dans le dossier src.
 
-### 3. Lancer l'application avec les scripts run :
+### 3. Lancer l'application avec les scripts run
 
-   a. Sous Linux :
+   a. Sous Linux
    ```bash
    chmod u + x run.sh
    ./run.sh
    ```
 
-   b. Sous Windows :
+   b. Sous Windows
    ```bash
    run.bat
    ```
@@ -49,7 +49,7 @@
    Vous pouvez également lancer l'application avec un double clic sur le fichier run.sh ou run.bat.
    Une fois lancé, ce script vous demandera de choisir un scénario. Pour lancer le jeu sans scénario, il faudra rentrer "4" dans le terminal.
 
-### 4. Lancer l'application depuis le terminal (sans script) :
+### 4. Lancer l'application depuis le terminal (sans script)
 
    Pour lancer l'application sans utiliser les scripts existants, utilisez les commandes suivantes (sous Windows ou Linux) :
    ```bash
