@@ -8,7 +8,7 @@
 ## Table des matières
 
 - [Installation](#installation)
-   - [1. Décompresser l'archive](#1-decompresser-l'archive)
+   - [1. Décompresser l'archive](#1-decompresser-larchive)
    - [2. Contenu de l'archive](#2-contenu-de-larchive)
    - [3. Lancer l'application avec les scripts run](#3-lancer-lapplication-avec-les-scripts-run)
      - [a. Sous Linux](#a-sous-linux)
