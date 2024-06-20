@@ -8,8 +8,9 @@
 ## Table des matières
 
 - [Installation](#installation)
-   - [1. Compilation](#1-compilation)
-   - [2. Lancer l'application avec les scripts](#2-lancer-lapplication-avec-les-scripts)
+   - [1. Décompression](#1-decompression)
+   - [2. Contenu de l'archive](#2-contenu-de-larchive)
+   - [3. Lancer l'application avec les scripts](#3-lancer-lapplication-avec-les-scripts)
      - [a. Sous Linux](#a-sous-linux)
      - [b. Sous Windows](#b-sous-windows)
    - [3. Lancer l'application depuis le terminal (sans script)](#3-lancer-lapplication-depuis-le-terminal-sans-script)
