@@ -8,12 +8,12 @@
 ## Table des matières
 
 - [Installation](#installation)
-   - [1. Décompression](#1-decompression)
+   - [1. Décompresser l'archive :](#1-decompresser-l'archive)
    - [2. Contenu de l'archive](#2-contenu-de-larchive)
-   - [3. Lancer l'application avec les scripts](#3-lancer-lapplication-avec-les-scripts)
-     - [a. Sous Linux](#a-sous-linux)
-     - [b. Sous Windows](#b-sous-windows)
-   - [3. Lancer l'application depuis le terminal (sans script)](#3-lancer-lapplication-depuis-le-terminal-sans-script)
+   - [3. Lancer l'application avec les scripts run :](#3-lancer-lapplication-avec-les-scripts-run)
+     - [a. Sous Linux :](#a-sous-linux)
+     - [b. Sous Windows :](#b-sous-windows)
+   - [3. Lancer l'application depuis le terminal (sans script) :](#3-lancer-lapplication-depuis-le-terminal-sans-script)
 - [Auteurs](#auteurs)
 
 ## Installation
