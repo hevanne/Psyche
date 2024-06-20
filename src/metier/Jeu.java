@@ -141,7 +141,8 @@ public class Jeu
 		Couleur couleur;
 		boolean doubler;
 		Joueur joueur;
-		int cptLig = 0;
+
+		this.numTour = 1;
 
 		for( Sommet smt : this.lstSommets ) { smt.reinit(); }
 		for( Route  r   : this.lstRoutes  )  r.reinit();
@@ -182,26 +183,17 @@ public class Jeu
 			{
 				if( lig.charAt(0) != '#' )
 				{
-					tabLig = lig.split("\t");
-
-					smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
-					smtArr = this.lstSommets.get(Integer.parseInt(tabLig[2].substring(0, 2)));
-
-					joueur = getJoueur(Integer.parseInt(tabLig[0]) % 2);
-
-					smtArr.setProprietaire(joueur);
-					smtDep.getRoute(smtArr).setProprietaire(joueur);
-
-					cptLig++;
+					this.lstEtapes.add(lig);
 				}
 				lig = scFic.nextLine();
 			}
 
+			this.sauvegarderEtapes();
+			this.parcourirEtape(this.lstEtapes.size()-1);
 			scFic.close();
 		}
 		catch (Exception e){e.printStackTrace(System.out);}
 
-		this.numTour = cptLig;
 		this.getDepart().setDepart();
 	}
 
@@ -291,7 +283,7 @@ public class Jeu
 	{
 		Sommet smtDep, smtArr;
 		Route r;
-		
+
 		for(int i = 0; i < trajet.size()-1; i++)
 		{
 			smtDep = trajet.get(i);
@@ -585,27 +577,28 @@ public class Jeu
 
 	public void parcourirEtape(int etape)
 	{
-		String[] tabLig;
-		Sommet   smtDep, smtArr;
-		
+		String[]           tabLig;
+		Sommet             smtDep, smtArr;
 		List<List<Sommet>> lstTrajets;
+		List<Sommet>       trajet;
 		int                indiceTrajetChoisi;
 
 		if(etape <= 0)                    etape = 1;
-		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size();
+		if(etape > this.lstEtapes.size()) etape = this.lstEtapes.size()-1;
 
 		this.nouveauJeu();
 		for(this.numTour = 1; this.numTour < etape; this.numTour++)
 		{
 			tabLig = this.lstEtapes.get(this.numTour-1).split("\t");
 
-			smtDep = getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
-			smtArr = getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
+			smtDep = this.getSommet(Integer.parseInt(tabLig[1].substring(0, 2)));
+			smtArr = this.getSommet(Integer.parseInt(tabLig[2].substring(0, 2)));
 			
-			this.affecterPrpRoute(this.prendreSommet(smtDep, smtArr));
+			trajet = this.prendreSommet(smtDep, smtArr);
+			this.affecterPrpRoute(trajet);
 
 			lstTrajets = this.getTrajets(smtArr, this.getDepart(), true);
-			System.out.println(lstTrajets);
+
 			indiceTrajetChoisi = 0;
 			if(tabLig.length == 4)
 				indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
