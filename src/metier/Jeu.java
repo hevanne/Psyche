@@ -207,8 +207,8 @@ public class Jeu
 	public boolean estFinJeu()
 	{
 		if(   this.lstJoueurs.get(0).getNbPions() <= 0
-		   && this.lstJoueurs.get(0).getNbPions() <= 0) 
-		   return false;
+		   && this.lstJoueurs.get(1).getNbPions() <= 0) 
+		   return true;
 		
 		for (int i = 1; i < this.lstSommets.size(); i++)
 			if (!this.lstSommets.get(i).aProprietaire())
@@ -604,7 +604,7 @@ public class Jeu
 				indiceTrajetChoisi = Integer.parseInt(tabLig[3]);
 			this.ajouterScoresTrajet(lstTrajets.get(indiceTrajetChoisi), smtArr);
 
-			this.numTour++;
+			this.incrementerNumTour();
 		}
 	}
 
@@ -621,7 +621,7 @@ public class Jeu
 		if(this.numTour <= tailleLst)
 		{
 			for(int i = this.numTour; i <= tailleLst; i++)
-				this.lstEtapes.removeLast();
+				this.lstEtapes.remove(this.lstEtapes.size() - 1);
 		}
 		
 		this.lstEtapes.add(str);
