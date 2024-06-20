@@ -25,7 +25,6 @@
    - Dossier src   : contient les fichiers sources du jeu.
    - Dossier bin   : contient les fichiers compilés du jeu.
    - Dossier theme : contient les images du jeu ainsi que le thème
-   - Dossier data  : contient le fichier d'enregistrement d'une partie.
    - README.md     : fichier contenant les informations sur le jeu.
    - run.sh        : script de lancement du jeu sous Linux.
    - run.bat       : script de lancement du jeu sous Windows.
